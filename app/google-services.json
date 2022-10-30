@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "505728848129",
+    "firebase_url": "https://zeta-turbine-297107-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "zeta-turbine-297107",
+    "storage_bucket": "zeta-turbine-297107.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505728848129:android:8665a234442c1acb200b00",
+        "android_client_info": {
+          "package_name": "com.example.pe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505728848129-amr0m2tdav2j8fgaencah0ugpn4ufhkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzZhFFiMlLmx2HoHra7uSKmQy-wGqvep0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505728848129-amr0m2tdav2j8fgaencah0ugpn4ufhkb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
