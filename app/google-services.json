@@ -8,12 +8,36 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:505728848129:android:8665a234442c1acb200b00",
+        "mobilesdk_app_id": "1:505728848129:android:dd4f62efb419268f200b00",
         "android_client_info": {
-          "package_name": "com.example.pe"
+          "package_name": "ru.hse.pe"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "505728848129-10njrtorau5k3lr83ali71cano26nkat.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.hse.pe",
+            "certificate_hash": "aaad38044a601619f3f500f3cd6d13d2d4d42610"
+          }
+        },
+        {
+          "client_id": "505728848129-7hgop6jp0h8kgoeqrevc24jegoudo29l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.hse.pe",
+            "certificate_hash": "bef373972c9bfae696071d670a7c641995ad8b0d"
+          }
+        },
+        {
+          "client_id": "505728848129-lmt1ctj578sfide9knq04ge7ui78cjra.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.hse.pe",
+            "certificate_hash": "8e0781727fbd11d9c06e9df4a8dcc496c204fc96"
+          }
+        },
         {
           "client_id": "505728848129-amr0m2tdav2j8fgaencah0ugpn4ufhkb.apps.googleusercontent.com",
           "client_type": 3

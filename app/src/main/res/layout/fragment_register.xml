@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/background"
+    android:noHistory="true"
+    tools:context="ru.hse.pe.auth.view.RegisterFragment">
+
+    <LinearLayout
+        android:id="@+id/login_register"
+        android:layout_width="390dp"
+        android:layout_height="606dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/regis_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_alternates"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/register_title"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="351dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/montserrat_alternates"
+            android:text="@string/register_name" />
+
+        <EditText
+            android:id="@+id/name_input"
+            android:layout_width="363dp"
+            android:layout_height="34dp"
+            android:background="@drawable/regis_inp_bg"
+            android:ems="10"
+            android:fontFamily="@font/montserrat_alternates"
+            android:inputType="textPersonName"
+            android:paddingLeft="20dp" />
+
+        <TextView
+            android:id="@+id/sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/montserrat_alternates"
+            android:text="@string/register_sex" />
+
+        <RadioGroup
+            android:id="@+id/sex_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="173dp"
+                android:layout_height="wrap_content"
+                android:text="@string/register_female" />
+
+            <RadioButton
+                android:id="@+id/male"
+                android:layout_width="172dp"
+                android:layout_height="wrap_content"
+                android:text="@string/register_male" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/montserrat_alternates"
+            android:text="@string/register_email" />
+
+        <EditText
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:background="@drawable/regis_inp_bg"
+            android:ems="10"
+            android:fontFamily="@font/montserrat_alternates"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="20dp" />
+
+        <TextView
+            android:id="@+id/password"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/montserrat_alternates"
+            android:text="@string/register_password" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            tools:ignore="MissingConstrains">
+
+            <EditText
+                android:id="@+id/password_input"
+                android:layout_width="354dp"
+                android:layout_height="34dp"
+                android:background="@drawable/regis_inp_bg"
+                android:ems="10"
+                android:fontFamily="@font/montserrat_alternates"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp"
+                app:errorEnabled="true"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/password_repeat"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/montserrat_alternates"
+            android:gravity="left"
+            android:text="@string/register_repeatPassword" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            tools:ignore="MissingConstrains">
+
+            <EditText
+                android:id="@+id/password_repeat_input"
+                android:layout_width="354dp"
+                android:layout_height="34dp"
+                android:background="@drawable/regis_inp_bg"
+                android:ems="10"
+                android:fontFamily="@font/montserrat_alternates"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp"
+                app:errorEnabled="true"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/accept_checkbox"
+                android:layout_width="74dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/register_userConf" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="220dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/regis_btn"
+            android:backgroundTint="@color/regisBtn"
+            android:inputType="textCapSentences"
+            android:text="@string/register_btn"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/blue"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
