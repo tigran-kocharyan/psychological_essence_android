@@ -16,5 +16,6 @@
     <color name="activeProgressBar">#62BFEC</color>
     <color name="nonactiveProgressBar">#D9D9D9</color>
     <color name="test__btnGoOrPush">#9962BFEC</color>
+    <color name="blue">#0050cf</color>
 
 </resources>
