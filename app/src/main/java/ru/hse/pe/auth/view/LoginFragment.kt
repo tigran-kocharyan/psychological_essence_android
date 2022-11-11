@@ -2,7 +2,6 @@ package ru.hse.pe.auth.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,8 @@ import ru.hse.pe.R
 import ru.hse.pe.databinding.FragmentLoginBinding
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
+import ru.hse.pe.utils.Utils.isInvalid
+import ru.hse.pe.utils.Utils.validateEmail
 import ru.hse.pe.utils.Utils.value
 
 class LoginFragment : Fragment() {
@@ -23,7 +24,11 @@ class LoginFragment : Fragment() {
 
     private var auth = FirebaseAuth.getInstance()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,12 +38,14 @@ class LoginFragment : Fragment() {
         root = binding.root
         binding.buttonRegister.setOnClickListener { registerUser() }
         binding.buttonLogin.setOnClickListener { loginUser() }
+        binding.buttonReset.setOnClickListener { resetPassword() }
     }
 
     private fun loginUser() {
         when {
-            binding.emailInput.text.toString().isBlank() -> {
-                binding.emailInput.error = "Введите почту"
+            binding.emailInput.isInvalid() && binding.emailInput.text.toString()
+                .validateEmail() -> {
+                binding.emailInput.error = "Введите корректную почту"
                 binding.emailInput.requestFocus()
             }
             binding.passwordInput.text.toString().isBlank() -> {
@@ -54,21 +61,51 @@ class LoginFragment : Fragment() {
     private fun authorize() {
         showProgress(true)
         auth.signInWithEmailAndPassword(binding.emailInput.value(), binding.passwordInput.value())
-                .addOnSuccessListener { result ->
-                    result.user?.let { user ->
-                        if (user.isEmailVerified) {
-                            val intent = Intent(activity, News::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(intent)
+            .addOnSuccessListener { result ->
+                result.user?.let { user ->
+                    if (user.isEmailVerified) {
+                        val intent = Intent(activity, News::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    } else {
+                        getSnackbar(root, "Подтвердите почту").show()
+                        binding.buttonVerify.setOnClickListener { verify(user) }
+                        binding.buttonVerify.visibility = View.VISIBLE
+                    }
+                    showProgress(false)
+                }
+            }.addOnFailureListener {
+                getSnackbar(root, "Неверная почта или пароль").show()
+                showProgress(false)
+            }
+    }
+
+    private fun resetPassword() {
+        when {
+            binding.emailInput.isInvalid() && binding.emailInput.text.toString()
+                .validateEmail() -> {
+                binding.emailInput.error = "Введите корректную почту"
+                binding.emailInput.requestFocus()
+            }
+            else -> {
+                showProgress(true)
+                auth.sendPasswordResetEmail(binding.emailInput.value())
+                    .addOnCompleteListener { result ->
+                        if (result.isSuccessful) {
+                            getLongSnackbar(
+                                root,
+                                "На указанную почту было отправлено письмо для смены пароля"
+                            ).show()
                         } else {
-                            getSnackbar(root, "Подтвердите почту").show()
-                            binding.buttonVerify.setOnClickListener { verify(user) }
-                            binding.buttonVerify.visibility = View.VISIBLE
+                            getLongSnackbar(
+                                root,
+                                "Ошибка отправки письма для смены пароля"
+                            ).show()
                         }
                         showProgress(false)
                     }
-                }.addOnFailureListener { getSnackbar(root, "Неверная почта или пароль").show()
-                showProgress(false)}
+            }
+        }
     }
 
     private fun registerUser() {
@@ -80,11 +117,17 @@ class LoginFragment : Fragment() {
     }
 
     private fun verify(user: FirebaseUser) {
-       user.sendEmailVerification().addOnCompleteListener {
-            if (it.isSuccessful) getLongSnackbar(root, "На вашу почту отправлена ссылка для подтверждения аккаунта!" +
-                    "\nПерейдите по ссылке для подтверждения").show()
-            else getLongSnackbar(root, "Не удалось отправить письмо-подтверждение\nВозможно недавно уже посылалось письмо!").show()
-       }
+        user.sendEmailVerification().addOnCanceledListener {
+            getLongSnackbar(
+                root, "На вашу почту отправлена ссылка для подтверждения аккаунта!" +
+                        "\nПерейдите по ссылке для подтверждения"
+            ).show()
+        }.addOnFailureListener {
+            getLongSnackbar(
+                root,
+                "Не удалось отправить письмо-подтверждение\nВозможно недавно уже посылалось письмо!"
+            ).show()
+        }
     }
 
     private fun showProgress(isVisible: Boolean) {
