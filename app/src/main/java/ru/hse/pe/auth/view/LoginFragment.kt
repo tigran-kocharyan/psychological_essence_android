@@ -1,12 +1,10 @@
 package ru.hse.pe.auth.view
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +15,7 @@ import ru.hse.pe.databinding.FragmentLoginBinding
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
 import ru.hse.pe.utils.Utils.isInvalid
+import ru.hse.pe.utils.Utils.setVisible
 import ru.hse.pe.utils.Utils.validateEmail
 import ru.hse.pe.utils.Utils.value
 
@@ -71,8 +70,8 @@ class LoginFragment : Fragment() {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                     } else {
-                        getSnackbar(root, "Подтвердите почту").show()
-                        verify(user)
+                        binding.resend.setVisible()
+                        binding.resendCodeButton.setOnClickListener { verify(user) }
 //                        binding.buttonVerify.setOnClickListener { verify(user) }
 //                        binding.buttonVerify.visibility = View.VISIBLE
                     }
@@ -106,11 +105,6 @@ class LoginFragment : Fragment() {
                 root, "На вашу почту отправлена ссылка для подтверждения аккаунта!" +
                         "\nПерейдите по ссылке для подтверждения"
             ).show()
-            try {
-                val intent = Intent(Intent.ACTION_MAIN)
-                intent.addCategory(Intent.CATEGORY_APP_EMAIL)
-                this.startActivity(intent)
-            } catch (ignored: ActivityNotFoundException) { }
         }.addOnFailureListener {
             getLongSnackbar(
                 root,
