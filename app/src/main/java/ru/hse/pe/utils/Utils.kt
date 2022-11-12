@@ -22,4 +22,8 @@ object Utils {
             textAlignment = View.TEXT_ALIGNMENT_CENTER
         }
     }
+
+    fun View.setGone() = run { this.visibility = View.GONE }
+    fun View.setVisible() = run { this.visibility = View.VISIBLE }
+    fun View.setInvisible() = run { this.visibility = View.INVISIBLE }
 }

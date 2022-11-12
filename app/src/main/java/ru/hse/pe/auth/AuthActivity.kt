@@ -3,7 +3,7 @@ package ru.hse.pe.auth
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ru.hse.pe.R
-import ru.hse.pe.auth.view.LoginFragment
+import ru.hse.pe.auth.view.AuthFragment
 
 /**
  * Основное Activity, на которое помещаются фрагменты авторизации
@@ -16,8 +16,8 @@ class AuthActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.fragment_container, LoginFragment.newInstance(), LoginFragment.TAG)
+                .beginTransaction()
+                .add(R.id.fragment_container, AuthFragment.newInstance(), AuthFragment.TAG)
                     .commit()
         }
     }

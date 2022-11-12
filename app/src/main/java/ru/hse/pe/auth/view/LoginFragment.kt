@@ -15,8 +15,10 @@ import ru.hse.pe.databinding.FragmentLoginBinding
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
 import ru.hse.pe.utils.Utils.isInvalid
+import ru.hse.pe.utils.Utils.setVisible
 import ru.hse.pe.utils.Utils.validateEmail
 import ru.hse.pe.utils.Utils.value
+
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
@@ -38,7 +40,7 @@ class LoginFragment : Fragment() {
         root = binding.root
         binding.buttonRegister.setOnClickListener { registerUser() }
         binding.buttonLogin.setOnClickListener { loginUser() }
-        binding.buttonReset.setOnClickListener { resetPassword() }
+        binding.buttonForgotPassword.setOnClickListener { resetPassword() }
     }
 
     private fun loginUser() {
@@ -68,9 +70,10 @@ class LoginFragment : Fragment() {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                     } else {
-                        getSnackbar(root, "Подтвердите почту").show()
-                        binding.buttonVerify.setOnClickListener { verify(user) }
-                        binding.buttonVerify.visibility = View.VISIBLE
+                        binding.resend.setVisible()
+                        binding.resendCodeButton.setOnClickListener { verify(user) }
+//                        binding.buttonVerify.setOnClickListener { verify(user) }
+//                        binding.buttonVerify.visibility = View.VISIBLE
                     }
                     showProgress(false)
                 }
@@ -81,31 +84,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun resetPassword() {
-        when {
-            binding.emailInput.isInvalid() && binding.emailInput.text.toString()
-                .validateEmail() -> {
-                binding.emailInput.error = "Введите корректную почту"
-                binding.emailInput.requestFocus()
-            }
-            else -> {
-                showProgress(true)
-                auth.sendPasswordResetEmail(binding.emailInput.value())
-                    .addOnCompleteListener { result ->
-                        if (result.isSuccessful) {
-                            getLongSnackbar(
-                                root,
-                                "На указанную почту было отправлено письмо для смены пароля"
-                            ).show()
-                        } else {
-                            getLongSnackbar(
-                                root,
-                                "Ошибка отправки письма для смены пароля"
-                            ).show()
-                        }
-                        showProgress(false)
-                    }
-            }
-        }
+        (activity as AppCompatActivity).supportFragmentManager
+            .beginTransaction()
+            .addToBackStack(null)
+            .add(R.id.fragment_container, ResetPasswordFragment.newInstance(), ResetPasswordFragment.TAG)
+            .commit()
     }
 
     private fun registerUser() {
@@ -125,7 +108,7 @@ class LoginFragment : Fragment() {
         }.addOnFailureListener {
             getLongSnackbar(
                 root,
-                "Не удалось отправить письмо-подтверждение\nВозможно недавно уже посылалось письмо!"
+                "Не удалось отправить письмо-подтверждение\nВозможно недавно письмо уже посылалось!"
             ).show()
         }
     }
