@@ -1,7 +1,10 @@
 package ru.hse.pe.auth.view
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
@@ -21,6 +24,8 @@ import ru.hse.pe.databinding.FragmentRegisterBinding
 import ru.hse.pe.model.User
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
+import ru.hse.pe.utils.Utils.setGone
+import ru.hse.pe.utils.Utils.setVisible
 import ru.hse.pe.utils.Utils.validateEmail
 
 class RegisterFragment : Fragment() {
@@ -30,7 +35,11 @@ class RegisterFragment : Fragment() {
     private var auth = FirebaseAuth.getInstance()
     private var users = FirebaseDatabase.getInstance(FIREBASE_URL).getReference(USER_KEY)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,7 +47,8 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         root = binding.root
-        binding.registerButton.setOnClickListener { registerUser() }
+        binding.buttonRegister.setOnClickListener { registerUser() }
+        binding.buttonLogin.setOnClickListener { openLogin() }
     }
 
     private fun registerUser() {
@@ -95,15 +105,7 @@ class RegisterFragment : Fragment() {
                         users.child(FirebaseAuth.getInstance().currentUser?.uid ?: "")
                             .setValue(user)
                             .addOnSuccessListener {
-                                (activity as AppCompatActivity).supportFragmentManager
-                                    .beginTransaction()
-                                    .addToBackStack(null)
-                                    .add(
-                                        R.id.fragment_container,
-                                        LoginFragment.newInstance(),
-                                        LoginFragment.TAG
-                                    )
-                                    .commit()
+                               update()
                             }.addOnFailureListener {
                                 getSnackbar(
                                     root,
@@ -159,6 +161,34 @@ class RegisterFragment : Fragment() {
 
     private fun showProgress(isVisible: Boolean) {
         binding.progressbar.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+
+    private fun openLogin() {
+        (activity as AppCompatActivity).supportFragmentManager
+            .beginTransaction()
+            .addToBackStack(null)
+            .add(
+                R.id.fragment_container,
+                LoginFragment.newInstance(),
+                LoginFragment.TAG
+            )
+            .commit()
+    }
+
+    private fun update() {
+        binding.hiddenInfo.setGone()
+        binding.fillInfo.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(view: View?, event: MotionEvent?): Boolean = true
+        })
+        binding.subtitle.setVisible()
+        binding.buttonRegister.text = "Проверить почту"
+        binding.buttonRegister.setOnClickListener {
+            try {
+                val intent = Intent(Intent.ACTION_MAIN)
+                intent.addCategory(Intent.CATEGORY_APP_EMAIL)
+                this.startActivity(intent)
+            } catch (ignored: ActivityNotFoundException) { }
+        }
     }
 
     companion object {
