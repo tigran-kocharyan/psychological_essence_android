@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import ru.hse.pe.article.Articles;
-
 public class Menu extends AppCompatActivity {
     TextView textView;
     private static String val = "", name = "";
@@ -88,8 +86,8 @@ public class Menu extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToArticles(View view){
-        Intent intent = new Intent(this, Articles.class);
-        startActivity(intent);
-    }
+//    public void goToArticles(View view){
+//        Intent intent = new Intent(this, Articles.class);
+//        startActivity(intent);
+//    }
 }
