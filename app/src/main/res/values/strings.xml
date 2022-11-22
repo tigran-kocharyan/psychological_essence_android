@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">PE</string>
+    <string name="app_name">Psychological Essence</string>
+
+    // New
+    <string name="time_article">Время чтения: %s</string>
 
     /* Регистрация/Вход */
     <string name="login_go">Войти в аккаунт</string>

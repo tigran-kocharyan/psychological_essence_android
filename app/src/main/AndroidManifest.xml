@@ -15,89 +15,86 @@
         android:theme="@style/Theme.PE"
         tools:targetApi="31">
         <activity
-            android:name=".test.PsychologicalState.Test_OxfordHappinessQuestionnaire"
+            android:name=".presentation.test.PsychologicalState.Test_OxfordHappinessQuestionnaire"
             android:exported="false" />
         <activity
-            android:name=".test.PsychologicalState.Test_MethodsDiagnosisNeurosis"
+            android:name=".presentation.test.PsychologicalState.Test_MethodsDiagnosisNeurosis"
             android:exported="false" />
         <activity
-            android:name=".test.PsychologicalState.Test_BecksDepressionScale"
+            android:name=".presentation.test.PsychologicalState.Test_BecksDepressionScale"
             android:exported="false" />
         <activity
-            android:name=".test.PsychologicalState.Test_BecksAlarmScale"
+            android:name=".presentation.test.PsychologicalState.Test_BecksAlarmScale"
             android:exported="false" />
         <activity
-            android:name=".test.PsychologicalState.Test_DepressionAnxietStress"
+            android:name=".presentation.test.PsychologicalState.Test_DepressionAnxietStress"
             android:exported="false" />
         <activity
-            android:name=".test.InterpersonalCommunicationTests.Test_Como"
+            android:name=".presentation.test.InterpersonalCommunicationTests.Test_Como"
             android:exported="false" />
         <activity
-            android:name=".test.InterpersonalCommunicationTests.Test_InterpersonalDependencyInventory"
+            android:name=".presentation.test.InterpersonalCommunicationTests.Test_InterpersonalDependencyInventory"
             android:exported="false" />
         <activity
-            android:name=".test.InterpersonalCommunicationTests.Test_AssessmentNeedApproval"
+            android:name=".presentation.test.InterpersonalCommunicationTests.Test_AssessmentNeedApproval"
             android:exported="false" />
         <activity
-            android:name=".test.InterpersonalCommunicationTests.Test_ScaleLoveSympathy"
+            android:name=".presentation.test.InterpersonalCommunicationTests.Test_ScaleLoveSympathy"
             android:exported="false" />
         <activity
-            android:name=".test.InterpersonalCommunicationTests.Test_DiagnosticControlAssessment"
+            android:name=".presentation.test.InterpersonalCommunicationTests.Test_DiagnosticControlAssessment"
             android:exported="false" />
         <activity
-            android:name=".test.InterpersonalCommunicationTests.Test_LevelEmpathy"
+            android:name=".presentation.test.InterpersonalCommunicationTests.Test_LevelEmpathy"
             android:exported="false" />
         <activity
-            android:name=".test.InterpersonalCommunicationTests.Test_PEA"
+            android:name=".presentation.test.InterpersonalCommunicationTests.Test_PEA"
             android:exported="false" />
         <activity
-            android:name=".test.InterpersonalCommunicationTests.Test_BornsteinRelationshipProfile"
+            android:name=".presentation.test.InterpersonalCommunicationTests.Test_BornsteinRelationshipProfile"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_ImplicitTheoriesLearning"
+            android:name=".presentation.test.CharacterOfUserTests.Test_ImplicitTheoriesLearning"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_DiagnosisTemperamentEysenck"
+            android:name=".presentation.test.CharacterOfUserTests.Test_DiagnosisTemperamentEysenck"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_HardinessSurvey"
+            android:name=".presentation.test.CharacterOfUserTests.Test_HardinessSurvey"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_MultidimensionalPerfectionismScale"
+            android:name=".presentation.test.CharacterOfUserTests.Test_MultidimensionalPerfectionismScale"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_SandraBoehmGenderRoleQuestionnaire"
+            android:name=".presentation.test.CharacterOfUserTests.Test_SandraBoehmGenderRoleQuestionnaire"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_BigFive"
+            android:name=".presentation.test.CharacterOfUserTests.Test_BigFive"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_AlienationMoralResponsibility"
+            android:name=".presentation.test.CharacterOfUserTests.Test_AlienationMoralResponsibility"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_CognitiveFlexibilityQuestionnaire"
+            android:name=".presentation.test.CharacterOfUserTests.Test_CognitiveFlexibilityQuestionnaire"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_BussPerryAggressionQuestionnaire"
+            android:name=".presentation.test.CharacterOfUserTests.Test_BussPerryAggressionQuestionnaire"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_BarretImpulsivityScale"
+            android:name=".presentation.test.CharacterOfUserTests.Test_BarretImpulsivityScale"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_AutismSpectrumCoefficient"
+            android:name=".presentation.test.CharacterOfUserTests.Test_AutismSpectrumCoefficient"
             android:exported="false" />
         <activity
-            android:name=".test.CharacterOfUserTests.Test_ToleranceToUncertainly"
+            android:name=".presentation.test.CharacterOfUserTests.Test_ToleranceToUncertainly"
             android:exported="false" />
         <activity
             android:name=".TestResults"
             android:exported="false" />
-        <activity
-            android:name=".article.Article"
-            android:exported="false" />
-        <activity
-            android:name=".article.Articles"
-            android:exported="false" />
+        <!--        <activity-->
+        <!--            android:name=".article.Article"-->
+        <!--            android:exported="false" />-->
         <activity
             android:name=".Test"
             android:exported="false" />
@@ -111,14 +108,17 @@
             android:name=".News"
             android:exported="false" />
         <activity
-            android:name=".auth.AuthActivity"
+            android:name=".presentation.auth.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".test.PsychologicalState.Test_BecksHopelessnessScale" />
+        <activity android:name=".presentation.test.PsychologicalState.Test_BecksHopelessnessScale" />
+        <activity
+            android:name=".presentation.MainActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

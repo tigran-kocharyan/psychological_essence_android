@@ -125,6 +125,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:hint="Ваша электронная почта"
                 android:id="@+id/email_input"
+                android:text="tigrankocharyan9@gmail.com"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -174,6 +175,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textColor="@color/gray"
+                android:text="pass123"
                 app:hintEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>

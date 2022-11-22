@@ -18,7 +18,4 @@ public class News extends AppCompatActivity {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
     }
-
-
-
 }
