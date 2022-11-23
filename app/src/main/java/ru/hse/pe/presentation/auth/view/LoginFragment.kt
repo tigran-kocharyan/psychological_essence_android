@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import ru.hse.pe.R
 import ru.hse.pe.databinding.FragmentLoginBinding
-import ru.hse.pe.presentation.MainActivity
+import ru.hse.pe.presentation.test.TestActivity
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
 import ru.hse.pe.utils.Utils.isInvalid
@@ -66,7 +66,7 @@ class LoginFragment : Fragment() {
             .addOnSuccessListener { result ->
                 result.user?.let { user ->
                     if (user.isEmailVerified) {
-                        val intent = Intent(activity, MainActivity::class.java)
+                        val intent = Intent(activity, TestActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                     } else {

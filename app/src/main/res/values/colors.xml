@@ -23,5 +23,8 @@
     <color name="grayLight">#C2C9D1</color>
     <color name="red">#B3261E</color>
     <color name="pink">#e9c8ff</color>
+    <color name="indicatorActFrom">#6766D8</color>
+    <color name="indicatorActTo">#9392F7</color>
+    <color name="indicatorNotAct">#B6B6B6</color>
 
 </resources>
