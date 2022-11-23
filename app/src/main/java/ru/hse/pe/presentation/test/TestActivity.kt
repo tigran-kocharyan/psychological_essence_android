@@ -20,7 +20,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -94,39 +93,28 @@ class TestActivity : ComponentActivity() {
                     .fillMaxSize()
                     .background(Color.White),
             ) {
-                LazyColumn() {
+                LazyColumn {
                     val keys = sortedScales.keys.toList()
                     var resDiff: HashMap<String, HashMap<String, String>>
-                    var resSize = 0
+                    var resSize: Int
 
+                    var text: String
                     var desc = ""
-                    var text = ""
 
-                    val reverseAnsP = hashMapOf<Int, Int>()
-
+                    val reversePoints = hashMapOf<Int, Int>()
                     val answersKeyList = answers.keys.toList()
 
-                    var k = 0
-                    var j = answersKeyList.size - 1
+                    var from = 0
+                    var to = answersKeyList.size - 1
 
-                    Log.d("answers", answers.toString())
-                    Log.d("answersKeyList", answersKeyList.toString())
-                    Log.d("answersKeyListsize", (answersKeyList.size - 1).toString())
-
-                    Log.d("j", answersKeyList[answersKeyList.size - 1].toString())
-
-
-                    while (k < answersKeyList.size) {
-                        reverseAnsP[answersKeyList[j]] = answersKeyList[k]
-                        k++
-                        j--
+                    while (from < answersKeyList.size) {
+                        reversePoints[answersKeyList[to]] = answersKeyList[from]
+                        from++
+                        to--
                     }
-
-                    Log.d("reverseAnsP", reverseAnsP.toString())
 
                     items(sortedScales.size) { index ->
                         Column() {
-
                             val counting = sortedScales[keys[index]]?.counting
                                 ?.split(", ")?.toList()
                             val countingR = sortedScales[keys[index]]?.countingR
@@ -139,11 +127,9 @@ class TestActivity : ComponentActivity() {
                                 }
                             }
 
-
-
                             if (countingR != null) {
                                 for (i in countingR.indices) {
-                                    mark += reverseAnsP[answersPoint[countingR[i].toInt()]]!!
+                                    mark += reversePoints[answersPoint[countingR[i].toInt()]]!!
                                 }
                             }
 
@@ -156,13 +142,13 @@ class TestActivity : ComponentActivity() {
                                 resSize = resDiffKeys.size
 
                                 for (i in 0 until resSize) {
-                                    var points = resDiff[resDiffKeys[i]]?.get("points")
-                                    var leftNum = 0
-                                    var rightNum = 0
+                                    val points = resDiff[resDiffKeys[i]]?.get("points")
+                                    var leftNum: Int
+                                    var rightNum: Int
 
                                     if (points != null) {
                                         if (points.contains("-")) {
-                                            var pointArr = points.split("-")
+                                            val pointArr = points.split("-")
                                             leftNum = pointArr[0].toInt()
                                             rightNum = pointArr[1].toInt()
 
@@ -252,7 +238,6 @@ class TestActivity : ComponentActivity() {
 
                 answers[key.toInt()] = sortedListAnswers[listAnswersKeys[i]].toString()
             }
-            Log.d("answers", answers.toString())
         }
 
         Box() {
@@ -378,6 +363,7 @@ class TestActivity : ComponentActivity() {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 CreateTopPartCard(counter, counterQ, maxCounter, progress)
                 CreateAnswersCard(counter, counterQ, maxCounter, progress, toggleBtn)
+                Spacer(Modifier.weight(1f, true))
                 CreateBtnCard(counter, maxCounter, toggleBtn, navController)
             }
         }
@@ -422,7 +408,7 @@ class TestActivity : ComponentActivity() {
             modifier = Modifier
                 .width(310.dp)
                 .padding(bottom = 30.dp),
-            color = colorResource(id = R.color.indicatorActFrom),
+            color = colorResource(id = R.color.purple),
 //            modifier = Modifier.background(brush = Brush.verticalGradient(
 //                colors = listOf(
 //                    colorResource(id = R.color.indicatorActFrom),
@@ -469,7 +455,7 @@ class TestActivity : ComponentActivity() {
                 modifier = Modifier
                     .selectableGroup()
                     .fillMaxWidth()
-                    .padding(bottom = 10.dp), // 40 dp bottom
+                    .padding(bottom = 10.dp),
                 horizontalAlignment = Alignment.Start
             ) {
                 val diff = 1.0 / maxCounter.value
@@ -479,7 +465,6 @@ class TestActivity : ComponentActivity() {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
-
                         Box(modifier = Modifier
                             .width(18.dp)
                             .height(18.dp)) {
@@ -505,18 +490,11 @@ class TestActivity : ComponentActivity() {
                                             toggleBtn.value = true
                                         }
                                     }
-
                                 },
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .alpha(0.0f)
-                            )
-                            Icon(
-                                painter = if (answers.keys.toList()[index] == answersPoint[counter.value])
-                                    painterResource(id = R.drawable.checked) else
-                                    painterResource(id = R.drawable.notchecked),
-                                contentDescription = null,
-                                modifier = Modifier.fillMaxSize()
+                                    .fillMaxSize(),
+                                colors = RadioButtonDefaults
+                                    .colors(selectedColor = Color(R.color.purple))
                             )
                         }
 
@@ -539,14 +517,12 @@ class TestActivity : ComponentActivity() {
         toggleBtn: MutableState<Boolean>,
         navController: NavController,
     ) {
-
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 0.dp, bottom = 10.dp), //20 dp TOp
+                .padding(top = 0.dp, bottom = 10.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Button(
                 onClick = {
@@ -575,8 +551,6 @@ class TestActivity : ComponentActivity() {
                     color = colorResource(id = R.color.purple)
                 )
             }
-
-
             Button(
                 onClick = {
                     if (answersPoint[counter.value] == -1) {
@@ -593,7 +567,6 @@ class TestActivity : ComponentActivity() {
                         }
                     }
                 },
-
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
                     .width(if (toggleBtn.value) 0.dp else 165.dp)
@@ -616,7 +589,6 @@ class TestActivity : ComponentActivity() {
                 modifier = Modifier
                     .width(if (toggleBtn.value) 165.dp else 0.dp)
                     .height(if (toggleBtn.value) 37.dp else 0.dp),
-
                 colors = ButtonDefaults
                     .buttonColors(
                         backgroundColor = colorResource(id = R.color.purple),
@@ -626,7 +598,6 @@ class TestActivity : ComponentActivity() {
                 Text(text = stringResource(id = R.string.finishBtn))
             }
         }
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -634,14 +605,13 @@ class TestActivity : ComponentActivity() {
         ) {
             Button(
                 onClick = {
-
                     counter.value++
-
                     if (counter.value > maxCounter.value) {
                         counter.value = 1
                     }
                 },
-                modifier = Modifier.fillMaxSize(if (toggleBtn.value) 0.0f else 1.0f),
+                modifier = Modifier
+                    .fillMaxWidth(if (toggleBtn.value) 0.0f else 0.7f),
                 elevation = ButtonDefaults.elevation(0.dp, 0.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             ) {

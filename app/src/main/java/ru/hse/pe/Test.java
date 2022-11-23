@@ -124,31 +124,28 @@ public class Test extends AppCompatActivity {
         getTestsFromDB();
 
         for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String id = getId(view);
-                    int intId = Integer.parseInt(id.substring(29));
+            buttons.get(i).setOnClickListener(view -> {
+                String id = getId(view);
+                int intId = Integer.parseInt(id.substring(29));
 
-                    dataOptimize(view);
+                dataOptimize(view);
 
-                    switch (typeOfTest){
-                        case "CharacterOfUser":
-                            Objects.requireNonNull(Objects.requireNonNull(testsTypes.get("CharacterOfUser")).get(intId)).run();
-                            break;
-                        case "InterpersonalCommunication":
-                            Objects.requireNonNull(Objects.requireNonNull(testsTypes.get("InterpersonalCommunication")).get(intId)).run();
-                            break;
-                        case "PsychologicalState":
-                            Objects.requireNonNull(Objects.requireNonNull(testsTypes.get("PsychologicalState")).get(intId)).run();
-                            break;
-                        case "Intelligence":
-                            Objects.requireNonNull(Objects.requireNonNull(testsTypes.get("Intelligence")).get(intId)).run();
-                            break;
-                        case "ProfessionalOrientation":
-                            Objects.requireNonNull(Objects.requireNonNull(testsTypes.get("ProfessionalOrientation")).get(intId)).run();
-                            break;
-                    }
+                switch (typeOfTest){
+                    case "CharacterOfUser":
+                        Objects.requireNonNull(Objects.requireNonNull(testsTypes.get("CharacterOfUser")).get(intId)).run();
+                        break;
+                    case "InterpersonalCommunication":
+                        Objects.requireNonNull(Objects.requireNonNull(testsTypes.get("InterpersonalCommunication")).get(intId)).run();
+                        break;
+                    case "PsychologicalState":
+                        Objects.requireNonNull(Objects.requireNonNull(testsTypes.get("PsychologicalState")).get(intId)).run();
+                        break;
+                    case "Intelligence":
+                        Objects.requireNonNull(Objects.requireNonNull(testsTypes.get("Intelligence")).get(intId)).run();
+                        break;
+                    case "ProfessionalOrientation":
+                        Objects.requireNonNull(Objects.requireNonNull(testsTypes.get("ProfessionalOrientation")).get(intId)).run();
+                        break;
                 }
             });
         }
@@ -161,7 +158,7 @@ public class Test extends AppCompatActivity {
 
 
     private void dataOptimize(View view) {
-        testsTypes = new HashMap<String, HashMap<Integer, Runnable>>();
+        testsTypes = new HashMap<>();
         charaterOfUserMap = new HashMap<Integer, Runnable>(){{
             put(0, () -> solveAMR(view));
             put(1, () -> solveASC(view));
@@ -358,7 +355,7 @@ public class Test extends AppCompatActivity {
 
         };
         commandsRef.addValueEventListener(valueEventListener);
-    };
+    }
 
 
     public void openMenu(View view){
@@ -366,40 +363,3 @@ public class Test extends AppCompatActivity {
         startActivity(intent);
     }
 }
-
-
-
-//    private void addTestItem() {
-//        LinearLayout testItem_wrapper = new LinearLayout(this, null, R.style.testItem_wrapper);
-//        TextView testTitle = new TextView(this, null, R.style.testItem_title);
-//
-//        testItem_wrapper.addView(testTitle);
-//
-//        LinearLayout testItem_wrapperHint = new LinearLayout(this, null, R.style.testItem_wrapperHint);
-//
-//
-//        ImageView question_answer_grey = new ImageView(this, null, R.style.testItem_img);
-//        question_answer_grey.setImageResource(R.drawable.question_answer_grey);
-//        TextView test_countQuestions1 = new TextView(this, null, R.style.testItem_txtHint);
-//
-//        ImageView timer_grey = new ImageView(this, null, R.style.testItem_img);
-//        question_answer_grey.setImageResource(R.drawable.timer_grey);
-//        TextView test_time = new TextView(this, null, R.style.testItem_txtHint);
-//
-//        testItem_wrapperHint.addView(question_answer_grey);
-//        testItem_wrapperHint.addView(test_countQuestions1);
-//        testItem_wrapperHint.addView(timer_grey);
-//        testItem_wrapperHint.addView(test_time);
-//        testItem_wrapper.addView(testItem_wrapperHint);
-//
-//
-//        TextView test_des = new TextView(this, null, R.style.testItem_des);
-//        Button test_button = new Button(this, null, R.style.testItem_btn);
-//
-//
-//        testItem_wrapper.addView(test_des);
-//        testItem_wrapper.addView(test_button);
-//
-//        mainLL.addView(testItem_wrapper);
-//    }
-
