@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -41,6 +42,7 @@ import ru.hse.pe.domain.model.Scale
 import ru.hse.pe.domain.model.Test
 import ru.hse.pe.presentation.test.utils.sealed.DataState
 import ru.hse.pe.presentation.test.utils.sealed.Routes
+import ru.hse.pe.presentation.test.utils.theme.TestTheme
 
 
 class TestActivity : ComponentActivity() {
@@ -60,7 +62,9 @@ class TestActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Navigation()
+            TestTheme {
+                Navigation()
+            }
         }
     }
 
@@ -310,7 +314,6 @@ class TestActivity : ComponentActivity() {
             modifier = Modifier.height(78.dp),
             shape = RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp),
         ) {
-
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth(),
@@ -321,7 +324,6 @@ class TestActivity : ComponentActivity() {
                     painter = painterResource(id = R.drawable.ic_arrow_back),
                     contentDescription = "arrowLeft"
                 )
-
                 Text(
                     text = name,
                     modifier = Modifier
@@ -332,7 +334,6 @@ class TestActivity : ComponentActivity() {
                         fontSize = 18.sp, fontWeight = FontWeight(500)
                     )
                 )
-
                 Image(
                     painter = painterResource(id = R.drawable.ic_question),
                     contentDescription = "question"
@@ -349,16 +350,15 @@ class TestActivity : ComponentActivity() {
         counterQ: MutableState<Int>,
         navController: NavController,
     ) {
-
         val progress = remember { mutableStateOf(0.0) }
         val toggleBtn = remember { mutableStateOf(false) }
-
 
         Card(
             elevation = 0.dp,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 20.dp, start = 40.dp, end = 27.dp, bottom = 20.dp),
+                .padding(top = 20.dp, end = 27.dp, bottom = 20.dp),
+
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 CreateTopPartCard(counter, counterQ, maxCounter, progress)
@@ -380,34 +380,29 @@ class TestActivity : ComponentActivity() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 3.dp, bottom = 15.dp),
+                .padding(top = 3.dp, bottom = 15.dp, start = 40.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-
             Text(
                 text = "${counterQ.value}/",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                    //   fontFamily = FontFamily(typeface = Typeface())
+                    fontSize = MaterialTheme.typography.subtitle1.fontSize,
+                    fontFamily = MaterialTheme.typography.subtitle1.fontFamily
                 ),
                 color = colorResource(id = R.color.black)
             )
             Text(
                 text = "${maxCounter.value}",
-                style = TextStyle(
-                    fontSize = 18.sp,
-                ),
+                style = MaterialTheme.typography.subtitle1
             )
         }
-
-
         LinearProgressIndicator(
             progress = progress.value.toFloat(),
             modifier = Modifier
                 .width(310.dp)
-                .padding(bottom = 30.dp),
+                .padding(bottom = 30.dp, start = 40.dp),
             color = colorResource(id = R.color.purple),
 //            modifier = Modifier.background(brush = Brush.verticalGradient(
 //                colors = listOf(
@@ -420,8 +415,13 @@ class TestActivity : ComponentActivity() {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 0.dp), // 15 dp bottom
-            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
+                .padding(bottom = 0.dp, start = 40.dp),
+            style = TextStyle(
+                fontFamily = MaterialTheme.typography.subtitle1.fontFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            ),
+
             text = counter.value.toString() + "."
         )
 
@@ -434,9 +434,10 @@ class TestActivity : ComponentActivity() {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 15.dp, bottom = 10.dp),
-            style = TextStyle(fontSize = 18.sp),
-            text = questionsMap[counter.value].toString()
+                .padding(top = 15.dp, bottom = 10.dp, start = 40.dp),
+
+            text = questionsMap[counter.value].toString(),
+            style = MaterialTheme.typography.subtitle1
         )
     }
 
@@ -450,12 +451,11 @@ class TestActivity : ComponentActivity() {
     ) {
         Column(Modifier.selectableGroup(), horizontalAlignment = Alignment.Start) {
             val (selectedOption, onOptionSelected) = remember { mutableStateOf(0) }
-
             LazyColumn(
                 modifier = Modifier
                     .selectableGroup()
                     .fillMaxWidth()
-                    .padding(bottom = 10.dp),
+                    .padding(bottom = 10.dp, start = 40.dp),
                 horizontalAlignment = Alignment.Start
             ) {
                 val diff = 1.0 / maxCounter.value
@@ -466,8 +466,8 @@ class TestActivity : ComponentActivity() {
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Box(modifier = Modifier
-                            .width(18.dp)
-                            .height(18.dp)) {
+                            .width(15.dp)
+                            .height(15.dp)) {
                             RadioButton(
                                 selected = (answers.keys.toList()[index] == answersPoint[counter.value]),
                                 onClick = {
@@ -501,7 +501,7 @@ class TestActivity : ComponentActivity() {
                         Text(
                             text = answers[answers.keys.toList()[index]].toString(),
                             fontSize = 13.sp,
-                            modifier = Modifier.padding(start = 20.dp)
+                            modifier = Modifier.padding(start = 20.dp),
                         )
                     }
                 }
@@ -520,7 +520,7 @@ class TestActivity : ComponentActivity() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 0.dp, bottom = 10.dp),
+                .padding(top = 0.dp, bottom = 10.dp, start = 40.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -599,7 +599,7 @@ class TestActivity : ComponentActivity() {
             }
         }
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(start = 40.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
