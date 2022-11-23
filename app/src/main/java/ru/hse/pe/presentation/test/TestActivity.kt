@@ -181,9 +181,6 @@ class TestActivity : ComponentActivity() {
                                         }
                                     }
                                 }
-//                                Log.d("resDiff", resDiff[resDiffKeys[index]].toString())
-//                                Log.d("resDiff", resDiff[resDiffKeys[index]]?.get("points").toString())
-//                                Log.d("resSize", resSize.toString())
                             } else {
                                 desc = sortedScales[keys[index]]?.desc.toString()
                             }
