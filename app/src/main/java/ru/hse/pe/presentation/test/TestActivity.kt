@@ -53,6 +53,7 @@ class TestActivity : ComponentActivity() {
     private var scales = hashMapOf<String, Scale>()
     private var sortedScales = mapOf<String, Scale>()
 
+
     private val context = this@TestActivity
     private val viewModel: TestViewModel by viewModels()
 
