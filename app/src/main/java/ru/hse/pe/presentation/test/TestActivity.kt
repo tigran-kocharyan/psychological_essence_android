@@ -54,10 +54,8 @@ class TestActivity : ComponentActivity() {
     private var scales = hashMapOf<String, Scale>()
     private var sortedScales = mapOf<String, Scale>()
 
-
     private val context = this@TestActivity
     private val viewModel: TestViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,17 +82,14 @@ class TestActivity : ComponentActivity() {
 
     @Composable
     fun Results(navController: NavController) {
-
-        Column(
-            //   modifier = Modifier.verticalScroll(ScrollState(0))
-        ) {
+        Column {
             SystemBarsNotVisible()
-            MyTopAppBar(getString(R.string.results))
+            MyTopResBar(getString(R.string.results))
 
             Box(
                 modifier = Modifier
                     .padding(24.dp)
-                    .fillMaxSize()
+                    .fillMaxSize(0.87f)
                     .background(Color.White),
             ) {
                 LazyColumn {
@@ -137,14 +132,11 @@ class TestActivity : ComponentActivity() {
                                 }
                             }
 
-
-
                             if (sortedScales[keys[index]]?.res != null) {
                                 resDiff = sortedScales[keys[index]]?.res!!
 
                                 val resDiffKeys = resDiff.keys.toList()
                                 resSize = resDiffKeys.size
-
                                 for (i in 0 until resSize) {
                                     val points = resDiff[resDiffKeys[i]]?.get("points")
                                     var leftNum: Int
@@ -182,26 +174,34 @@ class TestActivity : ComponentActivity() {
                             Text(
                                 text = text,
                                 fontSize = 18.sp,
-                                modifier = Modifier.padding(top = 30.dp, bottom = 10.dp),
-                                style = TextStyle(fontWeight = FontWeight.W600),
+                                modifier = Modifier.padding(top = 32.dp, bottom = 13.dp),
+                                style = MaterialTheme.typography.h3,
                             )
 
                             Text(
                                 text = desc,
-                                modifier = Modifier.padding(bottom = 20.dp),
-                                fontSize = 14.sp
+                                modifier = Modifier.padding(bottom = 24.dp),
+                                style = MaterialTheme.typography.h4,
                             )
                         }
                     }
                 }
-
-            }
-            Button(onClick = {
-                navController.navigate(Routes.Test.route)
-            }) {
-                Text(text = getString(R.string.backToTests), color = Color.White)
             }
 
+            Button(
+                onClick = {
+                    TODO()
+                },
+                shape = RoundedCornerShape(15.dp),
+                modifier = Modifier.padding(start = 25.dp, end = 25.dp).fillMaxWidth().height(45.dp),
+                colors = ButtonDefaults
+                    .buttonColors(
+                        backgroundColor = colorResource(id = R.color.purple),
+                        contentColor = Color.White
+                    )
+            ) {
+                Text(text = stringResource(id = R.string.backToTests))
+            }
         }
     }
 
@@ -326,17 +326,37 @@ class TestActivity : ComponentActivity() {
                 )
                 Text(
                     text = name,
-                    modifier = Modifier
-                        .padding(horizontal = 30.dp)
-                        .width(250.dp),
+                    modifier = Modifier.padding(horizontal = 30.dp).width(250.dp),
                     textAlign = TextAlign.Center,
-                    style = TextStyle(
-                        fontSize = 18.sp, fontWeight = FontWeight(500)
-                    )
+                    style = MaterialTheme.typography.subtitle1
                 )
                 Image(
                     painter = painterResource(id = R.drawable.ic_question),
                     contentDescription = "question"
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun MyTopResBar(name: String) {
+        Card(
+            backgroundColor = colorResource(id = R.color.purple),
+            contentColor = Color.White,
+            modifier = Modifier.height(78.dp),
+            shape = RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp),
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            )
+            {
+                Text(
+                    text = name,
+                    modifier = Modifier.padding(horizontal = 30.dp).width(250.dp),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.subtitle1
                 )
             }
         }
@@ -357,7 +377,7 @@ class TestActivity : ComponentActivity() {
             elevation = 0.dp,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 20.dp, end = 27.dp, bottom = 20.dp),
+                .padding(top = 32.dp, end = 27.dp, bottom = 20.dp),
 
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -380,14 +400,18 @@ class TestActivity : ComponentActivity() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 3.dp, bottom = 15.dp, start = 40.dp),
+                .padding(top = 3.dp, bottom = 8.dp, start = 40.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "${counterQ.value}/",
+                text = if (counterQ.value in 1..9) {
+                    "0${counterQ.value}/"
+                } else {
+                    "${counterQ.value}/"
+                },
                 style = TextStyle(
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.SemiBold,
                     fontSize = MaterialTheme.typography.subtitle1.fontSize,
                     fontFamily = MaterialTheme.typography.subtitle1.fontFamily
                 ),
@@ -402,8 +426,9 @@ class TestActivity : ComponentActivity() {
             progress = progress.value.toFloat(),
             modifier = Modifier
                 .width(310.dp)
-                .padding(bottom = 30.dp, start = 40.dp),
+                .padding(bottom = 32.dp, start = 40.dp),
             color = colorResource(id = R.color.purple),
+            backgroundColor = colorResource(id = R.color.grayLight),
 //            modifier = Modifier.background(brush = Brush.verticalGradient(
 //                colors = listOf(
 //                    colorResource(id = R.color.indicatorActFrom),
@@ -434,7 +459,7 @@ class TestActivity : ComponentActivity() {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 15.dp, bottom = 10.dp, start = 40.dp),
+                .padding(top = 16.dp, bottom = 35.dp, start = 40.dp),
 
             text = questionsMap[counter.value].toString(),
             style = MaterialTheme.typography.subtitle1
@@ -455,7 +480,7 @@ class TestActivity : ComponentActivity() {
                 modifier = Modifier
                     .selectableGroup()
                     .fillMaxWidth()
-                    .padding(bottom = 10.dp, start = 40.dp),
+                    .padding(bottom = 57.dp, start = 40.dp),
                 horizontalAlignment = Alignment.Start
             ) {
                 val diff = 1.0 / maxCounter.value
@@ -466,8 +491,8 @@ class TestActivity : ComponentActivity() {
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Box(modifier = Modifier
-                            .width(15.dp)
-                            .height(15.dp)) {
+                            .width(20.dp)
+                            .height(20.dp)) {
                             RadioButton(
                                 selected = (answers.keys.toList()[index] == answersPoint[counter.value]),
                                 onClick = {
@@ -501,7 +526,8 @@ class TestActivity : ComponentActivity() {
                         Text(
                             text = answers[answers.keys.toList()[index]].toString(),
                             fontSize = 13.sp,
-                            modifier = Modifier.padding(start = 20.dp),
+                            modifier = Modifier.padding(start = 22.dp),
+                            style = MaterialTheme.typography.subtitle2
                         )
                     }
                 }
@@ -520,7 +546,7 @@ class TestActivity : ComponentActivity() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 0.dp, bottom = 10.dp, start = 40.dp),
+                .padding(top = 0.dp, bottom = 0.dp, start = 40.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -541,7 +567,7 @@ class TestActivity : ComponentActivity() {
                         }
                     }
                 },
-                modifier = Modifier.width(160.dp),
+                modifier = Modifier.width(163.dp).height(45.dp).padding(end = 16.dp),
                 shape = RoundedCornerShape(15.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                 border = BorderStroke(2.dp, color = colorResource(id = R.color.purple))
@@ -570,7 +596,7 @@ class TestActivity : ComponentActivity() {
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
                     .width(if (toggleBtn.value) 0.dp else 165.dp)
-                    .height(if (toggleBtn.value) 0.dp else 37.dp),
+                    .height(if (toggleBtn.value) 0.dp else 45.dp),
                 colors = ButtonDefaults
                     .buttonColors(
                         backgroundColor = colorResource(id = R.color.purple),
@@ -588,7 +614,7 @@ class TestActivity : ComponentActivity() {
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
                     .width(if (toggleBtn.value) 165.dp else 0.dp)
-                    .height(if (toggleBtn.value) 37.dp else 0.dp),
+                    .height(if (toggleBtn.value) 45.dp else 0.dp),
                 colors = ButtonDefaults
                     .buttonColors(
                         backgroundColor = colorResource(id = R.color.purple),
@@ -599,7 +625,9 @@ class TestActivity : ComponentActivity() {
             }
         }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(start = 40.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 40.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {

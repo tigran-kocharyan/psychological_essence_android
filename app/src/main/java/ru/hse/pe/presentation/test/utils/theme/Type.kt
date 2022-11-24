@@ -14,15 +14,34 @@ val montserrat = FontFamily(
 )
 
 val nunitoSans = FontFamily(
-    Font(R.font.nunito_sans, weight = FontWeight.Normal)
+    Font(R.font.nunitosans_regular, weight = FontWeight.Normal)
 )
 
-val montserratTypography = Typography(
+val typography = Typography(
     subtitle1 = TextStyle(
         fontFamily = montserrat,
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp
+    ),
+    subtitle2 = TextStyle(
+        fontFamily = nunitoSans,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp
+    ),
+    h3 = TextStyle(
+        fontFamily = montserrat,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp,
+        lineHeight = 26.sp
+    ),
+    h4 = TextStyle(
+        fontFamily = montserrat,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 18.sp
     )
+
+
 )
 
 val nunitoSansTypography = Typography(

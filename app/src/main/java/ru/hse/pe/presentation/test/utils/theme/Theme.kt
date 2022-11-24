@@ -37,7 +37,7 @@ fun TestTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable (
 
     MaterialTheme(
         colors = colors,
-        typography = montserratTypography,
+        typography = typography,
         shapes = Shapes,
     ){
         content()
