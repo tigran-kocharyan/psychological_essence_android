@@ -1,5 +1,6 @@
 package ru.hse.pe.presentation.test
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -40,22 +41,17 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import ru.hse.pe.R
 import ru.hse.pe.domain.model.Scale
 import ru.hse.pe.domain.model.Test
+import ru.hse.pe.domain.model.TestItem
 import ru.hse.pe.presentation.test.utils.sealed.DataState
 import ru.hse.pe.presentation.test.utils.sealed.Routes
 import ru.hse.pe.presentation.test.utils.theme.TestTheme
+import ru.hse.pe.utils.Utils.MyTopAppBar
+import ru.hse.pe.utils.Utils.SystemBarsNotVisible
 
 
 class TestActivity : ComponentActivity() {
-    private val questionsMap = hashMapOf<Int, String>()
-    private val answers = hashMapOf<Int, String>()
+    private lateinit var testItem: TestItem
 
-    private val answersPoint = mutableListOf<Int>()
-    private val answersBoolean = mutableListOf<Boolean>()
-    private var scales = hashMapOf<String, Scale>()
-    private var sortedScales = mapOf<String, Scale>()
-
-    private val context = this@TestActivity
-    private val viewModel: TestViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,16 +71,18 @@ class TestActivity : ComponentActivity() {
             }
 
             composable(Routes.Results.route) {
-                Results(navController)
+                Results()
             }
         }
     }
 
+
+
     @Composable
-    fun Results(navController: NavController) {
+    fun Results() {
         Column {
             SystemBarsNotVisible()
-            MyTopResBar(getString(R.string.results))
+            MyTopAppBar(getString(R.string.results), false)
 
             Box(
                 modifier = Modifier
@@ -93,7 +91,7 @@ class TestActivity : ComponentActivity() {
                     .background(Color.White),
             ) {
                 LazyColumn {
-                    val keys = sortedScales.keys.toList()
+                    val keys = testItem.sortedScales.keys.toList()
                     var resDiff: HashMap<String, HashMap<String, String>>
                     var resSize: Int
 
@@ -101,7 +99,7 @@ class TestActivity : ComponentActivity() {
                     var desc = ""
 
                     val reversePoints = hashMapOf<Int, Int>()
-                    val answersKeyList = answers.keys.toList()
+                    val answersKeyList = testItem.answers.keys.toList()
 
                     var from = 0
                     var to = answersKeyList.size - 1
@@ -112,28 +110,28 @@ class TestActivity : ComponentActivity() {
                         to--
                     }
 
-                    items(sortedScales.size) { index ->
+                    items(testItem.sortedScales.size) { index ->
                         Column() {
-                            val counting = sortedScales[keys[index]]?.counting
+                            val counting = testItem.sortedScales[keys[index]]?.counting
                                 ?.split(", ")?.toList()
-                            val countingR = sortedScales[keys[index]]?.countingR
+                            val countingR = testItem.sortedScales[keys[index]]?.countingR
                                 ?.split(", ")?.toList()
                             var mark = 0
 
                             if (counting != null) {
                                 for (i in counting.indices) {
-                                    mark += answersPoint[counting[i].toInt()]
+                                    mark += testItem.answersPoint[counting[i].toInt()]
                                 }
                             }
 
                             if (countingR != null) {
                                 for (i in countingR.indices) {
-                                    mark += reversePoints[answersPoint[countingR[i].toInt()]]!!
+                                    mark += reversePoints[testItem.answersPoint[countingR[i].toInt()]]!!
                                 }
                             }
 
-                            if (sortedScales[keys[index]]?.res != null) {
-                                resDiff = sortedScales[keys[index]]?.res!!
+                            if (testItem.sortedScales[keys[index]]?.res != null) {
+                                resDiff = testItem.sortedScales[keys[index]]?.res!!
 
                                 val resDiffKeys = resDiff.keys.toList()
                                 resSize = resDiffKeys.size
@@ -164,10 +162,10 @@ class TestActivity : ComponentActivity() {
                                     }
                                 }
                             } else {
-                                desc = sortedScales[keys[index]]?.desc.toString()
+                                desc = testItem.sortedScales[keys[index]]?.desc.toString()
                             }
 
-                            val textArray = sortedScales[keys[index]]?.text
+                            val textArray = testItem.sortedScales[keys[index]]?.text
                                 .toString().split("mark")
                             text = textArray[0] + mark + textArray[1]
 
@@ -207,14 +205,9 @@ class TestActivity : ComponentActivity() {
 
     @Composable
     fun Test(navController: NavController) {
+        val viewModel: TestViewModel by viewModels()
         SystemBarsNotVisible()
         SetData(viewModel, navController)
-    }
-
-    @Composable
-    fun SystemBarsNotVisible() {
-        val systemUiController: SystemUiController = rememberSystemUiController()
-        systemUiController.isSystemBarsVisible = false // Status & Navigation bars
     }
 
 
@@ -224,7 +217,15 @@ class TestActivity : ComponentActivity() {
         val countQuestions = test?.countQuestions
         val listQuestions = test?.questions
         val listAnswers = test?.answers
-        scales = test?.scales!!
+
+        val questionsMap = hashMapOf<Int, String>()
+        val answers = hashMapOf<Int, String>()
+
+        val answersPoint = mutableListOf<Int>()
+        val answersBoolean = mutableListOf<Boolean>()
+        var sortedScales: Map<String, Scale>
+
+        var scales: HashMap<String, Scale> = test?.scales!!
         sortedScales = scales.toSortedMap()
 
         for (i in 0 until countQuestions!! + 1) {
@@ -244,21 +245,28 @@ class TestActivity : ComponentActivity() {
             }
         }
 
-        Box() {
-            val counter = remember { mutableStateOf(1) }
-            val maxCounter = remember { mutableStateOf(countQuestions) }
-            val counterQ = remember { mutableStateOf(0) }
 
+        val progress = remember { mutableStateOf(0.0) }
+        val toggleBtn = remember { mutableStateOf(false) }
+        val counter = remember { mutableStateOf(1) }
+        val maxCounter = remember { mutableStateOf(countQuestions) }
+        val counterQ = remember { mutableStateOf(0) }
+        val context = this@TestActivity
+
+        Box() {
             for (i in 1 until maxCounter.value + 2) {
                 answersPoint.add(-1)
                 answersBoolean.add(false)
             }
 
+            testItem = TestItem(counter, maxCounter, counterQ, progress, toggleBtn, questionsMap, answers,
+                answersPoint, answersBoolean, scales, sortedScales, context)
+
             Column(
                 modifier = Modifier.background(Color.White)
             ) {
-                MyTopAppBar(name)
-                CardItem(counter, maxCounter, counterQ, navController)
+                MyTopAppBar(name, true)
+                CardItem(navController)
             }
         }
     }
@@ -306,97 +314,28 @@ class TestActivity : ComponentActivity() {
     }
 
 
-    @Composable
-    fun MyTopAppBar(name: String) {
-        Card(
-            backgroundColor = colorResource(id = R.color.purple),
-            contentColor = Color.White,
-            modifier = Modifier.height(78.dp),
-            shape = RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp),
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            )
-            {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_back),
-                    contentDescription = "arrowLeft"
-                )
-                Text(
-                    text = name,
-                    modifier = Modifier.padding(horizontal = 30.dp).width(250.dp),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.subtitle1
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.ic_question),
-                    contentDescription = "question"
-                )
-            }
-        }
-    }
-
-    @Composable
-    fun MyTopResBar(name: String) {
-        Card(
-            backgroundColor = colorResource(id = R.color.purple),
-            contentColor = Color.White,
-            modifier = Modifier.height(78.dp),
-            shape = RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp),
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            )
-            {
-                Text(
-                    text = name,
-                    modifier = Modifier.padding(horizontal = 30.dp).width(250.dp),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.subtitle1
-                )
-            }
-        }
-    }
 
 
     @Composable
-    fun CardItem(
-        counter: MutableState<Int>,
-        maxCounter: MutableState<Int>,
-        counterQ: MutableState<Int>,
-        navController: NavController,
-    ) {
-        val progress = remember { mutableStateOf(0.0) }
-        val toggleBtn = remember { mutableStateOf(false) }
-
+    fun CardItem(navController: NavController) {
         Card(
             elevation = 0.dp,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 32.dp, end = 27.dp, bottom = 20.dp),
 
-        ) {
+            ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                CreateTopPartCard(counter, counterQ, maxCounter, progress)
-                CreateAnswersCard(counter, counterQ, maxCounter, progress, toggleBtn)
+                CreateTopPartCard()
+                CreateAnswersCard()
                 Spacer(Modifier.weight(1f, true))
-                CreateBtnCard(counter, maxCounter, toggleBtn, navController)
+                CreateBtnCard(navController)
             }
         }
     }
 
     @Composable
-    fun CreateTopPartCard(
-        counter: MutableState<Int>,
-        counterQ: MutableState<Int>,
-        maxCounter: MutableState<Int>,
-        progress: MutableState<Double>,
-
-        ) {
+    fun CreateTopPartCard() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -405,10 +344,10 @@ class TestActivity : ComponentActivity() {
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = if (counterQ.value in 1..9) {
-                    "0${counterQ.value}/"
+                text = if (testItem.counterQ.value in 1..9) {
+                    "0${testItem.counterQ.value}/"
                 } else {
-                    "${counterQ.value}/"
+                    "${testItem.counterQ.value}/"
                 },
                 style = TextStyle(
                     fontWeight = FontWeight.SemiBold,
@@ -418,12 +357,12 @@ class TestActivity : ComponentActivity() {
                 color = colorResource(id = R.color.black)
             )
             Text(
-                text = "${maxCounter.value}",
+                text = "${testItem.maxCounter.value}",
                 style = MaterialTheme.typography.subtitle1
             )
         }
         LinearProgressIndicator(
-            progress = progress.value.toFloat(),
+            progress = testItem.progress.value.toFloat(),
             modifier = Modifier
                 .width(310.dp)
                 .padding(bottom = 32.dp, start = 40.dp),
@@ -447,33 +386,21 @@ class TestActivity : ComponentActivity() {
                 fontSize = 20.sp
             ),
 
-            text = counter.value.toString() + "."
+            text = testItem.counter.value.toString() + "."
         )
-
-//        Box(modifier = Modifier
-//            .width(310.dp)
-//            .height(145.dp)
-//            .background(Color.Gray)
-//        ){}
 
         Text(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, bottom = 35.dp, start = 40.dp),
 
-            text = questionsMap[counter.value].toString(),
+            text = testItem.questionsMap[testItem.counter.value].toString(),
             style = MaterialTheme.typography.subtitle1
         )
     }
 
     @Composable
-    fun CreateAnswersCard(
-        counter: MutableState<Int>,
-        counterQ: MutableState<Int>,
-        maxCounter: MutableState<Int>,
-        progress: MutableState<Double>,
-        toggleBtn: MutableState<Boolean>,
-    ) {
+    fun CreateAnswersCard() {
         Column(Modifier.selectableGroup(), horizontalAlignment = Alignment.Start) {
             val (selectedOption, onOptionSelected) = remember { mutableStateOf(0) }
             LazyColumn(
@@ -483,8 +410,8 @@ class TestActivity : ComponentActivity() {
                     .padding(bottom = 57.dp, start = 40.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                val diff = 1.0 / maxCounter.value
-                items(answers.size) { index ->
+                val diff = 1.0 / testItem.maxCounter.value
+                items(testItem.answers.size) { index ->
                     Row(
                         modifier = Modifier.height(30.dp),
                         verticalAlignment = Alignment.CenterVertically,
@@ -494,25 +421,25 @@ class TestActivity : ComponentActivity() {
                             .width(20.dp)
                             .height(20.dp)) {
                             RadioButton(
-                                selected = (answers.keys.toList()[index] == answersPoint[counter.value]),
+                                selected = (testItem.answers.keys.toList()[index] == testItem.answersPoint[testItem.counter.value]),
                                 onClick = {
-                                    onOptionSelected(answers.keys.toList()[index])
-                                    answersPoint[counter.value] = answers.keys.toList()[index]
+                                    onOptionSelected(testItem.answers.keys.toList()[index])
+                                    testItem.answersPoint[testItem.counter.value] = testItem.answers.keys.toList()[index]
 
-                                    if (!answersBoolean[counter.value]) {
-                                        counterQ.value++
-                                        if (progress.value < 1.0f) progress.value += diff
-                                        answersBoolean[counter.value] = true
+                                    if (!testItem.answersBoolean[testItem.counter.value]) {
+                                        testItem.counterQ.value++
+                                        if (testItem.progress.value < 1.0f) testItem.progress.value += diff
+                                        testItem.answersBoolean[testItem.counter.value] = true
 
                                         var c = 0
-                                        for (i in 1 until answersBoolean.size) {
-                                            if (answersBoolean[i]) {
+                                        for (i in 1 until testItem.answersBoolean.size) {
+                                            if (testItem.answersBoolean[i]) {
                                                 c++
                                             }
                                         }
 
-                                        if (c == maxCounter.value) {
-                                            toggleBtn.value = true
+                                        if (c == testItem.maxCounter.value) {
+                                            testItem.toggleBtn.value = true
                                         }
                                     }
                                 },
@@ -524,7 +451,7 @@ class TestActivity : ComponentActivity() {
                         }
 
                         Text(
-                            text = answers[answers.keys.toList()[index]].toString(),
+                            text = testItem.answers[testItem.answers.keys.toList()[index]].toString(),
                             fontSize = 13.sp,
                             modifier = Modifier.padding(start = 22.dp),
                             style = MaterialTheme.typography.subtitle2
@@ -537,12 +464,7 @@ class TestActivity : ComponentActivity() {
 
 
     @Composable
-    fun CreateBtnCard(
-        counter: MutableState<Int>,
-        maxCounter: MutableState<Int>,
-        toggleBtn: MutableState<Boolean>,
-        navController: NavController,
-    ) {
+    fun CreateBtnCard(navController: NavController) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -552,18 +474,18 @@ class TestActivity : ComponentActivity() {
         ) {
             Button(
                 onClick = {
-                    if (answersPoint[counter.value] == -1) {
+                    if (testItem.answersPoint[testItem.counter.value] == -1) {
                         Toast.makeText(
-                            context,
+                            testItem.context,
                             "Выберите вариант ответа или нажмите кнопку пропустить",
                             Toast.LENGTH_SHORT
                         ).show()
                         return@Button
                     } else {
-                        counter.value--
+                        testItem.counter.value--
 
-                        if (counter.value < 1) {
-                            counter.value = maxCounter.value
+                        if (testItem.counter.value < 1) {
+                            testItem.counter.value = testItem.maxCounter.value
                         }
                     }
                 },
@@ -579,24 +501,24 @@ class TestActivity : ComponentActivity() {
             }
             Button(
                 onClick = {
-                    if (answersPoint[counter.value] == -1) {
+                    if (testItem.answersPoint[testItem.counter.value] == -1) {
                         Toast.makeText(
-                            context,
+                            testItem.context,
                             "Выберите вариант ответа или нажмите кнопку пропустить",
                             Toast.LENGTH_SHORT
                         ).show()
                         return@Button
                     } else {
-                        counter.value++
-                        if (counter.value > maxCounter.value) {
-                            counter.value = 1
+                        testItem.counter.value++
+                        if (testItem.counter.value > testItem.maxCounter.value) {
+                            testItem.counter.value = 1
                         }
                     }
                 },
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
-                    .width(if (toggleBtn.value) 0.dp else 165.dp)
-                    .height(if (toggleBtn.value) 0.dp else 45.dp),
+                    .width(if (testItem.toggleBtn.value) 0.dp else 165.dp)
+                    .height(if (testItem.toggleBtn.value) 0.dp else 45.dp),
                 colors = ButtonDefaults
                     .buttonColors(
                         backgroundColor = colorResource(id = R.color.purple),
@@ -613,8 +535,8 @@ class TestActivity : ComponentActivity() {
 
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
-                    .width(if (toggleBtn.value) 165.dp else 0.dp)
-                    .height(if (toggleBtn.value) 45.dp else 0.dp),
+                    .width(if (testItem.toggleBtn.value) 165.dp else 0.dp)
+                    .height(if (testItem.toggleBtn.value) 45.dp else 0.dp),
                 colors = ButtonDefaults
                     .buttonColors(
                         backgroundColor = colorResource(id = R.color.purple),
@@ -633,13 +555,13 @@ class TestActivity : ComponentActivity() {
         ) {
             Button(
                 onClick = {
-                    counter.value++
-                    if (counter.value > maxCounter.value) {
-                        counter.value = 1
+                    testItem.counter.value++
+                    if (testItem.counter.value > testItem.maxCounter.value) {
+                        testItem.counter.value = 1
                     }
                 },
                 modifier = Modifier
-                    .fillMaxWidth(if (toggleBtn.value) 0.0f else 0.7f),
+                    .fillMaxWidth(if (testItem.toggleBtn.value) 0.0f else 0.7f),
                 elevation = ButtonDefaults.elevation(0.dp, 0.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             ) {
