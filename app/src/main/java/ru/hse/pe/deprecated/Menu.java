@@ -1,4 +1,4 @@
-package ru.hse.pe;
+package ru.hse.pe.deprecated;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import ru.hse.pe.R;
 
 public class Menu extends AppCompatActivity {
     TextView textView;

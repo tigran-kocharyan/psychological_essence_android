@@ -26,10 +26,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ru.hse.pe.Functions;
-import ru.hse.pe.Menu;
 import ru.hse.pe.R;
-import ru.hse.pe.Test;
+import ru.hse.pe.deprecated.Functions;
+import ru.hse.pe.deprecated.Menu;
+import ru.hse.pe.deprecated.Test;
 
 public class Test_ImplicitTheoriesLearning extends AppCompatActivity {
 
