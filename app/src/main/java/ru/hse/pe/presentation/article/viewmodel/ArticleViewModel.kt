@@ -11,7 +11,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
-import ru.hse.pe.data.model.Article
+import ru.hse.pe.domain.model.ArticleEntity
 import ru.hse.pe.utils.scheduler.SchedulersProvider
 import java.io.BufferedReader
 import java.io.InputStream
@@ -29,8 +29,8 @@ class ArticleViewModel(
 
     private val progressLiveData = MutableLiveData<Boolean>()
     private val markdownLiveData = MutableLiveData<String>()
-    private val articleLiveData = MutableLiveData<Article>()
-    private val articlesLiveData = MutableLiveData<ArrayList<Article>>()
+    private val articleLiveData = MutableLiveData<ArticleEntity>()
+    private val articlesLiveData = MutableLiveData<ArrayList<ArticleEntity>>()
     private val errorLiveData = MutableLiveData<Throwable>()
     private val disposables = CompositeDisposable()
 
@@ -44,9 +44,9 @@ class ArticleViewModel(
         progressLiveData.postValue(true)
         database.getReference(FB_ARTICLES).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val articles = arrayListOf<Article>()
+                val articles = arrayListOf<ArticleEntity>()
                 for (ds in dataSnapshot.children) {
-                    ds.getValue(Article::class.java)?.let {
+                    ds.getValue(ArticleEntity::class.java)?.let {
                         articles.add(it)
                     }
                 }
@@ -65,7 +65,7 @@ class ArticleViewModel(
         progressLiveData.postValue(true)
         article.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                articleLiveData.postValue(dataSnapshot.getValue(Article::class.java))
+                articleLiveData.postValue(dataSnapshot.getValue(ArticleEntity::class.java))
                 progressLiveData.postValue(false)
             }
 
@@ -141,7 +141,7 @@ class ArticleViewModel(
     /**
      * @return LiveData<Boolean> for error display
      */
-    fun getArticleLiveData(): LiveData<Article> =
+    fun getArticleLiveData(): LiveData<ArticleEntity> =
         articleLiveData
 
 

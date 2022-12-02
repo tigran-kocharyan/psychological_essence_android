@@ -27,11 +27,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ru.hse.pe.Functions;
-import ru.hse.pe.Menu;
 import ru.hse.pe.R;
-import ru.hse.pe.Test;
-import ru.hse.pe.utils.FireBaseSuccessListener;
+import ru.hse.pe.deprecated.Functions;
+import ru.hse.pe.deprecated.Menu;
+import ru.hse.pe.deprecated.Test;
+import ru.hse.pe.utils.callback.FirebaseSuccessListener;
 
 public class Test_Como extends AppCompatActivity{
     private  boolean isMale;
@@ -176,7 +176,7 @@ public class Test_Como extends AppCompatActivity{
         }
 
 
-        Functions.getSexFromDB(new FireBaseSuccessListener() {
+        Functions.getSexFromDB(new FirebaseSuccessListener() {
             @Override
             public void onDataFound(boolean isDataFetched) {
                 userIsOnFirebase(isDataFetched);

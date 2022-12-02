@@ -23,9 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.hse.pe.Menu;
 import ru.hse.pe.R;
-import ru.hse.pe.Test;
+import ru.hse.pe.deprecated.Menu;
+import ru.hse.pe.deprecated.Test;
 
 public class Test_AutismSpectrumCoefficient extends AppCompatActivity {
     private List<String> questions;

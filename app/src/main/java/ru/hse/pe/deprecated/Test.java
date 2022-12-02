@@ -1,4 +1,4 @@
-package ru.hse.pe;
+package ru.hse.pe.deprecated;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import ru.hse.pe.data.model.TestItem;
+import ru.hse.pe.R;
+import ru.hse.pe.deprecated.model.TestItem;
 import ru.hse.pe.deprecated.test.CharacterOfUserTests.Test_AlienationMoralResponsibility;
 import ru.hse.pe.deprecated.test.CharacterOfUserTests.Test_AutismSpectrumCoefficient;
 import ru.hse.pe.deprecated.test.CharacterOfUserTests.Test_BarretImpulsivityScale;
