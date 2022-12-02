@@ -1,8 +1,10 @@
-package ru.hse.pe;
+package ru.hse.pe.deprecated;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import ru.hse.pe.R;
 
 public class TestResults extends AppCompatActivity {
 

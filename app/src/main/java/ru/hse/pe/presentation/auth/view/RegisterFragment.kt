@@ -20,8 +20,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import ru.hse.pe.BuildConfig
 import ru.hse.pe.R
-import ru.hse.pe.data.model.User
 import ru.hse.pe.databinding.FragmentRegisterBinding
+import ru.hse.pe.deprecated.model.User
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
 import ru.hse.pe.utils.Utils.isInvalid

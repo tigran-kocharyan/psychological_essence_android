@@ -11,7 +11,7 @@
 //import nl.totowka.bridge.domain.model.EventEntity
 //import nl.totowka.bridge.utils.Common.toCoolString
 //import nl.totowka.bridge.utils.callback.EventClickListener
-//import ru.hse.pe.data.model.Article
+//import ru.hse.pe.domain.model.Article
 //
 //
 ///**

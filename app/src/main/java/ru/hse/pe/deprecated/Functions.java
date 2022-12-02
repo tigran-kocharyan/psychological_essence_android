@@ -1,4 +1,4 @@
-package ru.hse.pe;
+package ru.hse.pe.deprecated;
 
 import android.util.Log;
 
@@ -12,7 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import ru.hse.pe.utils.FireBaseSuccessListener;
+import ru.hse.pe.utils.callback.FirebaseSuccessListener;
 
 
 public class Functions {
@@ -28,7 +28,7 @@ public class Functions {
         return ints;
     }
 
-    public static void getSexFromDB(FireBaseSuccessListener dataFetched){
+    public static void getSexFromDB(FirebaseSuccessListener dataFetched){
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         mDataBase = FirebaseDatabase.getInstance("https://zeta-turbine-297107-default-rtdb.europe-west1.firebasedatabase.app/").getReference("/User/" + currentFirebaseUser.getUid());

@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import ru.hse.pe.Menu;
 import ru.hse.pe.R;
-import ru.hse.pe.Test;
+import ru.hse.pe.deprecated.Menu;
+import ru.hse.pe.deprecated.Test;
 
 public class Test_BecksDepressionScale extends AppCompatActivity {
     private List<String> questions;

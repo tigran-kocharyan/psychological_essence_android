@@ -1,4 +1,4 @@
-package ru.hse.pe.data.model;
+package ru.hse.pe.deprecated.model;
 
 public class TestItem {
     private String name, desc, advice, time;

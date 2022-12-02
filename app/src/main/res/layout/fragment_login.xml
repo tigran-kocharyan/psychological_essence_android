@@ -129,6 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:hintEnabled="false" />
 
@@ -165,6 +166,8 @@
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusTopStart="16dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             app:boxStrokeWidth="1dp"
             app:endIconMode="password_toggle">
 
