@@ -14,17 +14,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import ru.hse.pe.BuildConfig
 import ru.hse.pe.R
 import ru.hse.pe.databinding.FragmentRegisterBinding
-import ru.hse.pe.deprecated.model.User
+import ru.hse.pe.domain.model.UserEntity
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
-import ru.hse.pe.utils.Utils.isInvalid
 import ru.hse.pe.utils.Utils.setGone
 import ru.hse.pe.utils.Utils.setVisible
 import ru.hse.pe.utils.Utils.validateEmail
@@ -54,8 +50,6 @@ class RegisterFragment : Fragment() {
 
     private fun registerUser() {
         val name = binding.nameInput.text.toString()
-        val surname = binding.surnameInput.text.toString()
-        val patronymic = binding.patronymicInput.text.toString()
         val email = binding.emailInput.text.toString()
         val password = binding.passwordInput.text.toString()
         val repeatPassword = binding.passwordRepeatInput.text.toString()
@@ -65,14 +59,6 @@ class RegisterFragment : Fragment() {
         when {
             name.isEmpty() -> {
                 binding.nameInput.error = "Введите ваше имя"
-                binding.nameInput.requestFocus()
-            }
-            binding.surnameInput.isInvalid() -> {
-                binding.nameInput.error = "Введите вашу фамилию"
-                binding.nameInput.requestFocus()
-            }
-            binding.patronymicInput.isInvalid() -> {
-                binding.nameInput.error = "Введите ваше отчество"
                 binding.nameInput.requestFocus()
             }
             email.isEmpty() -> {
@@ -101,46 +87,26 @@ class RegisterFragment : Fragment() {
             }
             else -> {
                 showProgress(true)
-                val user = UserData(name, surname, patronymic, email, password, sex)
-                createUser(user)
+                createUser(UserCredentials(name, email, password, sex))
             }
         }
     }
 
-    private fun isRegistered(user: UserData) {
-        val valueEventListener: ValueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (ds in snapshot.children) {
-                    val emailDB = ds.child("email").getValue(String::class.java)
-                    if (user.email == emailDB) {
-                        getSnackbar(root, "Данная почта уже зарегистрирована!").show()
-                        return
-                    }
-                }
-                createUser(user)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                throw error.toException()
-            }
-        }
-        users.addValueEventListener(valueEventListener)
-    }
-
-    private fun createUser(data: UserData) {
-        auth.createUserWithEmailAndPassword(data.email, data.password)
+    private fun createUser(credentials: UserCredentials) {
+        auth.createUserWithEmailAndPassword(credentials.email, credentials.password)
             .addOnSuccessListener {
                 auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
                     if (!it.isSuccessful) getSnackbar(root, "Не удается создать аккаунт").show()
                 }
-
-                val user = User(
-                    "${data.surname} ${data.name} ${data.patronymic}",
-                    data.sex,
-                    data.email,
-                    data.password
+                val uid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+                val user = UserEntity(
+                    uid,
+                    credentials.name,
+                    credentials.sex,
+                    credentials.email,
+                    false
                 )
-                users.child(FirebaseAuth.getInstance().currentUser?.uid ?: "")
+                users.child(uid)
                     .setValue(user)
                     .addOnSuccessListener {
                         update()
@@ -217,10 +183,8 @@ class RegisterFragment : Fragment() {
             return RegisterFragment()
         }
 
-        data class UserData(
+        data class UserCredentials(
             val name: String,
-            val surname: String,
-            val patronymic: String,
             val email: String,
             val password: String,
             val sex: String
