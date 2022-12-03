@@ -52,7 +52,6 @@ import ru.hse.pe.utils.Utils.SystemBarsNotVisible
 class TestActivity : ComponentActivity() {
     private lateinit var testItem: TestItem
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -61,22 +60,6 @@ class TestActivity : ComponentActivity() {
             }
         }
     }
-
-    @Composable
-    fun Navigation() {
-        val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = Routes.Test.route) {
-            composable(Routes.Test.route) {
-                Test(navController)
-            }
-
-            composable(Routes.Results.route) {
-                Results()
-            }
-        }
-    }
-
-
 
     @Composable
     fun Results() {
@@ -313,9 +296,6 @@ class TestActivity : ComponentActivity() {
         }
     }
 
-
-
-
     @Composable
     fun CardItem(navController: NavController) {
         Card(
@@ -368,12 +348,12 @@ class TestActivity : ComponentActivity() {
                 .padding(bottom = 32.dp, start = 40.dp),
             color = colorResource(id = R.color.purple),
             backgroundColor = colorResource(id = R.color.grayLight),
-//            modifier = Modifier.background(brush = Brush.verticalGradient(
-//                colors = listOf(
-//                    colorResource(id = R.color.indicatorActFrom),
-//                    colorResource(id = R.color.indicatorActTo)
-//                )
-//            ))
+    //            modifier = Modifier.background(brush = Brush.verticalGradient(
+    //                colors = listOf(
+    //                    colorResource(id = R.color.indicatorActFrom),
+    //                    colorResource(id = R.color.indicatorActTo)
+    //                )
+    //            ))
         )
 
         Text(

@@ -8,32 +8,18 @@ import com.example.test.viewModels.TestViewModel
 import ru.hse.pe.presentation.test.utils.sealed.Routes
 
 
-//@Composable
-//fun Navigation() {
-//    val navController = rememberNavController()
-//    NavHost(navController = navController, startDestination = Routes.Test.route) {
-//        composable(Routes.Test.route) {
-//            TestActivity().Test(navController)
-//        }
-//
-//        composable(Routes.Results.route) {
-//            TestActivity().Results()
-//        }
-//    }
-//}
+@Composable
+fun Navigation() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = Routes.Test.route) {
+        composable(Routes.Test.route) {
+            TestActivity().Test(navController)
+        }
 
-//
-//@Composable
-//fun Navigation(viewModel: TestViewModel) {
-//    val navController = rememberNavController()
-//    NavHost(navController = navController, startDestination = Routes.Test.route) {
-//        composable(Routes.Test.route) {
-//            TestClass().Test(navController, viewModel)
-//        }
-//
-//        composable(Routes.Results.route) {
-//            ResultsClass().Results()
-//        }
-//    }
-//}
+        composable(Routes.Results.route) {
+            TestActivity().Results()
+        }
+    }
+}
+
 
