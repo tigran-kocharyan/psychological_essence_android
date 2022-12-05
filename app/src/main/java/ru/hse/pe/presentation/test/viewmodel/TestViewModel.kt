@@ -1,4 +1,4 @@
-package com.example.test.viewModels
+package ru.hse.pe.presentation.test.viewmodel
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

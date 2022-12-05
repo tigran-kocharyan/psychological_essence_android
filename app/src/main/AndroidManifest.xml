@@ -14,99 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PE"
         tools:targetApi="31">
-        <activity
-            android:name=".deprecated.test.PsychologicalState.Test_OxfordHappinessQuestionnaire"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.PsychologicalState.Test_MethodsDiagnosisNeurosis"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.PsychologicalState.Test_BecksDepressionScale"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.PsychologicalState.Test_BecksAlarmScale"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.PsychologicalState.Test_DepressionAnxietStress"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.InterpersonalCommunicationTests.Test_Como"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.InterpersonalCommunicationTests.Test_InterpersonalDependencyInventory"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.InterpersonalCommunicationTests.Test_AssessmentNeedApproval"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.InterpersonalCommunicationTests.Test_ScaleLoveSympathy"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.InterpersonalCommunicationTests.Test_DiagnosticControlAssessment"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.InterpersonalCommunicationTests.Test_LevelEmpathy"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.InterpersonalCommunicationTests.Test_PEA"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.InterpersonalCommunicationTests.Test_BornsteinRelationshipProfile"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_ImplicitTheoriesLearning"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_DiagnosisTemperamentEysenck"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_HardinessSurvey"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_MultidimensionalPerfectionismScale"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_SandraBoehmGenderRoleQuestionnaire"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_BigFive"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_AlienationMoralResponsibility"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_CognitiveFlexibilityQuestionnaire"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_BussPerryAggressionQuestionnaire"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_BarretImpulsivityScale"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_AutismSpectrumCoefficient"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.test.CharacterOfUserTests.Test_ToleranceToUncertainly"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.TestResults"
-            android:exported="false" />
-        <!--        <activity-->
-        <!--            android:name=".article.Article"-->
-        <!--            android:exported="false" />-->
-        <activity
-            android:name=".deprecated.Test"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.Settings"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.Menu"
-            android:exported="false" />
-        <activity
-            android:name=".deprecated.News"
-            android:exported="false" />
+
         <activity
             android:name=".presentation.auth.AuthActivity"
             android:exported="true">
@@ -115,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".deprecated.test.PsychologicalState.Test_BecksHopelessnessScale" />
         <activity
             android:name=".presentation.MainActivity"
             android:exported="false" />

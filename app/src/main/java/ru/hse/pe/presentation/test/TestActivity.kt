@@ -1,7 +1,6 @@
 package ru.hse.pe.presentation.test
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,14 +26,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.test.viewModels.TestViewModel
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import ru.hse.pe.R
@@ -43,6 +40,7 @@ import ru.hse.pe.domain.model.Test
 import ru.hse.pe.presentation.test.utils.sealed.DataState
 import ru.hse.pe.presentation.test.utils.sealed.Routes
 import ru.hse.pe.presentation.test.utils.theme.TestTheme
+import ru.hse.pe.presentation.test.viewmodel.TestViewModel
 
 
 class TestActivity : ComponentActivity() {
@@ -193,7 +191,10 @@ class TestActivity : ComponentActivity() {
                     TODO()
                 },
                 shape = RoundedCornerShape(15.dp),
-                modifier = Modifier.padding(start = 25.dp, end = 25.dp).fillMaxWidth().height(45.dp),
+                modifier = Modifier
+                    .padding(start = 25.dp, end = 25.dp)
+                    .fillMaxWidth()
+                    .height(45.dp),
                 colors = ButtonDefaults
                     .buttonColors(
                         backgroundColor = colorResource(id = R.color.purple),
@@ -326,7 +327,9 @@ class TestActivity : ComponentActivity() {
                 )
                 Text(
                     text = name,
-                    modifier = Modifier.padding(horizontal = 30.dp).width(250.dp),
+                    modifier = Modifier
+                        .padding(horizontal = 30.dp)
+                        .width(250.dp),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.subtitle1
                 )
@@ -354,7 +357,9 @@ class TestActivity : ComponentActivity() {
             {
                 Text(
                     text = name,
-                    modifier = Modifier.padding(horizontal = 30.dp).width(250.dp),
+                    modifier = Modifier
+                        .padding(horizontal = 30.dp)
+                        .width(250.dp),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.subtitle1
                 )
@@ -567,7 +572,10 @@ class TestActivity : ComponentActivity() {
                         }
                     }
                 },
-                modifier = Modifier.width(163.dp).height(45.dp).padding(end = 16.dp),
+                modifier = Modifier
+                    .width(163.dp)
+                    .height(45.dp)
+                    .padding(end = 16.dp),
                 shape = RoundedCornerShape(15.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                 border = BorderStroke(2.dp, color = colorResource(id = R.color.purple))
