@@ -50,6 +50,7 @@ object Utils {
         systemUiController.isSystemBarsVisible = false
     }
 
+
     @Composable
     fun MyTopAppBar(name: String, arrow: Boolean) {
         Card(
