@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
@@ -38,6 +39,14 @@ class ArticleFragment : Fragment() {
         root = binding.root
         (activity as MainActivity).isBottomNavVisible(false)
         showArticle(sharedViewModel.article.value ?: ArticleEntity())
+
+        val toolbar = binding.toolbar
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        toolbar.title = ""
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
     }
 
     private fun showMarkdown(text: String?) {
