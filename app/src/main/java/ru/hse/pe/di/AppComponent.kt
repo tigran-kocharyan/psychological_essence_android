@@ -4,6 +4,7 @@ import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import ru.hse.pe.presentation.MainActivity
+import ru.hse.pe.presentation.article.view.ArticlesFragment
 import ru.hse.pe.presentation.auth.view.AuthFragment
 import ru.hse.pe.presentation.content.ContentFragment
 import javax.inject.Singleton
@@ -22,6 +23,7 @@ interface AppComponent {
     fun inject(launcher: MainActivity)
     fun inject(fragment: AuthFragment)
     fun inject(fragment: ContentFragment)
+    fun inject(fragment: ArticlesFragment)
 
     @Component.Builder
     interface Builder {

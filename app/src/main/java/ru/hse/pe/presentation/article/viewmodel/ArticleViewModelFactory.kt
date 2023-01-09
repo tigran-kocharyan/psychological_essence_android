@@ -1,4 +1,4 @@
-//package ru.hse.pe.presentation.article.viewmodel
+//package ru.hse.pe.presentation.content.view.article.viewmodel
 //
 //import androidx.lifecycle.ViewModel
 //import androidx.lifecycle.ViewModelProvider

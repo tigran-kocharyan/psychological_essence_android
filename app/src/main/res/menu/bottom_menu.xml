@@ -3,7 +3,7 @@
     <item
         android:id="@+id/content"
         android:icon="@drawable/ic_content"
-        android:title="Популярные" />
+        android:title="Разделы" />
     <item
         android:id="@+id/shop"
         android:icon="@drawable/ic_shopping"
@@ -11,5 +11,5 @@
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_profile"
-        android:title="настройки" />
+        android:title="Профиль" />
 </menu>

@@ -9,6 +9,7 @@ import ru.hse.pe.R
 import ru.hse.pe.databinding.ActivityMainBinding
 import ru.hse.pe.presentation.article.view.ArticleFragment
 import ru.hse.pe.presentation.content.ContentFragment
+import ru.hse.pe.presentation.shop.ShopFragment
 
 /**
  * Main [Activity]. All fragments will be added on top of it.
@@ -30,11 +31,16 @@ class MainActivity : AppCompatActivity() {
         bottom_nav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.content -> setCurrentFragment(ContentFragment.newInstance(), ContentFragment.TAG)
-                R.id.shop -> {}
+                R.id.shop -> setCurrentFragment(ShopFragment.newInstance(), ContentFragment.TAG)
                 R.id.profile -> {}
             }
             true
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        supportFragmentManager.popBackStack()
+        return true
     }
 
     fun isBottomNavVisible(isVisible: Boolean) {

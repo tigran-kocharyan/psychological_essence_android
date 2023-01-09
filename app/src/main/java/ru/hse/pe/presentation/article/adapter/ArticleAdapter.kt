@@ -1,4 +1,4 @@
-//package ru.hse.pe.presentation.article.adapter
+//package ru.hse.pe.presentation.content.view.article.adapter
 //
 //import android.view.LayoutInflater
 //import android.view.View

@@ -86,6 +86,12 @@ class LoginFragment : Fragment() {
     private fun resetPassword() {
         (activity as AppCompatActivity).supportFragmentManager
             .beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.fade_out,
+                R.anim.pop_enter,
+                R.anim.pop_exit
+            )
             .addToBackStack(null)
             .add(
                 R.id.fragment_container,
@@ -98,6 +104,12 @@ class LoginFragment : Fragment() {
     private fun registerUser() {
         (activity as AppCompatActivity).supportFragmentManager
             .beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.fade_out,
+                R.anim.pop_enter,
+                R.anim.pop_exit
+            )
             .addToBackStack(null)
             .add(R.id.fragment_container, RegisterFragment.newInstance(), RegisterFragment.TAG)
             .commit()

@@ -17,6 +17,12 @@ class AuthActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in,
+                    R.anim.fade_out,
+                    R.anim.pop_enter,
+                    R.anim.pop_exit
+                )
                 .add(R.id.fragment_container, AuthFragment.newInstance(), AuthFragment.TAG)
                     .commit()
         }

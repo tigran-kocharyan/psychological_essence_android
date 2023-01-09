@@ -22,7 +22,6 @@ import ru.hse.pe.presentation.MainActivity
 
 class ArticleFragment : Fragment() {
     private lateinit var binding: FragmentArticleBinding
-    private lateinit var root: View
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -36,7 +35,6 @@ class ArticleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        root = binding.root
         (activity as MainActivity).isBottomNavVisible(false)
         showArticle(sharedViewModel.article.value ?: ArticleEntity())
 
@@ -44,7 +42,6 @@ class ArticleFragment : Fragment() {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.title = ""
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
     }

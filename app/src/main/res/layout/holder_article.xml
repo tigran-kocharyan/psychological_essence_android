@@ -5,34 +5,78 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
-    android:orientation="vertical"
-    android:paddingHorizontal="14dp"
-    android:paddingVertical="7dp">
+    android:layout_marginBottom="16dp">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:ellipsize="end"
         android:fontFamily="@font/montserrat_medium"
+        android:gravity="start|top"
         android:lineSpacingExtra="4.8sp"
+        android:maxLines="3"
         android:textColor="#22272f"
         android:textSize="16sp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Какие вопросы нужно задать себе, если хочется начать с чистого листа?" />
 
-
     <ImageView
         android:id="@+id/image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginVertical="10dp"
+        android:layout_width="107dp"
+        android:layout_height="107dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/title"
-        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_avatar_placeholder" />
 
+    <ImageView
+        android:id="@+id/likes_image"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/ic_like"
+        app:layout_constraintBottom_toBottomOf="@id/likes_count"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/likes_count" />
+
+    <TextView
+        android:id="@+id/likes_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:lineSpacingExtra="3.6sp"
+        android:textColor="#a8a8a8"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@id/image"
+        app:layout_constraintStart_toEndOf="@id/likes_image"
+        tools:text="10" />
+
+    <ImageView
+        android:id="@+id/views_image"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="4dp"
+        android:src="@drawable/ic_view"
+        app:layout_constraintBottom_toBottomOf="@id/views_count"
+        app:layout_constraintStart_toEndOf="@id/likes_count"
+        app:layout_constraintTop_toTopOf="@id/views_count" />
+
+    <TextView
+        android:id="@+id/views_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:lineSpacingExtra="3.6sp"
+        android:textColor="#a8a8a8"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@id/image"
+        app:layout_constraintStart_toEndOf="@id/views_image"
+        tools:text="10" />
 </androidx.constraintlayout.widget.ConstraintLayout>
