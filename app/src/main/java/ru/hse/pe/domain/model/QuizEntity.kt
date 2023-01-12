@@ -17,7 +17,7 @@ data class QuizEntity(
     @SerializedName("views") val views: Int? = 0,
     @SerializedName("likes") val likes: Int? = 0,
     @SerializedName("needs_subscription") val requiresSubscription: Boolean = false
-) : Parcelable
+) : Parcelable, ContentEntity
 
 @Parcelize
 data class QuizResultEntity(

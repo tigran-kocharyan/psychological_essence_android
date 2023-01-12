@@ -1,10 +1,10 @@
 package ru.hse.pe.utils.callback
 
-import ru.hse.pe.domain.model.ArticleEntity
+import ru.hse.pe.domain.model.ContentEntity
 
 /**
  * Interface to interact with onClick event for RecyclerView.
  */
 interface ContentClickListener {
-    fun onArticleClick(article: ArticleEntity, position: Int)
+    fun onContentClick(content: ContentEntity, position: Int)
 }

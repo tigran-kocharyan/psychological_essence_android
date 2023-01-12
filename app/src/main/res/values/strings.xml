@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Psychological Essence</string>
 
-    // New
+    // Redesign
     <string name="time_article">Время чтения: %s</string>
+    <string name="date_recommendation">Год производства: %s</string>
+    <string name="date_series">Год: %s</string>
+    <string name="country_recommendation">Страна: %s</string>
+    <string name="category_recommendation">Жанр: %s</string>
 
     /* Регистрация/Вход */
     <string name="login_go">Войти в аккаунт</string>

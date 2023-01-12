@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.content.view.article.viewmodel
+package ru.hse.pe.presentation.content.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.ArticleEntity
 import ru.hse.pe.domain.model.QuizEntity
+import ru.hse.pe.domain.model.RecommendationEntity
 import ru.hse.pe.utils.scheduler.SchedulersProvider
 
 
@@ -20,8 +21,7 @@ class ContentViewModel(
 ) : ViewModel() {
 
     private val progressLiveData = MutableLiveData<Boolean>()
-    private val markdownLiveData = MutableLiveData<String>()
-    private val articleLiveData = MutableLiveData<ArticleEntity>()
+    private val recommendationsLiveData = MutableLiveData<List<RecommendationEntity>>()
     private val articlesLiveData = MutableLiveData<List<ArticleEntity>>()
     private val quizzesLiveData = MutableLiveData<List<QuizEntity>>()
     private val errorLiveData = MutableLiveData<Throwable>()
@@ -57,6 +57,20 @@ class ContentViewModel(
     }
 
     /**
+     * Скачать статьи из БД
+     */
+    fun getRecommendations() {
+        disposables.add(contentInteractor.getRecommendations()
+            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .doOnSubscribe { progressLiveData.postValue(true) }
+            .doAfterTerminate { progressLiveData.postValue(false) }
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(recommendationsLiveData::setValue, errorLiveData::setValue)
+        )
+    }
+
+    /**
      * Method clears disposables.
      */
     override fun onCleared() {
@@ -77,14 +91,14 @@ class ContentViewModel(
     fun getErrorLiveData(): LiveData<Throwable> =
         errorLiveData
 
-    fun getArticleLiveData(): LiveData<ArticleEntity> =
-        articleLiveData
-
     fun getArticlesLiveData(): MutableLiveData<List<ArticleEntity>> =
         articlesLiveData
 
     fun getQuizzesLiveData(): MutableLiveData<List<QuizEntity>> =
         quizzesLiveData
+
+    fun getRecommendationsLiveData(): MutableLiveData<List<RecommendationEntity>> =
+        recommendationsLiveData
 
     companion object {
         private const val TAG = "ContentViewModel"

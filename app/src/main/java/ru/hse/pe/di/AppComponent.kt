@@ -7,6 +7,7 @@ import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.article.view.ArticlesFragment
 import ru.hse.pe.presentation.auth.view.AuthFragment
 import ru.hse.pe.presentation.content.ContentFragment
+import ru.hse.pe.presentation.recommendation.view.RecommendationsFragment
 import javax.inject.Singleton
 
 /**
@@ -24,6 +25,7 @@ interface AppComponent {
     fun inject(fragment: AuthFragment)
     fun inject(fragment: ContentFragment)
     fun inject(fragment: ArticlesFragment)
+    fun inject(fragment: RecommendationsFragment)
 
     @Component.Builder
     interface Builder {
