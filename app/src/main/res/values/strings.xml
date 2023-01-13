@@ -30,6 +30,8 @@
     <string name="register_hintSex">Выберите пол</string>
     <string name="register_hintRepeatPassword">Повторите пароль</string>
 
+    /* Курсы */
+    <string name="courses">Курсы</string>
 
     /* Меню */
     <string name="menu_title">КАТЕГОРИИ</string>
