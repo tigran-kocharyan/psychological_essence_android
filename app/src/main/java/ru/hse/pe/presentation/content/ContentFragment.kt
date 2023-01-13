@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment
 import ru.hse.pe.R
 import ru.hse.pe.databinding.FragmentContentBinding
 import ru.hse.pe.presentation.MainActivity
-import ru.hse.pe.presentation.article.view.ArticlesFragment
-import ru.hse.pe.presentation.recommendation.view.RecommendationsFragment
+import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
+import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
+import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
 
 /**
  * [Fragment] to display the trending events.
@@ -41,6 +42,12 @@ class ContentFragment : Fragment() {
             setCurrentFragment(
                 RecommendationsFragment.newInstance(),
                 RecommendationsFragment.TAG
+            )
+        }
+        binding.facts.setOnClickListener {
+            setCurrentFragment(
+                FactsFragment.newInstance(),
+                FactsFragment.TAG
             )
         }
     }

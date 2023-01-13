@@ -3,6 +3,7 @@ package ru.hse.pe.data.api
 import io.reactivex.Single
 import retrofit2.http.*
 import ru.hse.pe.domain.model.ArticleEntity
+import ru.hse.pe.domain.model.FactEntity
 import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.domain.model.RecommendationEntity
 
@@ -31,9 +32,16 @@ interface ContentService {
     @GET(GET_RECOMMENDATIONS)
     fun getRecommendations(): Single<List<RecommendationEntity>>
 
+    /**
+     * Method calls API to get the recommendations data from DB
+     */
+    @GET(GET_FACTS)
+    fun getFacts(): Single<List<FactEntity>>
+
     companion object {
         private const val GET_ARTICLES = "articles"
         private const val GET_QUIZZES = "quizzes"
         private const val GET_RECOMMENDATIONS = "recommendations"
+        private const val GET_FACTS = "facts"
     }
 }

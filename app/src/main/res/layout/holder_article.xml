@@ -29,9 +29,10 @@
         android:id="@+id/image"
         android:layout_width="107dp"
         android:layout_height="107dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_avatar_placeholder" />
+        tools:src="@drawable/placeholder_article" />
 
     <ImageView
         android:id="@+id/likes_image"

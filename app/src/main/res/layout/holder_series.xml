@@ -13,25 +13,26 @@
         android:layout_height="173dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/series_poster" />
+        tools:src="@drawable/placeholder_series" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:ellipsize="end"
+        android:ellipsize="marquee"
+        android:scrollHorizontally="true"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="start|top"
         android:lineSpacingExtra="4.8sp"
-        android:maxLines="1"
         android:textColor="#22272f"
         android:textSize="16sp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Пациенты" />
+        android:singleLine="true"
+        tools:text="ПациентыПациентыПациентыПациенты" />
 
     <TextView
         android:id="@+id/date"
@@ -50,7 +51,7 @@
         tools:text="Год: 2008" />
 
     <TextView
-        android:id="@+id/category"
+        android:id="@+id/episodes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -63,6 +64,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toBottomOf="@id/date"
+        tools:text="Эпизоды: 24" />
+
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:lineSpacingExtra="4.2sp"
+        android:textColor="#22272f"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/episodes"
         tools:text="Жанр: драма" />
 
     <TextView

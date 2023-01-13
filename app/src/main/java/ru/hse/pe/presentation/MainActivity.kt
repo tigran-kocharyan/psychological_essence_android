@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.hse.pe.R
 import ru.hse.pe.databinding.ActivityMainBinding
-import ru.hse.pe.presentation.article.view.ArticleFragment
 import ru.hse.pe.presentation.content.ContentFragment
 import ru.hse.pe.presentation.shop.ShopFragment
 
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragment_container, ContentFragment.newInstance(), ArticleFragment.TAG)
+                .add(R.id.fragment_container, ContentFragment.newInstance(), ContentFragment.TAG)
                 .commit()
         }
         bottom_nav.setOnItemSelectedListener {

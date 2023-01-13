@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_dialog">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/markdown_article"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="24dp"
+        android:fontFamily="@font/montserrat"
+        android:lineSpacingExtra="4.2sp"
+        android:paddingHorizontal="24dp"
+        android:textColor="#22272f"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        tools:text="«Тебе показалось», «я просто пошутил», «не было ничего такого». Как распознать газлайтинг и, главное, как не дать сбить себя с толку?\n\nГазлайтинг — достаточно новое явление в мировой психотерапии. Внимание, которое привлёк к себе этот термин, помогло многим людям распознать конкретные дисфункции, возникающие в их взаимоотношениях. Такой приём психологической манипуляции подразумевает внушение другому человеку своей правды, преследуя собственную выгоду.\n\nМожет быть, ваш родитель тоже применял к вам газлайтинг? И теперь вы повторяете детский сценарий в отношениях с партнёром и неосознанно, как много лет назад, пытаетесь в них заслужить родительскую любовь?\n\nВ любом случае, следует понять: как бы вы ни любили человека, психологическое насилие — веский повод, чтобы прекратить отношения. Если газлайтер категорически не замечает своих ошибок и манипуляций, это иногда означает банальное нежелание их замечать. А значит, шансы договориться и выстроить тёплые, доверительные отношения невелики." />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

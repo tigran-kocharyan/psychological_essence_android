@@ -10,11 +10,11 @@ import ru.hse.pe.R
 
 // Set of Material typography styles to start with
 val montserrat = FontFamily(
-    Font(R.font.montserrat_regular, weight = FontWeight.Normal)
+    Font(R.font.montserrat, weight = FontWeight.Normal)
 )
 
 val nunitoSans = FontFamily(
-    Font(R.font.nunitosans_regular, weight = FontWeight.Normal)
+    Font(R.font.montserrat, weight = FontWeight.Normal)
 )
 
 val typography = Typography(

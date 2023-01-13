@@ -24,44 +24,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/categories"
-        style="@style/AppTheme.Text.Content.Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:paddingHorizontal="24dp"
-        android:text="Разделы"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/bar" />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="24dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/categories" />
-
-    <TextView
-        android:id="@+id/series_title"
-        style="@style/AppTheme.Text.Content.Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:paddingHorizontal="24dp"
-        android:text="Сериалы"
-        app:layout_constraintTop_toBottomOf="@id/categories" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/series"
+        android:id="@+id/items_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="24dp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/series_title" />
+        app:layout_constraintTop_toBottomOf="@id/bar" />
 
     <ProgressBar
         android:id="@+id/progressbar"

@@ -7,6 +7,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.ArticleEntity
+import ru.hse.pe.domain.model.FactEntity
 import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.domain.model.RecommendationEntity
 import ru.hse.pe.utils.scheduler.SchedulersProvider
@@ -24,6 +25,7 @@ class ContentViewModel(
     private val recommendationsLiveData = MutableLiveData<List<RecommendationEntity>>()
     private val articlesLiveData = MutableLiveData<List<ArticleEntity>>()
     private val quizzesLiveData = MutableLiveData<List<QuizEntity>>()
+    private val factsLiveData = MutableLiveData<List<FactEntity>>()
     private val errorLiveData = MutableLiveData<Throwable>()
     private val disposables = CompositeDisposable()
 
@@ -71,6 +73,20 @@ class ContentViewModel(
     }
 
     /**
+     * Скачать факты из БД
+     */
+    fun getFacts() {
+        disposables.add(contentInteractor.getFacts()
+            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .doOnSubscribe { progressLiveData.postValue(true) }
+            .doAfterTerminate { progressLiveData.postValue(false) }
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(factsLiveData::setValue, errorLiveData::setValue)
+        )
+    }
+
+    /**
      * Method clears disposables.
      */
     override fun onCleared() {
@@ -99,6 +115,9 @@ class ContentViewModel(
 
     fun getRecommendationsLiveData(): MutableLiveData<List<RecommendationEntity>> =
         recommendationsLiveData
+
+    fun getFactsLiveData(): MutableLiveData<List<FactEntity>> =
+        factsLiveData
 
     companion object {
         private const val TAG = "ContentViewModel"

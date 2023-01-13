@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="24dp"
+    android:background="?attr/selectableItemBackground"
+    android:ellipsize="end"
+    android:fontFamily="@font/montserrat_medium"
+    android:gravity="start|top"
+    android:lineSpacingExtra="4.8sp"
+    android:textColor="#22272f"
+    android:textSize="16sp"
+    android:textStyle="normal"
+    app:layout_constraintEnd_toStartOf="@id/image"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:text="Какие вопросы нужно задать себе, если хочется начать с чистого листа?" />
