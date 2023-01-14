@@ -32,6 +32,11 @@
 
     /* Курсы */
     <string name="courses">Курсы</string>
+    <string name="course">Курс</string>
+    <string name="newCourses">Новинки</string>
+    <string name="seeAll">Смотреть все</string>
+    /* Реклама */
+    <string name="develop">Прокачай себя вместе с нами всего за 99 ₽/мес.</string>
 
     /* Меню */
     <string name="menu_title">КАТЕГОРИИ</string>
@@ -357,4 +362,7 @@
     <string name="OHQAverageRes">Вы в целом удовлетворены вашей жизнью и получаете от нее удовольствие, однако некоторые вещи омрачают вам вам состояние. Есть что-то, чем вы в жизни не удовлетворены и из-за этого не можете полноценно испытать счастье.</string>
     <string name="OHQLowRes">Вы скорее не удовлетворены своей жизнью, не очень получаете от нее удовольствие. Для вас может быть трудно радоваться жизни и ощущать ее полноту и богатство.</string>
     <string name="OHQVeryLowRes">Вы находитесь в состоянии неудовлетворенности жизнью, не видите целей в жизни, практически не испытываете радость и удовольствие от бытия.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

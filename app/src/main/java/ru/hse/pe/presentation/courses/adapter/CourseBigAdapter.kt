@@ -1,17 +1,18 @@
-package ru.hse.pe.presentation.courses
+package ru.hse.pe.presentation.courses.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.hse.pe.R
-import ru.hse.pe.databinding.CourseItemBinding
+import ru.hse.pe.databinding.CourseBigItemBinding
+import ru.hse.pe.presentation.courses.Course
 
-class CourseAdapter: RecyclerView.Adapter<CourseAdapter.BackgroundHolder>() {
+class CourseBigAdapter: RecyclerView.Adapter<CourseBigAdapter.BackgroundHolder>() {
     val courseList =  ArrayList<Course>()
 
     class BackgroundHolder(item: View):RecyclerView.ViewHolder(item) {
-        val binding = CourseItemBinding.bind(item)
+        val binding = CourseBigItemBinding.bind(item)
 
         fun bind(cs: Course) = with(binding){
             imgCourse.setImageResource(cs.img)
@@ -21,7 +22,7 @@ class CourseAdapter: RecyclerView.Adapter<CourseAdapter.BackgroundHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BackgroundHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.course_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.course_big_item, parent, false)
         return BackgroundHolder(view)
     }
 
