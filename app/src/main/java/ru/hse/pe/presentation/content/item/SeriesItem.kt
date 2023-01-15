@@ -6,11 +6,11 @@ import coil.transform.RoundedCornersTransformation
 import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.R
 import ru.hse.pe.databinding.HolderSeriesBinding
-import ru.hse.pe.domain.model.SeriesEntity
+import ru.hse.pe.domain.model.RecommendationEntity
 import ru.hse.pe.utils.callback.ContentClickListener
 
 class SeriesItem(
-    private val series: SeriesEntity,
+    private val series: RecommendationEntity,
     private val clickListener: ContentClickListener
 ) : BindableItem<HolderSeriesBinding>() {
 

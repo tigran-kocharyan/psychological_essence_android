@@ -20,8 +20,8 @@ class FactItem(
 
     override fun bind(binding: HolderFactBinding, position: Int) {
         binding.root.setOnClickListener { clickListener.onContentClick(fact, position) }
-        if (fact.title != null && fact.title.isBlank()) {
-            binding.title.text = "Заголовок"
+        if (fact.title == null) {
+            binding.title.text = "*Заголовок*"
         } else {
             binding.title.text = fact.title
         }

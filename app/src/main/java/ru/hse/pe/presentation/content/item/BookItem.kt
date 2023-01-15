@@ -5,11 +5,11 @@ import coil.load
 import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.R
 import ru.hse.pe.databinding.HolderBookBinding
-import ru.hse.pe.domain.model.BookEntity
+import ru.hse.pe.domain.model.RecommendationEntity
 import ru.hse.pe.utils.callback.ContentClickListener
 
 class BookItem(
-    private val book: BookEntity,
+    private val book: RecommendationEntity,
     private val clickListener: ContentClickListener
 ) : BindableItem<HolderBookBinding>() {
 

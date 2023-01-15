@@ -1,29 +1,29 @@
-package ru.hse.pe.presentation.content.type.article.view
+package ru.hse.pe.presentation.content.type.recommendation.view
 
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import coil.load
-import com.bumptech.glide.Glide
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.image.ImagesPlugin
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
-import ru.hse.pe.databinding.FragmentArticleBinding
-import ru.hse.pe.domain.model.ArticleEntity
+import ru.hse.pe.databinding.FragmentBookRecommendationBinding
+import ru.hse.pe.domain.model.RecommendationEntity
 import ru.hse.pe.presentation.MainActivity
-import ru.hse.pe.presentation.content.type.fact.view.FactBottomSheetDialogFragment
 
 
-class ArticleFragment : Fragment() {
-    private lateinit var binding: FragmentArticleBinding
+class BookFragment : Fragment() {
+    private lateinit var binding: FragmentBookRecommendationBinding
+    private lateinit var root: View
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -31,21 +31,33 @@ class ArticleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentArticleBinding.inflate(inflater, container, false)
+        binding = FragmentBookRecommendationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        root = binding.root
         (activity as MainActivity).isBottomNavVisible(false)
-        showArticle(sharedViewModel.article.value ?: ArticleEntity())
+        showRecommendation(sharedViewModel.recommendation.value ?: RecommendationEntity())
 
         val toolbar = binding.toolbar
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.title = ""
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
+
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                activity?.supportFragmentManager?.popBackStack()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun showMarkdown(text: String?) {
@@ -67,40 +79,31 @@ class ArticleFragment : Fragment() {
         }
     }
 
-    private fun showArticle(article: ArticleEntity) {
-        showMarkdown(article.content)
-        binding.title.text = article.title
-        binding.time.text = context?.getString(R.string.time_article, article.time) ?: ""
-        binding.category.text = article.category
-        if (article.imageUrl != null && article.imageUrl.isNotBlank()) {
-            binding.image.load(article.imageUrl) {
-                crossfade(true)
-                placeholder(R.drawable.placeholder_article)
-                error(R.drawable.placeholder_article)
-            }
-        } else {
-            binding.image.load(R.drawable.placeholder_article)
-        }
-        context?.let {
-            Glide.with(it)
-                .load(article.imageUrl)
-                .centerCrop()
-                .placeholder(R.drawable.ic_avatar_placeholder)
-                .error(R.drawable.ic_avatar_placeholder)
-                .into(binding.image)
+    private fun showRecommendation(recommendation: RecommendationEntity) {
+        showMarkdown(recommendation.content)
+        binding.title.text = recommendation.title
+        binding.type.text = recommendation.type
+        binding.country.text =
+            context?.getString(R.string.country_recommendation, recommendation.country) ?: ""
+        binding.category.text =
+            context?.getString(R.string.category_recommendation, recommendation.category) ?: ""
+        binding.image.load(recommendation.imageUrls.firstOrNull()) {
+            placeholder(R.drawable.placeholder_book)
+            error(R.drawable.placeholder_book)
+            crossfade(true)
         }
     }
 
     companion object {
-        const val TAG = "ArticleFragment"
+        const val TAG = "BookFragment"
         private val MULTIPLIERS = floatArrayOf(1.5F, 1.17F, 1F, 1F, .83F, .67F)
         private val LINK_COLOR = "#6766D8"
 
         /**
-         * Получение объекта [FactBottomSheetDialogFragment]
+         * Получение объекта [BookFragment]
          */
-        fun newInstance(): ArticleFragment {
-            return ArticleFragment()
+        fun newInstance(): BookFragment {
+            return BookFragment()
         }
     }
 }

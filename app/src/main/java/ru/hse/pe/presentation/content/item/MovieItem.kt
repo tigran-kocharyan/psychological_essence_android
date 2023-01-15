@@ -6,11 +6,11 @@ import coil.transform.RoundedCornersTransformation
 import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.R
 import ru.hse.pe.databinding.HolderMovieBinding
-import ru.hse.pe.domain.model.MovieEntity
+import ru.hse.pe.domain.model.RecommendationEntity
 import ru.hse.pe.utils.callback.ContentClickListener
 
 class MovieItem(
-    private val movie: MovieEntity,
+    private val movie: RecommendationEntity,
     private val clickListener: ContentClickListener
 ) : BindableItem<HolderMovieBinding>() {
 
@@ -26,6 +26,7 @@ class MovieItem(
             binding.image.load(movie.imageUrls[0]) {
                 crossfade(true)
                 error(R.drawable.placeholder_movie)
+                placeholder(R.drawable.placeholder_movie)
                 transformations(RoundedCornersTransformation(20f))
             }
         } else {

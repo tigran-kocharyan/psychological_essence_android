@@ -12,6 +12,9 @@ data class RecommendationEntity(
     @SerializedName("category") val category: String = "",
     @SerializedName("year") val year: String = "",
     @SerializedName("country") val country: String = "",
+    @SerializedName("duration") val duration: String = "",
+    @SerializedName("episodes") val episodes: String = "",
+    @SerializedName("type") val type: String = "",
     @SerializedName("content") val content: String = "",
     @SerializedName("image_urls") val imageUrls: List<String> = emptyList(),
     @SerializedName("needs_subscription") val requiresSubscription: Boolean = false

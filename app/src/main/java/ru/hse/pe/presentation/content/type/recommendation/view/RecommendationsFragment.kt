@@ -17,7 +17,8 @@ import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentRecommendationsBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
-import ru.hse.pe.domain.model.*
+import ru.hse.pe.domain.model.ContentEntity
+import ru.hse.pe.domain.model.RecommendationEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.BookItem
 import ru.hse.pe.presentation.content.item.MovieItem
@@ -61,6 +62,25 @@ class RecommendationsFragment : Fragment() {
                     )
                     .addToBackStack(null)
                     .add(R.id.fragment_container, RecommendationFragment.newInstance(), TAG)
+                    .commit()
+            }
+        }
+    }
+
+    private var bookClickListener = object : ContentClickListener {
+        override fun onContentClick(content: ContentEntity, position: Int) {
+            if (content is RecommendationEntity) {
+                sharedViewModel.setRecommendation(content)
+                (activity as AppCompatActivity).supportFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.pop_enter,
+                        R.anim.pop_exit
+                    )
+                    .addToBackStack(null)
+                    .add(R.id.fragment_container, BookFragment.newInstance(), TAG)
                     .commit()
             }
         }
@@ -124,60 +144,60 @@ class RecommendationsFragment : Fragment() {
             "Книги",
             listOf(
                 BookItem(
-                    BookEntity(
-                        1,
-                        "Ксюша",
-                        "Дар психотерапии Ялом",
-                        "",
-                        "",
-                        "Борьба со стрессом",
-                        "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
-                        arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        false
+                    RecommendationEntity(
+                        id = 1,
+                        author = "Ксюша",
+                        title = "Дар психотерапии Ялом",
+                        category = "",
+                        year = "",
+                        type = "Борьба со страхом",
+                        country = "США",
+                        content = "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
                     ),
-                    clickListener
+                    bookClickListener
                 ),
                 BookItem(
-                    BookEntity(
-                        1,
-                        "Ксюша",
-                        "Дар психотерапии Ялом",
-                        "",
-                        "",
-                        "Борьба со стрессом",
-                        "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
-                        arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        false
+                    RecommendationEntity(
+                        id = 1,
+                        author = "Ксюша",
+                        title = "Дар психотерапии Ялом",
+                        category = "",
+                        year = "",
+                        type = "Борьба со страхом",
+                        country = "США",
+                        content = "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
                     ),
-                    clickListener
+                    bookClickListener
                 ),
                 BookItem(
-                    BookEntity(
-                        1,
-                        "Ксюша",
-                        "Дар психотерапии Ялом",
-                        "",
-                        "",
-                        "Борьба со стрессом",
-                        "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
-                        arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        false
+                    RecommendationEntity(
+                        id = 1,
+                        author = "Ксюша",
+                        title = "Дар психотерапии Ялом",
+                        category = "",
+                        year = "",
+                        type = "Борьба со страхом",
+                        country = "США",
+                        content = "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
                     ),
-                    clickListener
+                    bookClickListener
                 ),
                 BookItem(
-                    BookEntity(
-                        1,
-                        "Ксюша",
-                        "Дар психотерапии Ялом",
-                        "",
-                        "",
-                        "Борьба со стрессом",
-                        "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
-                        arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        false
+                    RecommendationEntity(
+                        id = 1,
+                        author = "Ксюша",
+                        title = "Дар психотерапии Ялом",
+                        category = "",
+                        year = "",
+                        type = "Борьба со страхом",
+                        country = "США",
+                        content = "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
                     ),
-                    clickListener
+                    bookClickListener
                 )
             )
         )
@@ -188,77 +208,92 @@ class RecommendationsFragment : Fragment() {
             "Фильмы",
             listOf(
                 MovieItem(
-                    MovieEntity(
-                        1,
-                        "Ксюша",
+                    RecommendationEntity(
+                        id = 1,
+                        author = "Ксюша",
                         "Дар психотерапии Ялом",
-                        "Фильмы",
-                        "2001",
+                        category = "Фильмы",
+                        year = "2001",
                         "США",
                         "1 ч. 30 мин.",
-                        "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        false
+                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
+                        requiresSubscription = false
                     ),
                     clickListener
                 ),
                 MovieItem(
-                    MovieEntity(
-                        1,
-                        "Ксюша",
+                    RecommendationEntity(
+                        id = 1,
+                        author = "Ксюша",
                         "Дар психотерапии Ялом",
-                        "Фильмы",
-                        "2001",
+                        category = "Фильмы",
+                        year = "2001",
                         "США",
                         "1 ч. 30 мин.",
-                        "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        false
+                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
+                        requiresSubscription = false
                     ),
                     clickListener
                 ),
                 MovieItem(
-                    MovieEntity(
-                        1,
-                        "Ксюша",
+                    RecommendationEntity(
+                        id = 1,
+                        author = "Ксюша",
                         "Дар психотерапии Ялом",
-                        "Фильмы",
-                        "2001",
+                        category = "Фильмы",
+                        year = "2001",
                         "США",
                         "1 ч. 30 мин.",
-                        "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        false
+                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
+                        requiresSubscription = false
                     ),
                     clickListener
                 ),
                 MovieItem(
-                    MovieEntity(
-                        1,
-                        "Ксюша",
+                    RecommendationEntity(
+                        id = 1,
+                        author = "Ксюша",
                         "Дар психотерапии Ялом",
-                        "Фильмы",
-                        "2001",
+                        category = "Фильмы",
+                        year = "2001",
                         "США",
                         "1 ч. 30 мин.",
-                        "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        false
+                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
+                        requiresSubscription = false
                     ),
                     clickListener
                 ),
                 MovieItem(
-                    MovieEntity(
-                        1,
-                        "Ксюша",
+                    RecommendationEntity(
+                        id = 1,
+                        author = "Ксюша",
                         "Дар психотерапии Ялом",
-                        "Фильмы",
-                        "2001",
+                        category = "Фильмы",
+                        year = "2001",
                         "США",
                         "1 ч. 30 мин.",
-                        "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        false
+                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
+                        requiresSubscription = false
+                    ),
+                    clickListener
+                ),
+                MovieItem(
+                    RecommendationEntity(
+                        id = 1,
+                        author = "Ксюша",
+                        "Дар психотерапии Ялом",
+                        category = "Фильмы",
+                        year = "2001",
+                        "США",
+                        "1 ч. 30 мин.",
+                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
+                        requiresSubscription = false
                     ),
                     clickListener
                 )
@@ -271,77 +306,77 @@ class RecommendationsFragment : Fragment() {
             "Сериалы",
             listOf(
                 SeriesItem(
-                    SeriesEntity(
+                    RecommendationEntity(
                         1,
                         "Ксюша",
                         "Дар психотерапии Ялом",
                         "Фильмы",
                         "2001",
                         "США",
-                        "25",
-                        "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
-                        false
+                        episodes = "25",
+                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
+                        requiresSubscription = false
                     ),
                     clickListener
                 ),
                 SeriesItem(
-                    SeriesEntity(
+                    RecommendationEntity(
                         1,
                         "Ксюша",
                         "Дар психотерапии Ялом",
                         "Фильмы",
                         "2001",
                         "США",
-                        "25",
-                        "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
-                        false
+                        episodes = "25",
+                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
+                        requiresSubscription = false
                     ),
                     clickListener
                 ),
                 SeriesItem(
-                    SeriesEntity(
+                    RecommendationEntity(
                         1,
                         "Ксюша",
                         "Дар психотерапии Ялом",
                         "Фильмы",
                         "2001",
                         "США",
-                        "25",
-                        "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
-                        false
+                        episodes = "25",
+                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
+                        requiresSubscription = false
                     ),
                     clickListener
                 ),
                 SeriesItem(
-                    SeriesEntity(
+                    RecommendationEntity(
                         1,
                         "Ксюша",
                         "Дар психотерапии Ялом",
                         "Фильмы",
                         "2001",
                         "США",
-                        "25",
-                        "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
-                        false
+                        episodes = "25",
+                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
+                        requiresSubscription = false
                     ),
                     clickListener
                 ),
                 SeriesItem(
-                    SeriesEntity(
+                    RecommendationEntity(
                         1,
                         "Ксюша",
                         "Дар психотерапии Ялом",
                         "Фильмы",
                         "2001",
                         "США",
-                        "25",
-                        "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
-                        false
+                        episodes = "25",
+                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
+                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
+                        requiresSubscription = false
                     ),
                     clickListener
                 )

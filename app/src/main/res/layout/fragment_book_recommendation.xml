@@ -30,8 +30,8 @@
                 android:layout_marginBottom="19dp"
                 android:background="@color/purple"
                 android:scaleType="centerInside"
-                tools:src="@drawable/placeholder_series"
-                app:layout_collapseMode="parallax" />
+                app:layout_collapseMode="parallax"
+                tools:src="@drawable/placeholder_book" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -74,11 +74,20 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/date"
+                    android:id="@+id/type"
                     style="@style/AppTheme.Text.Subtitle.Recommendation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Год производства: 2008" />
+                    android:background="@drawable/rounded_corners_10dp"
+                    android:backgroundTint="@color/purpleSoft"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="0sp"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    tools:text="Борьба со стрессом" />
 
                 <TextView
                     android:id="@+id/country"
@@ -98,7 +107,7 @@
                     android:id="@+id/flow"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:constraint_referenced_ids="date,country,category"
+                    app:constraint_referenced_ids="type,country,category"
                     app:flow_firstHorizontalStyle="spread_inside"
                     app:flow_lastHorizontalStyle="spread_inside"
                     app:flow_wrapMode="chain" />
