@@ -1,8 +1,8 @@
 package ru.hse.pe.presentation.courses
 
-import com.xwray.groupie.*
-import com.xwray.groupie.kotlinandroidextensions.Item
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
+import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Item
+import ru.hse.pe.R
 
 
 class MainCourseContainer(
@@ -15,7 +15,7 @@ class MainCourseContainer(
         TODO("Not yet implemented")
     }
 
-    override fun getLayout() = R.layout.course
+    override fun getLayout() = R.layout.course_small_item
 
 
 }
