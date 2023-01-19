@@ -15,10 +15,9 @@ class CourseBigAdapter: RecyclerView.Adapter<CourseBigAdapter.BackgroundHolder>(
         val binding = CourseBigItemBinding.bind(item)
 
         fun bind(cs: Course) = with(binding){
-            imgCourse.setImageResource(cs.img)
-            titleCourse.text = cs.title
+            imgBigCourse.setImageResource(cs.img)
+            titleBigCourse.text = cs.title
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BackgroundHolder {

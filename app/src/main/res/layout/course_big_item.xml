@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imgCourse"
+                android:id="@+id/imgBigCourse"
                 android:layout_width="280dp"
                 android:layout_height="170dp"
                 android:scaleType="centerCrop"
@@ -34,7 +34,7 @@
                 app:srcCompat="@drawable/course_big" />
 
             <TextView
-                android:id="@+id/titleCourse"
+                android:id="@+id/titleBigCourse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -43,8 +43,8 @@
                 android:text="Поднять самооценку"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imgCourse"
-                app:layout_constraintStart_toStartOf="@+id/imgCourse" />
+                app:layout_constraintBottom_toBottomOf="@+id/imgBigCourse"
+                app:layout_constraintStart_toStartOf="@+id/imgBigCourse" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

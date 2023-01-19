@@ -53,7 +53,6 @@ dependencies {
     implementation "com.github.lisawray.groupie:groupie:$groupie_version"
     implementation "com.github.lisawray.groupie:groupie-viewbinding:$groupie_version"
 
-
     implementation 'com.github.mukeshsolanki:MarkdownView-Android:2.0.0'
     implementation "io.noties.markwon:core:4.6.2"
     implementation "io.noties.markwon:image:4.6.2"

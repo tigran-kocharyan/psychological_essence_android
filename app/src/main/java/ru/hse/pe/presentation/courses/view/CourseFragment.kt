@@ -41,7 +41,7 @@ class CourseFragment : Fragment() {
         Log.d("keysda", key)
         when (key) {
             "newCourses" -> {
-                binding.name.text = getString(R.string.newCourses)
+                binding.nameNewCourses.text = getString(R.string.newCourses)
 
                 val course1 = Course("Кто я и чего хочу? Определяем ценности", R.drawable.course_small1)
                 val course2 = Course("Как наладить контакт с миром и с собой", R.drawable.course_small2)
@@ -53,7 +53,7 @@ class CourseFragment : Fragment() {
                 adapterSmall.addCourse(course3)
             }
             "special" -> {
-                binding.name.text = getString(R.string.specCourses)
+                binding.nameNewCourses.text = getString(R.string.specCourses)
 
                 val course1 = Course("Как выйти из депрессии", R.drawable.course_small1)
                 val course2 = Course("Повышаем самооценку", R.drawable.course_small2)
