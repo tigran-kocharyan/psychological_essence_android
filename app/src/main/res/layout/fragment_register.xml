@@ -30,18 +30,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/title"
-        style="@style/AppTheme.Text.Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:paddingHorizontal="24dp"
-        android:text="Регистрация"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bar" />
-
-    <TextView
         android:id="@+id/subtitle"
         style="@style/AppTheme.Text.Subtitle"
         android:layout_width="match_parent"
@@ -52,7 +40,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/bar" />
 
     <ScrollView
         android:id="@+id/fill_info"
@@ -293,6 +281,8 @@
                         app:layout_constraintTop_toTopOf="@id/accept" />
 
                     <TextView
+                        android:clickable="true"
+                        android:textColor="@color/purple"
                         android:id="@+id/accept"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

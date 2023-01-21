@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupieAdapter
+import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.App
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
@@ -103,8 +105,8 @@ class RecommendationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLiveData()
-        showDummyAdaptter()
         (activity as MainActivity).isBottomNavVisible(false)
+        viewModel.getRecommendations()
     }
 
     private fun showProgress(isVisible: Boolean) {
@@ -118,272 +120,42 @@ class RecommendationsFragment : Fragment() {
             .show()
     }
 
-//    private fun showRecommendations(recommendations: List<RecommendationEntity>) {
-//        adapter.updateData(ArrayList(recommendations))
-//    }
+    private fun showRecommendations(recommendations: List<RecommendationEntity>) {
+        val categories = recommendations.groupBy { it.category }
+        val content = arrayListOf<BindableItem<*>>()
+        categories.forEach { entry ->
+            content.add(entry.key.getCategoryContent(entry.value))
+        }
+        binding.itemsContainer.adapter = GroupieAdapter().apply { addAll(content) }
+    }
 
     private fun observeLiveData() {
         viewModel.getErrorLiveData().observe(viewLifecycleOwner, this::showError)
         viewModel.getProgressLiveData().observe(viewLifecycleOwner, this::showProgress)
-//        viewModel.getRecommendationsLiveData()
-//            .observe(viewLifecycleOwner, this::showRecommendations)
+        viewModel.getRecommendationsLiveData()
+            .observe(viewLifecycleOwner, this::showRecommendations)
     }
 
-    private fun showDummyAdaptter() {
-        val movies = listOf(
-            getBooks(),
-            getMovies(),
-            getSeries()
-        )
 
-        binding.itemsContainer.adapter = GroupieAdapter().apply { addAll(movies) }
-    }
+    private fun <T : ViewBinding> getHorizontalCategory(
+        title: String,
+        items: List<RecommendationEntity>,
+        cast: (RecommendationEntity) -> BindableItem<T>
+    ) = HorizontalContentContainer(title, items.map(cast))
 
-    private fun getBooks(): HorizontalContentContainer {
-        return HorizontalContentContainer(
-            "Книги",
-            listOf(
-                BookItem(
-                    RecommendationEntity(
-                        id = 1,
-                        author = "Ксюша",
-                        title = "Дар психотерапии Ялом",
-                        category = "",
-                        year = "",
-                        type = "Борьба со страхом",
-                        country = "США",
-                        content = "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                    ),
-                    bookClickListener
-                ),
-                BookItem(
-                    RecommendationEntity(
-                        id = 1,
-                        author = "Ксюша",
-                        title = "Дар психотерапии Ялом",
-                        category = "",
-                        year = "",
-                        type = "Борьба со страхом",
-                        country = "США",
-                        content = "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                    ),
-                    bookClickListener
-                ),
-                BookItem(
-                    RecommendationEntity(
-                        id = 1,
-                        author = "Ксюша",
-                        title = "Дар психотерапии Ялом",
-                        category = "",
-                        year = "",
-                        type = "Борьба со страхом",
-                        country = "США",
-                        content = "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                    ),
-                    bookClickListener
-                ),
-                BookItem(
-                    RecommendationEntity(
-                        id = 1,
-                        author = "Ксюша",
-                        title = "Дар психотерапии Ялом",
-                        category = "",
-                        year = "",
-                        type = "Борьба со страхом",
-                        country = "США",
-                        content = "Книга состоит из 85 глав-рекомендаций. Каждая глава посвящена одному из правил, принципов, описанию инструментов психологического консультирования.\\n\\n\\\"Дар психотерапии\\\" позволяет взглянуть на профессию психотерапевта изнутри благодаря множеству описанных в ней случаев из практики автора.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                    ),
-                    bookClickListener
-                )
-            )
-        )
-    }
+    private fun <T : ViewBinding> getVerticalCategory(
+        title: String,
+        items: List<RecommendationEntity>,
+        cast: (RecommendationEntity) -> BindableItem<T>
+    ) = VerticalContentContainer(title, items.map(cast))
 
-    private fun getMovies(): HorizontalContentContainer {
-        return HorizontalContentContainer(
-            "Фильмы",
-            listOf(
-                MovieItem(
-                    RecommendationEntity(
-                        id = 1,
-                        author = "Ксюша",
-                        "Дар психотерапии Ялом",
-                        category = "Фильмы",
-                        year = "2001",
-                        "США",
-                        "1 ч. 30 мин.",
-                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        requiresSubscription = false
-                    ),
-                    clickListener
-                ),
-                MovieItem(
-                    RecommendationEntity(
-                        id = 1,
-                        author = "Ксюша",
-                        "Дар психотерапии Ялом",
-                        category = "Фильмы",
-                        year = "2001",
-                        "США",
-                        "1 ч. 30 мин.",
-                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        requiresSubscription = false
-                    ),
-                    clickListener
-                ),
-                MovieItem(
-                    RecommendationEntity(
-                        id = 1,
-                        author = "Ксюша",
-                        "Дар психотерапии Ялом",
-                        category = "Фильмы",
-                        year = "2001",
-                        "США",
-                        "1 ч. 30 мин.",
-                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        requiresSubscription = false
-                    ),
-                    clickListener
-                ),
-                MovieItem(
-                    RecommendationEntity(
-                        id = 1,
-                        author = "Ксюша",
-                        "Дар психотерапии Ялом",
-                        category = "Фильмы",
-                        year = "2001",
-                        "США",
-                        "1 ч. 30 мин.",
-                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        requiresSubscription = false
-                    ),
-                    clickListener
-                ),
-                MovieItem(
-                    RecommendationEntity(
-                        id = 1,
-                        author = "Ксюша",
-                        "Дар психотерапии Ялом",
-                        category = "Фильмы",
-                        year = "2001",
-                        "США",
-                        "1 ч. 30 мин.",
-                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        requiresSubscription = false
-                    ),
-                    clickListener
-                ),
-                MovieItem(
-                    RecommendationEntity(
-                        id = 1,
-                        author = "Ксюша",
-                        "Дар психотерапии Ялом",
-                        category = "Фильмы",
-                        year = "2001",
-                        "США",
-                        "1 ч. 30 мин.",
-                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Books/сказать жизни да.jpeg"),
-                        requiresSubscription = false
-                    ),
-                    clickListener
-                )
-            )
-        )
-    }
-
-    private fun getSeries(): VerticalContentContainer {
-        return VerticalContentContainer(
-            "Сериалы",
-            listOf(
-                SeriesItem(
-                    RecommendationEntity(
-                        1,
-                        "Ксюша",
-                        "Дар психотерапии Ялом",
-                        "Фильмы",
-                        "2001",
-                        "США",
-                        episodes = "25",
-                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
-                        requiresSubscription = false
-                    ),
-                    clickListener
-                ),
-                SeriesItem(
-                    RecommendationEntity(
-                        1,
-                        "Ксюша",
-                        "Дар психотерапии Ялом",
-                        "Фильмы",
-                        "2001",
-                        "США",
-                        episodes = "25",
-                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
-                        requiresSubscription = false
-                    ),
-                    clickListener
-                ),
-                SeriesItem(
-                    RecommendationEntity(
-                        1,
-                        "Ксюша",
-                        "Дар психотерапии Ялом",
-                        "Фильмы",
-                        "2001",
-                        "США",
-                        episodes = "25",
-                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
-                        requiresSubscription = false
-                    ),
-                    clickListener
-                ),
-                SeriesItem(
-                    RecommendationEntity(
-                        1,
-                        "Ксюша",
-                        "Дар психотерапии Ялом",
-                        "Фильмы",
-                        "2001",
-                        "США",
-                        episodes = "25",
-                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
-                        requiresSubscription = false
-                    ),
-                    clickListener
-                ),
-                SeriesItem(
-                    RecommendationEntity(
-                        1,
-                        "Ксюша",
-                        "Дар психотерапии Ялом",
-                        "Фильмы",
-                        "2001",
-                        "США",
-                        episodes = "25",
-                        content = "Фильм с элементами фэнтези, который повествует о человеке с диссоциативным расстройством личности. История частично основана на жизни реального человека – Билли Миллигана.",
-                        imageUrls = arrayListOf("https://psychological-essence.github.io/images/Series/алиенист.webp"),
-                        requiresSubscription = false
-                    ),
-                    clickListener
-                )
-            )
-        )
-    }
-
+    private fun String.getCategoryContent(list: List<RecommendationEntity>): BindableItem<*> =
+        when (this) {
+            "Книги" -> getHorizontalCategory(this, list) { BookItem(it, bookClickListener) }
+            "Фильмы" -> getHorizontalCategory(this, list) { MovieItem(it, clickListener) }
+            "Сериалы" -> getVerticalCategory(this, list) { SeriesItem(it, clickListener) }
+            else -> getVerticalCategory("Также рекомендуем", list) { BookItem(it, clickListener) }
+        }
 
     companion object {
         const val TAG = "RecommendationsFragment"

@@ -92,8 +92,9 @@ class RecommendationFragment : Fragment() {
     }
 
     private fun showRecommendation(recommendation: RecommendationEntity) {
-        showMarkdown(recommendation.content)
+        showMarkdown(recommendation.extraContent)
         binding.title.text = recommendation.title
+        binding.description.text = recommendation.content
         binding.date.text =
             context?.getString(R.string.date_recommendation, recommendation.year) ?: ""
         binding.country.text =

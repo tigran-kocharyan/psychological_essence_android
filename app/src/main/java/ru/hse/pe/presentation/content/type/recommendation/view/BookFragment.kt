@@ -80,11 +80,12 @@ class BookFragment : Fragment() {
     }
 
     private fun showRecommendation(recommendation: RecommendationEntity) {
-        showMarkdown(recommendation.content)
+        showMarkdown(recommendation.extraContent)
+        binding.description.text = recommendation.content
         binding.title.text = recommendation.title
-        binding.type.text = recommendation.type
+        binding.type.text = recommendation.genre
         binding.country.text =
-            context?.getString(R.string.country_recommendation, recommendation.country) ?: ""
+            context?.getString(R.string.country_recommendation, recommendation.country)
         binding.category.text =
             context?.getString(R.string.category_recommendation, recommendation.category) ?: ""
         binding.image.load(recommendation.imageUrls.firstOrNull()) {

@@ -29,9 +29,15 @@ class MainActivity : AppCompatActivity() {
         }
         bottom_nav.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.content -> setCurrentFragment(ContentFragment.newInstance(), ContentFragment.TAG)
+                R.id.content -> setCurrentFragment(
+                    ContentFragment.newInstance(),
+                    ContentFragment.TAG
+                )
                 R.id.shop -> setCurrentFragment(ShopFragment.newInstance(), ContentFragment.TAG)
-                R.id.profile -> {}
+                R.id.profile -> setCurrentFragment(
+                    PlaceholderFragment.newInstance(),
+                    PlaceholderFragment.TAG
+                )
             }
             true
         }

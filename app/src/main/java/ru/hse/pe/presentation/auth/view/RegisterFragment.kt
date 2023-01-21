@@ -46,6 +46,7 @@ class RegisterFragment : Fragment() {
         root = binding.root
         binding.buttonRegister.setOnClickListener { registerUser() }
         binding.buttonLogin.setOnClickListener { openLogin() }
+        binding.accept.setOnClickListener { openToU() }
     }
 
     private fun registerUser() {
@@ -135,6 +136,13 @@ class RegisterFragment : Fragment() {
                 }
                 showProgress(false)
             }
+    }
+
+    private fun openToU() {
+        ToUBottomSheetDialogFragment.newInstance().show(
+            (activity as AppCompatActivity).supportFragmentManager,
+            ToUBottomSheetDialogFragment.TAG
+        )
     }
 
     private fun showProgress(isVisible: Boolean) {

@@ -1,38 +1,33 @@
-package ru.hse.pe.presentation.content.type.fact.view
+package ru.hse.pe.presentation.auth.view
 
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.image.ImagesPlugin
-import ru.hse.pe.SharedViewModel
-import ru.hse.pe.databinding.BottomSheetFactBinding
-import ru.hse.pe.presentation.MainActivity
+import ru.hse.pe.databinding.BottomSheetTouBinding
 
 
-class FactBottomSheetDialogFragment : BottomSheetDialogFragment() {
-    private lateinit var binding: BottomSheetFactBinding
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+class ToUBottomSheetDialogFragment : BottomSheetDialogFragment() {
+    private lateinit var binding: BottomSheetTouBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = BottomSheetFactBinding.inflate(inflater, container, false)
+        binding = BottomSheetTouBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).isBottomNavVisible(false)
-        showMarkdown(sharedViewModel.fact.value?.content)
+        showMarkdown(read())
     }
 
     private fun showMarkdown(text: String?) {
@@ -54,16 +49,20 @@ class FactBottomSheetDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
+    private fun read(): String =
+        context?.assets?.open("terms_of_use.md")?.bufferedReader().use { it?.readText() ?: "" }
+
+
     companion object {
-        const val TAG = "ArticleFragment"
+        const val TAG = "ToUBottomSheetDialogFragment"
         private val MULTIPLIERS = floatArrayOf(1.5F, 1.17F, 1F, 1F, .83F, .67F)
         private const val LINK_COLOR = "#6766D8"
 
         /**
-         * Получение объекта [FactBottomSheetDialogFragment]
+         * Получение объекта [ToUBottomSheetDialogFragment]
          */
-        fun newInstance(): FactBottomSheetDialogFragment {
-            return FactBottomSheetDialogFragment()
+        fun newInstance(): ToUBottomSheetDialogFragment {
+            return ToUBottomSheetDialogFragment()
         }
     }
 }
