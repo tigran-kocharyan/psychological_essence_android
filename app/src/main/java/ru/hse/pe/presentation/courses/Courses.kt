@@ -16,12 +16,14 @@ import ru.hse.pe.presentation.courses.groupie.courseSmall.CourseSmall
 import ru.hse.pe.presentation.courses.groupie.courseSmall.CourseSmallItem
 import ru.hse.pe.presentation.courses.groupie.MainCourseContainer
 import ru.hse.pe.presentation.courses.viewmodel.CourseViewModel
+import ru.hse.pe.presentation.courses.viewmodel.TopAbbBarViewModel
 import ru.hse.pe.utils.Utils.openFragment
 
 class Courses : AppCompatActivity() {
     lateinit var bindingClass: ActivityCoursesBinding
     private val adapterBig = CourseBigAdapter()
     private val courseModel: CourseViewModel by viewModels()
+    private val topAppBarModel: TopAbbBarViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,7 @@ class Courses : AppCompatActivity() {
 
         val courses = listOf(getAllCourses())
         bindingClass.courseContainter.adapter = GroupieAdapter().apply { addAll(courses) }
+        topAppBarModel.title.value = getString(R.string.courses)
     }
 
     private fun getAllCourses(): BindableItem<MainCourseContainerBinding> {
