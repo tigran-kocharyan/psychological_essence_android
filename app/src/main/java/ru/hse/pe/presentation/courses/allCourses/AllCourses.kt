@@ -12,13 +12,16 @@ import ru.hse.pe.TopAppBarFragment
 import ru.hse.pe.databinding.ActivityAllCoursesBinding
 import ru.hse.pe.databinding.AllCoursesContainerBinding
 import ru.hse.pe.databinding.AllCoursesItemBinding
+import ru.hse.pe.presentation.courses.BottomSheetCourse.ActionBottomCourse
+import ru.hse.pe.presentation.courses.BottomSheetCourse.ItemClickListener
 import ru.hse.pe.presentation.courses.viewmodel.TopAbbBarViewModel
 import ru.hse.pe.utils.Utils.openFragment
 
-class AllCourses : AppCompatActivity() {
+class AllCourses : AppCompatActivity(), ItemClickListener {
     private lateinit var binding: ActivityAllCoursesBinding
     private val dataModel: TopAbbBarViewModel by viewModels()
 
+    // Экран со списком курсов (при нажатии на кнопку смотреть все)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAllCoursesBinding.inflate(layoutInflater)
@@ -26,9 +29,19 @@ class AllCourses : AppCompatActivity() {
 
         val courses = listOf(getAllCourses())
         binding.rcview.adapter = GroupieAdapter().apply { addAll(courses) }
+
         openFragment(R.id.topappbar, TopAppBarFragment.newInstance())
         dataModel.title.value = getString(R.string.newCourses)
+
     }
+
+    private fun onCourseClick(url: String) {
+        val bottomDialogFrag = ActionBottomCourse.newInstance()
+        bottomDialogFrag.show(
+            supportFragmentManager, ActionBottomCourse.TAG
+        )
+    }
+
 
     private fun getAllCourses(): BindableItem<AllCoursesContainerBinding> {
         return AllCoursesContainer(
@@ -36,30 +49,36 @@ class AllCourses : AppCompatActivity() {
                 AllCoursesItem(
                     "Кто я и чего хочу? Определяем ценности",
                     1,
-                    R.drawable.course_small1
+                    R.drawable.course_small1,
+                    ::onCourseClick,
                 ),
                 AllCoursesItem(
                     "Как наладить контакст с собою",
                     2,
-                    R.drawable.course_small2
+                    R.drawable.course_small2,
+                    ::onCourseClick,
                 ),
                 AllCoursesItem(
                     "Кто я и чего хочу? Определяем ценности",
                     8,
-                    R.drawable.course_small3
+                    R.drawable.course_small3,
+                    ::onCourseClick,
                 ),
                 AllCoursesItem(
                     "Выгорание: как вернуть интерес к работе и жизни",
                     3,
-                    R.drawable.course_small1
+                    R.drawable.course_small1,
+                    ::onCourseClick,
                 ),
             ),
         )
     }
 
-    private fun onItemClick(url: String) {
-        Log.d("click", "clicked")
+    override fun onItemClick(item: String?) {
+        //
     }
+
+
 }
 
 class AllCoursesContainer(
@@ -79,12 +98,16 @@ class AllCoursesContainer(
 class AllCoursesItem(
     private val title: String,
     private val duration: Int,
-    private val imgId: Int
+    private val imgId: Int,
+    private val onClick: (url: String) -> Unit,
 ) : BindableItem<AllCoursesItemBinding>() {
 
     override fun bind(binding: AllCoursesItemBinding, position: Int) {
         binding.titleAllCoursesItem.text = title
-        // binding.durAllICoursesItem.text = stringResource(R.string.durationCourses)
+
+        binding.consLayoutAllCourses.setOnClickListener {
+            onClick("")
+        }
 
         when (duration) {
             1 -> binding.durAllICoursesItem.text = "Длительность: $duration месяц"

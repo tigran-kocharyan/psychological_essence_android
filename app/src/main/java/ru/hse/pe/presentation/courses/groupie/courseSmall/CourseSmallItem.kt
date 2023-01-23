@@ -9,11 +9,16 @@ import ru.hse.pe.databinding.CourseSmallItemBinding
 class CourseSmallItem(
     private val title: String,
     private val imageId: Int,
+    private val onClick: (url: String) -> Unit,
 ) : BindableItem<CourseSmallItemBinding>(){
 
-    override fun bind(viewHolder: CourseSmallItemBinding, position: Int) {
-        viewHolder.root.titleSmallCourse.text = title
-        viewHolder.root.imgCourse.setImageResource(imageId)
+    override fun bind(binding: CourseSmallItemBinding, position: Int) {
+        binding.root.titleSmallCourse.text = title
+        binding.root.imgCourse.setImageResource(imageId)
+
+        binding.consLayoutSmall.setOnClickListener {
+            onClick("")
+        }
     }
 
     override fun getLayout() = R.layout.course_small_item

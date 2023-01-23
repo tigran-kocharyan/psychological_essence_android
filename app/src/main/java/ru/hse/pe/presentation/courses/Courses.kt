@@ -10,6 +10,8 @@ import ru.hse.pe.R
 import ru.hse.pe.TopAppBarFragment
 import ru.hse.pe.databinding.ActivityCoursesBinding
 import ru.hse.pe.databinding.MainCourseContainerBinding
+import ru.hse.pe.presentation.courses.BottomSheetCourse.ActionBottomCourse
+import ru.hse.pe.presentation.courses.BottomSheetCourse.ItemClickListener
 import ru.hse.pe.presentation.courses.adapter.CourseBigAdapter
 import ru.hse.pe.presentation.courses.groupie.courseBig.CourseBigItem
 import ru.hse.pe.presentation.courses.groupie.courseSmall.CourseSmall
@@ -19,12 +21,11 @@ import ru.hse.pe.presentation.courses.viewmodel.CourseViewModel
 import ru.hse.pe.presentation.courses.viewmodel.TopAbbBarViewModel
 import ru.hse.pe.utils.Utils.openFragment
 
-class Courses : AppCompatActivity() {
+class Courses : AppCompatActivity(), ItemClickListener {
     lateinit var bindingClass: ActivityCoursesBinding
-    private val adapterBig = CourseBigAdapter()
-    private val courseModel: CourseViewModel by viewModels()
     private val topAppBarModel: TopAbbBarViewModel by viewModels()
 
+    // Главный экран курсов
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingClass = ActivityCoursesBinding.inflate(layoutInflater)
@@ -42,51 +43,60 @@ class Courses : AppCompatActivity() {
             listOf(
                 CourseBigItem(
                     "Поднять самооценку",
-                    R.drawable.course_big
+                    R.drawable.course_big,
+                    ::onCourseClick
                 ),
                 CourseBigItem(
                     "Обрести спокойствие",
-                    R.drawable.course_big
+                    R.drawable.course_big,
+                    ::onCourseClick
                 ),
                 CourseBigItem(
                     "Избавиться от токсиков",
-                    R.drawable.course_big
+                    R.drawable.course_big,
+                    ::onCourseClick
                 )
             ),
             listOf(
                 CourseSmall(
-                    "Новинки", "Смотреть все", ::onItemClick,
+                    "Новинки", "Смотреть все",
                     listOf(
                         CourseSmallItem(
                             "Кто я и чего я не хочу?",
-                            R.drawable.course_small1
+                            R.drawable.course_small1,
+                            ::onCourseClick,
                         ),
                         CourseSmallItem(
                             "Как поднять самооценку",
-                            R.drawable.course_small2
+                            R.drawable.course_small2,
+                            ::onCourseClick,
                         ),
                         CourseSmallItem(
                             "Техника бей-беги",
-                            R.drawable.course_small3
+                            R.drawable.course_small3,
+                            ::onCourseClick,
                         ),
                     )
                 )
             ),
             listOf(
                 CourseSmall(
-                    "Специально для вас", "Смотреть все", ::onItemClick,
+                    "Специально для вас", "Смотреть все",
                     listOf(
                         CourseSmallItem(
                             "Кто я и чего хочу? Определяем ценности",
-                            R.drawable.course_small1
+                            R.drawable.course_small1,
+                            ::onCourseClick,
                         ),
                         CourseSmallItem(
                             "Кто я и чего хочу? Определяем ценности",
-                            R.drawable.course_small2
+                            R.drawable.course_small2,
+                            ::onCourseClick,
                         ),
                         CourseSmallItem(
                             "Кто я и чего хочу? Определяем ценности",
-                            R.drawable.course_small3
+                            R.drawable.course_small3,
+                            ::onCourseClick,
                         ),
                     )
                 )
@@ -94,8 +104,15 @@ class Courses : AppCompatActivity() {
         )
     }
 
-    private fun onItemClick(url: String) {
-        Log.d("click", "clicked")
+     private fun onCourseClick(url: String) {
+         val bottomDialogFrag = ActionBottomCourse.newInstance()
+         bottomDialogFrag.show(
+             supportFragmentManager, ActionBottomCourse.TAG
+         )
+    }
+
+    override fun onItemClick(item: String?) {
+        //
     }
 }
 

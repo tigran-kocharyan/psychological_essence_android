@@ -1,15 +1,9 @@
 package ru.hse.pe.presentation.courses.groupie
 
-import android.content.Intent
-import android.util.Log
 import android.view.View
-import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.R
-import ru.hse.pe.databinding.ActivityAllCoursesBinding
 import ru.hse.pe.databinding.MainCourseContainerBinding
 
 

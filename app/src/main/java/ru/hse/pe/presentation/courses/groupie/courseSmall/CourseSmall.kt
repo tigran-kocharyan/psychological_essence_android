@@ -12,7 +12,6 @@ import ru.hse.pe.presentation.courses.allCourses.AllCourses
 class CourseSmall(
     private val name: String ?= null,
     private val seeAll: String ?= null,
-    private val onClick: (url: String) -> Unit,
     private val items: List<BindableItem<*>>
 ) : BindableItem<CourseSmallBinding>() {
 
@@ -36,6 +35,6 @@ class CourseSmall(
     }
 
     override fun toString(): String {
-        return "CourseSmall(name=$name, seeAll=$seeAll, onClick=$onClick, items=$items)"
+        return "CourseSmall(name=$name, seeAll=$seeAll,  items=$items)"
     }
 }
