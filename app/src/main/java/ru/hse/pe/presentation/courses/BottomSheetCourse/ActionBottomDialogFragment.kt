@@ -5,24 +5,44 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import ru.hse.pe.R
+import ru.hse.pe.databinding.BottomCourseLayoutBinding
+import ru.hse.pe.presentation.courses.lesson.Lesson
+import ru.hse.pe.presentation.courses.lesson.LessonAdapter
 import java.lang.RuntimeException
 
 class ActionBottomDialogFragment : BottomSheetDialogFragment(), View.OnClickListener{
     private var mListener: ItemClickListener? = null
+    private lateinit var bindingClass: BottomCourseLayoutBinding
+    private val adapter = LessonAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.bottom_course_layout, container, false)
+    ): View {
+        bindingClass = BottomCourseLayoutBinding.inflate(inflater, container, false)
+        return bindingClass.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        bindingClass.apply {
+            rcviewLesson.layoutManager = LinearLayoutManager(bindingClass.root.context, LinearLayoutManager.VERTICAL, false)
+            rcviewLesson.adapter = adapter
+
+            val lesson1 = Lesson("Грани моего Я. Из чего складывается наше представление о себе",
+                "Выделите качества своей личности и сильные черты, которые помогут реализоваться и достичь целей. Познакомитесь с моделью личности Big Five. Узнаете, как черты личности влияют на поведение и общение с окружающими.")
+            val lesson2 = Lesson("Поднять самооценку 2", "sdasad")
+            val lesson3 = Lesson("Поднять самооценку 3", "sadsadsadas")
+
+            adapter.addLesson(lesson1)
+            adapter.addLesson(lesson1)
+            adapter.addLesson(lesson1)
+        }
     }
 
     override fun onClick(v: View?) {

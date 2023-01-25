@@ -1,17 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="com.google.android.material.BottomSheet">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:background="@drawable/rounded_corners_top_left_right_10dp"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners_top_left_right_10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="44dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/icon_line_close" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:gravity="center"
+                    android:lineSpacingExtra="6sp"
+                    android:text="Пример"
+                    android:textColor="@color/blackLight"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="44dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/icon_line_share" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/course_img" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingTop="32dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="32dp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="373dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="Кто я и чего хочу? Определяем ценности"
+                    android:textColor="@color/blackLight"
+                    android:textSize="20sp"
+                    app:lineHeight="26sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Длительность: 2 месяца"
+                        android:textColor="@color/blackLight" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="7 модулей"
+                        android:textColor="@color/blackLight" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="О курсе..." />
+
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="Содержание курса"
+                    android:textColor="@color/blackLight"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcviewLesson"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:layout_marginTop="16dp" >
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStartCourse"
+                style="@style/MaterialButtonPurple"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:layout_weight="1"
+                android:text="@string/startCourse" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -88,7 +88,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/montserrat_semibold2"
                 android:lineSpacingExtra="6sp"
                 android:textColor="#22272f"
                 android:textSize="20sp"
