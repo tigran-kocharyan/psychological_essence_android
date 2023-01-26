@@ -125,7 +125,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcviewLesson"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp"
+                    android:layout_height="250dp"
                     android:layout_marginTop="16dp" >
 
                 </androidx.recyclerview.widget.RecyclerView>

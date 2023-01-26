@@ -5,20 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.hse.pe.R
-import ru.hse.pe.databinding.CourseBigItemBinding
 import ru.hse.pe.databinding.LessonItemBinding
-import ru.hse.pe.presentation.courses.Course
 
 class LessonAdapter: RecyclerView.Adapter<LessonAdapter.BackgroundHolder>() {
 
-    val lessonsList =  ArrayList<Lesson>()
+    val lessonsList =  ArrayList<LessonData>()
 
 
     class BackgroundHolder(item: View): RecyclerView.ViewHolder(item) {
         val binding = LessonItemBinding.bind(item)
 
 
-        fun bind(lesson: Lesson) = with(binding){
+        fun bind(lesson: LessonData) = with(binding){
             binding.titleLesson.text = lesson.title
             binding.descLesson.text = lesson.desc
 
@@ -59,7 +57,7 @@ class LessonAdapter: RecyclerView.Adapter<LessonAdapter.BackgroundHolder>() {
         return lessonsList.size
     }
 
-    fun addLesson(lesson: Lesson){
+    fun addLesson(lesson: LessonData){
         lessonsList.add(lesson)
         notifyDataSetChanged()
     }
