@@ -1,4 +1,10 @@
-package ru.hse.pe
+package ru.hse.pe.presentation.courses.viewmodel
 
-class TopAppBarViewModel {
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+
+class TopAbbBarViewModel : ViewModel() {
+    val title: MutableLiveData<String> by lazy{
+        MutableLiveData<String>()
+    }
 }
