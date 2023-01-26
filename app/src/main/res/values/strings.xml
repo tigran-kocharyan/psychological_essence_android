@@ -31,6 +31,18 @@
     <string name="register_hintRepeatPassword">Повторите пароль</string>
 
 
+    /* Курсы */
+    <string name="courses">Курсы</string>
+    <string name="course">Курс</string>
+    <string name="newCourses">Новинки</string>
+    <string name="specCourses">Специально для вас</string>
+    <string name="seeAll">Смотреть все</string>
+    <string name="durationCourses">Длительность ${duration} месяца</string>
+    <string name="goToTest">Перейти к тесту</string>
+    /* Реклама */
+    <string name="develop">Прокачай себя вместе с нами всего за 99 ₽/мес.</string>
+
+
     /* Меню */
     <string name="menu_title">КАТЕГОРИИ</string>
 
@@ -98,6 +110,7 @@
 
 
     /* Test*/
+    <string name="tests">Тесты</string>
     <string name="test_back">Назад</string>
     <string name="test_go">Следующий вопрос</string>
     <string name="test_skip">Пропустить</string>
