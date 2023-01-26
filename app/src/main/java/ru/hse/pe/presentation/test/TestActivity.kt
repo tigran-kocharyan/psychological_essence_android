@@ -3,6 +3,7 @@ package ru.hse.pe.presentation.test
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import ru.hse.pe.R
 import ru.hse.pe.databinding.ActivityTestBinding
 import ru.hse.pe.domain.model.TestItem
 import ru.hse.pe.presentation.test.utils.theme.TestTheme
@@ -18,8 +19,10 @@ class TestActivity : ComponentActivity() {
         binding = ActivityTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        
+        openFragment(R.id.topappbar, TopAppBarFragment.newInstance())
     }
+
+
 }
 
 //class TestActivity : ComponentActivity() {

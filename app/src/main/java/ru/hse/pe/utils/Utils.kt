@@ -3,6 +3,7 @@ package ru.hse.pe.utils
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,6 +18,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.Fragment
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.material.snackbar.Snackbar
@@ -39,6 +41,14 @@ object Utils {
             textAlignment = View.TEXT_ALIGNMENT_CENTER
         }
     }
+
+    fun AppCompatActivity.openFragment(holder: Int, fragment: Fragment){
+        supportFragmentManager
+            .beginTransaction()
+            .replace(holder, fragment)
+            .commit()
+    }
+
 
     fun View.setGone() = run { this.visibility = View.GONE }
     fun View.setVisible() = run { this.visibility = View.VISIBLE }
