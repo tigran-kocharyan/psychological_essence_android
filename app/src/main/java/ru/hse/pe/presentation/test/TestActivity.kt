@@ -2,13 +2,15 @@ package ru.hse.pe.presentation.test
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import ru.hse.pe.R
 import ru.hse.pe.TopAppBarFragment
 import ru.hse.pe.databinding.ActivityTestBinding
 import ru.hse.pe.domain.model.TestItem
+import ru.hse.pe.utils.Utils.openFragment
 
 
-class TestActivity : ComponentActivity() {
+class TestActivity : AppCompatActivity() {
     public lateinit var testItem: TestItem
     private lateinit var binding: ActivityTestBinding
     val context = this@TestActivity
