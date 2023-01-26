@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import ru.hse.pe.databinding.FragmentTopAppBarBinding
 
 class TopAppBarFragment : Fragment() {
+
     private lateinit var binding: FragmentTopAppBarBinding
     private val dataModel: TopAbbBarViewModel by activityViewModels()
 
