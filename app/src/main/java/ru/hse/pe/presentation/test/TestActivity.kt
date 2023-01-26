@@ -2,17 +2,20 @@ package ru.hse.pe.presentation.test
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ru.hse.pe.R
 import ru.hse.pe.TopAppBarFragment
 import ru.hse.pe.databinding.ActivityTestBinding
 import ru.hse.pe.domain.model.TestItem
+import ru.hse.pe.presentation.courses.viewmodel.TopAbbBarViewModel
 import ru.hse.pe.utils.Utils.openFragment
 
 
 class TestActivity : AppCompatActivity() {
     public lateinit var testItem: TestItem
     private lateinit var binding: ActivityTestBinding
+    private val topAppBarModel: TopAbbBarViewModel by viewModels()
     val context = this@TestActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,10 +25,12 @@ class TestActivity : AppCompatActivity() {
 
 
         openFragment(R.id.topappbar, TopAppBarFragment.newInstance())
+        topAppBarModel.title.value = getString(R.string.tests)
     }
-
-
 }
+
+
+
 
 //class TestActivity : ComponentActivity() {
 //    public lateinit var testItem: TestItem
