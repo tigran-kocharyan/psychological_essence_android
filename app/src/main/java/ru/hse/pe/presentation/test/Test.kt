@@ -89,8 +89,6 @@ fun ShowData(navController: NavController, context: TestActivity) {
         TestItem.answersBoolean = answersBoolean
         TestItem.context = context
 
-
-
         Column(
             modifier = Modifier.background(Color.White)
         ) {
