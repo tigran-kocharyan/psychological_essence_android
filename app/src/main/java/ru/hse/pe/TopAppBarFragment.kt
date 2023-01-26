@@ -30,6 +30,8 @@ class TopAppBarFragment : Fragment() {
         binding.imageBack.setOnClickListener{
             activity?.finish()
         }
+
+
     }
 
     companion object {
