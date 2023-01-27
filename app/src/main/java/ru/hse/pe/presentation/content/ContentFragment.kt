@@ -11,6 +11,7 @@ import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
+import ru.hse.pe.presentation.content.type.technique.TechniquesFragment
 
 /**
  * [Fragment] to display the trending events.
@@ -48,6 +49,12 @@ class ContentFragment : Fragment() {
             setCurrentFragment(
                 FactsFragment.newInstance(),
                 FactsFragment.TAG
+            )
+        }
+        binding.techniques.setOnClickListener {
+            setCurrentFragment(
+                TechniquesFragment.newInstance(),
+                TechniquesFragment.TAG
             )
         }
     }

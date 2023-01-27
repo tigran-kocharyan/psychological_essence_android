@@ -25,6 +25,12 @@ interface ApiService {
     fun getArticles(): Single<List<ArticleEntity>>
 
     /**
+     * Method calls API to get the techniques data from DB
+     */
+    @GET(GET_TECHNIQUES)
+    fun getTechniques(): Single<List<ArticleEntity>>
+
+    /**
      * Method calls API to get the recommendations data from DB
      */
     @GET(GET_RECOMMENDATIONS)
@@ -50,6 +56,7 @@ interface ApiService {
 
     companion object {
         private const val GET_ARTICLES = "articles"
+        private const val GET_TECHNIQUES = "techniques"
         private const val GET_QUIZZES = "quizzes"
         private const val GET_RECOMMENDATIONS = "recommendations"
         private const val GET_FACTS = "facts"

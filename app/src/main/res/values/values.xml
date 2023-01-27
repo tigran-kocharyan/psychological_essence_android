@@ -7,10 +7,11 @@
     </style>
 
     <style name="AppTheme.Text">
-        <item name="android:lineSpacingMultiplier">1.2</item>
+
     </style>
 
     <style name="AppTheme.Text.Title" parent="AppTheme.Text">
+        <item name="android:lineSpacingMultiplier">1.2</item>
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/blackLight</item>
@@ -18,6 +19,7 @@
 
     <style name="AppTheme.Text.Content.Title" parent="AppTheme.Text">
         <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">@color/blackLight</item>

@@ -3,7 +3,6 @@ package ru.hse.pe.presentation.auth.view
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -12,8 +11,6 @@ import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -27,7 +24,6 @@ import ru.hse.pe.domain.interactor.AuthInteractor
 import ru.hse.pe.domain.model.UserEntity
 import ru.hse.pe.presentation.auth.viewmodel.AuthViewModel
 import ru.hse.pe.presentation.auth.viewmodel.AuthViewModelFactory
-import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
 import ru.hse.pe.utils.Utils.setGone
@@ -76,6 +72,7 @@ class RegisterFragment : Fragment() {
         binding.buttonRegister.setOnClickListener { registerUser() }
         binding.buttonLogin.setOnClickListener { openLogin() }
         binding.accept.setOnClickListener { openToU() }
+//        observeLiveData()
     }
 
     private fun registerUser() {
@@ -137,10 +134,10 @@ class RegisterFragment : Fragment() {
                     credentials.password,
                     false
                 )
-                viewModel.addUser(user)
                 users.child(uid)
                     .setValue(user)
                     .addOnSuccessListener {
+                        viewModel.addUser(user)
                         update()
                     }.addOnFailureListener {
                         getSnackbar(binding.root, it.message.toString()).show()
@@ -212,20 +209,20 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun observeLiveData() {
-        viewModel.errorLiveData.observe(viewLifecycleOwner, this::showError)
-        viewModel.progressLiveData.observe(viewLifecycleOwner, this::showProgress)
-    }
+//    private fun observeLiveData() {
+//        viewModel.errorLiveData.observe(viewLifecycleOwner, this::showError)
+//        viewModel.progressLiveData.observe(viewLifecycleOwner, this::showProgress)
+//    }
 
     private fun showProgress(isVisible: Boolean) {
         binding.progressbar.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
-
-    private fun showError(throwable: Throwable) {
-        Log.d(ArticlesFragment.TAG, "showError() called with: throwable = $throwable")
-        Snackbar.make(binding.root, throwable.toString(), BaseTransientBottomBar.LENGTH_SHORT)
-            .show()
-    }
+//
+//    private fun showError(throwable: Throwable) {
+//        Log.d(ArticlesFragment.TAG, "showError() called with: throwable = $throwable")
+//        Snackbar.make(binding.root, throwable.toString(), BaseTransientBottomBar.LENGTH_SHORT)
+//            .show()
+//    }
 
     companion object {
         const val TAG = "RegisterFragment"

@@ -10,6 +10,7 @@ import ru.hse.pe.presentation.content.ContentFragment
 import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
+import ru.hse.pe.presentation.content.type.technique.TechniquesFragment
 import javax.inject.Singleton
 
 /**
@@ -29,6 +30,7 @@ interface AppComponent {
     fun inject(fragment: FactsFragment)
     fun inject(fragment: RecommendationsFragment)
     fun inject(fragment: ArticlesFragment)
+    fun inject(fragment: TechniquesFragment)
     fun inject(fragment: RegisterFragment)
 
     @Component.Builder
