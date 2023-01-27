@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.auth.view.AuthFragment
+import ru.hse.pe.presentation.auth.view.RegisterFragment
 import ru.hse.pe.presentation.content.ContentFragment
 import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
@@ -28,6 +29,7 @@ interface AppComponent {
     fun inject(fragment: FactsFragment)
     fun inject(fragment: RecommendationsFragment)
     fun inject(fragment: ArticlesFragment)
+    fun inject(fragment: RegisterFragment)
 
     @Component.Builder
     interface Builder {

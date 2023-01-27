@@ -8,13 +8,19 @@ import ru.hse.pe.domain.model.FactEntity
 import ru.hse.pe.domain.model.RecommendationEntity
 
 class SharedViewModel : ViewModel() {
+    private var _uid = MutableLiveData<String>(null)
     private var _article = MutableLiveData<ArticleEntity?>(null)
     private var _fact = MutableLiveData<FactEntity?>(null)
     private var _recommendation = MutableLiveData<RecommendationEntity?>(null)
 
+    val uid: LiveData<String> get() = _uid
     var article: LiveData<ArticleEntity?> = _article
     var recommendation: LiveData<RecommendationEntity?> = _recommendation
     var fact: LiveData<FactEntity?> = _fact
+
+    fun setUser(uid: String) {
+        _uid.value = uid
+    }
 
     fun setArticle(article: ArticleEntity) {
         _article.value = article

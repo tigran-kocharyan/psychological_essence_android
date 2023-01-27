@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import ru.hse.pe.R
+import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentLoginBinding
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.utils.Utils.getLongSnackbar
@@ -25,6 +27,8 @@ class LoginFragment : Fragment() {
     private lateinit var root: View
 
     private var auth = FirebaseAuth.getInstance()
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

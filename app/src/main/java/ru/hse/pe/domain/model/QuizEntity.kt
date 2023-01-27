@@ -8,7 +8,6 @@ import kotlinx.android.parcel.Parcelize
 data class QuizEntity(
     @SerializedName("id") val id: Int? = 0,
     @SerializedName("category") val category: String? = "",
-    @SerializedName("filename") val filename: String? = "",
     @SerializedName("name") val name: String? = "",
     @SerializedName("description") val description: String? = "",
     @SerializedName("time") val time: String? = "",

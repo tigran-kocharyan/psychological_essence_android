@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.hse.pe.BuildConfig
-import ru.hse.pe.data.api.ContentService
+import ru.hse.pe.data.api.ApiService
 import javax.inject.Singleton
 
 
@@ -21,12 +21,12 @@ import javax.inject.Singleton
 class RetrofitModule {
     @Provides
     @Singleton
-    fun provideAuthService(builder: Retrofit.Builder, gson: Gson): ContentService = builder
+    fun provideApiService(builder: Retrofit.Builder, gson: Gson): ApiService = builder
         .baseUrl(SERVER_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
-        .create(ContentService::class.java)
+        .create(ApiService::class.java)
 
 
     @Provides
