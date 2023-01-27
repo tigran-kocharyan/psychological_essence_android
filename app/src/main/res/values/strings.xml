@@ -39,6 +39,7 @@
     <string name="seeAll">Смотреть все</string>
     <string name="durationCourses">Длительность ${duration} месяца</string>
     <string name="goToTest">Перейти к тесту</string>
+    <string name="tempLorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam dictum nulla nullam. Lorem ipsum dolor sit amet, consectetur adipiscing</string>
     /* Реклама */
     <string name="develop">Прокачай себя вместе с нами всего за 99 ₽/мес.</string>
 
