@@ -1,15 +1,23 @@
 package ru.hse.pe.presentation.test
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieAdapter
+import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.R
 import ru.hse.pe.TopAppBarFragment
 import ru.hse.pe.databinding.ActivityTestBinding
+import ru.hse.pe.databinding.SpecItemTestBinding
+import ru.hse.pe.databinding.TestContainerBinding
 import ru.hse.pe.domain.model.TestItem
 import ru.hse.pe.presentation.courses.viewmodel.TopAbbBarViewModel
 import ru.hse.pe.utils.Utils.openFragment
+import java.util.Collections.addAll
 
 
 class TestActivity : AppCompatActivity() {
@@ -23,11 +31,129 @@ class TestActivity : AppCompatActivity() {
         binding = ActivityTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val tests = listOf(getSpecTests(), getAllTests())
+        binding.rcView.adapter = GroupAdapter<GroupieViewHolder>().apply { addAll(tests) }
 
         openFragment(R.id.topappbar, TopAppBarFragment.newInstance())
         topAppBarModel.title.value = getString(R.string.tests)
     }
+
+
+    private fun getSpecTests(): BindableItem<TestContainerBinding> {
+        return TestContainter(
+            getString(R.string.specCourses), ::onTestClick,
+            listOf(
+                SpecTestItem(
+                    "Тест на определение типа личности",
+                    24,
+                    10,
+                    R.drawable.exampl
+                ),
+                SpecTestItem(
+                    "Тест на определение типа личности",
+                    24,
+                    10,
+                    R.drawable.exampl
+                ),
+                SpecTestItem(
+                    "Тест на определение типа личности",
+                    24,
+                    10,
+                    R.drawable.exampl
+                ),
+            ),
+        )
+    }
+
+    private fun getAllTests(): BindableItem<TestContainerBinding> {
+        return TestContainter(
+            getString(R.string.tests), ::onTestClick,
+            listOf(
+                SpecTestItem(
+                    "Тест на определение типа личности",
+                    24,
+                    10,
+                    R.drawable.exampl
+                ),
+                SpecTestItem(
+                    "Тест на определение типа личности",
+                    24,
+                    10,
+                    R.drawable.exampl
+                ),
+                SpecTestItem(
+                    "Тест на определение типа личности",
+                    24,
+                    10,
+                    R.drawable.exampl
+                ),
+            ),
+        )
+    }
+
+    private fun onTestClick(url: String) {
+
+    }
 }
+
+class TestContainter(
+    private val name: String,
+    private val onClick: (url: String) -> Unit,
+    private val items: List<BindableItem<*>>
+) : BindableItem<TestContainerBinding>() {
+    override fun bind(binding: TestContainerBinding, position: Int) {
+        binding.titleTest.text = name
+        binding.recyclerView.adapter = GroupieAdapter().apply { addAll(items) }
+    }
+
+    override fun getLayout() = R.layout.test_container
+
+    override fun initializeViewBinding(view: View): TestContainerBinding {
+        return TestContainerBinding.bind(view)
+    }
+}
+
+class SpecTestItem(
+    private val title: String,
+    private val countQues: Int,
+    private val time: Int,
+    private val imageId: Int,
+) : BindableItem<SpecItemTestBinding>() {
+    override fun bind(binding: SpecItemTestBinding, position: Int) {
+        binding.specNameTest.text = title
+        binding.specTestQues.text = "$countQues вопроса"
+        binding.specTestTime.text = "$time минут"
+        binding.specImageTest.setImageResource(R.drawable.exampl)
+    }
+
+    override fun getLayout() = R.layout.spec_item_test
+
+    override fun initializeViewBinding(view: View): SpecItemTestBinding {
+        return SpecItemTestBinding.bind(view)
+    }
+}
+
+class testItem(
+    private val title: String,
+    private val desc: String,
+    private val countQues: Int,
+    private val time: Int,
+    private val imageId: Int,
+) : BindableItem<SpecItemTestBinding>() {
+    override fun bind(binding: SpecItemTestBinding, position: Int) {
+        binding.specNameTest.text = title
+        binding.specTestQues.text = "$countQues вопроса"
+        binding.specTestTime.text = "$time минут"
+        binding.specImageTest.setImageResource(R.drawable.exampl)
+    }
+
+    override fun getLayout() = R.layout.item_test
+
+    override fun initializeViewBinding(view: View): SpecItemTestBinding {
+        return SpecItemTestBinding.bind(view)
+    }
+}
+
 
 
 
