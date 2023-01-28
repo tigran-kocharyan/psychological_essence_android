@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -165,6 +167,7 @@ class TestItem(
         binding.quesItemTest.text = "$countQues вопроса"
         binding.timeItemTest.text = "Время прохождения: $time минут"
         binding.imgItemTest.setImageResource(R.drawable.exampl)
+     //   binding.circleTestItem.drawable.colorFilter
     }
 
     override fun getLayout() = R.layout.item_test
