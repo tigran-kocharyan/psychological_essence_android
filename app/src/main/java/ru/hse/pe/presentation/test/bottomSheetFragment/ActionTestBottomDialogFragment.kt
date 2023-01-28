@@ -13,7 +13,7 @@ import ru.hse.pe.databinding.BottomTestLayoutBinding
 import java.lang.RuntimeException
 
 
-class ActionBottomDialogFragment : BottomSheetDialogFragment(), View.OnClickListener{
+class ActionTestBottomDialogFragment : BottomSheetDialogFragment(), View.OnClickListener{
     private var mListener: ItemClickListenerTest? = null
     private lateinit var bindingClass: BottomTestLayoutBinding
    // private val adapter = LessonAdapter()

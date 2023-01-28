@@ -15,6 +15,7 @@ import ru.hse.pe.TopAppBarFragment
 import ru.hse.pe.databinding.*
 import ru.hse.pe.domain.model.TestItem
 import ru.hse.pe.presentation.courses.viewmodel.TopAbbBarViewModel
+import ru.hse.pe.presentation.test.bottomSheetFragment.ActionTestBottom
 import ru.hse.pe.utils.Utils.openFragment
 
 
@@ -34,7 +35,16 @@ class TestActivity : AppCompatActivity() {
 
         openFragment(R.id.topappbar, TopAppBarFragment.newInstance())
         topAppBarModel.title.value = getString(R.string.tests)
+
     }
+
+    private fun onCourseClick(url: String) {
+        val bottomDialogFrag = ActionTestBottom.newInstance()
+        bottomDialogFrag.show(
+            supportFragmentManager, ActionTestBottom.TAG
+        )
+    }
+
 
 
     private fun getSpecTests(): BindableItem<SpecTestContainerBinding> {
@@ -73,7 +83,6 @@ class TestActivity : AppCompatActivity() {
                     24,
                     10,
                     R.drawable.exampl,
-                    context
                 ),
                 TestItem(
                     "Тест на определение типа личности",
@@ -81,7 +90,6 @@ class TestActivity : AppCompatActivity() {
                     24,
                     10,
                     R.drawable.exampl,
-                    context
                 ),
                 TestItem(
                     "Тест на определение типа личности",
@@ -89,7 +97,6 @@ class TestActivity : AppCompatActivity() {
                     24,
                     10,
                     R.drawable.exampl,
-                    context
                 ),
             ),
         )
@@ -163,7 +170,6 @@ class TestItem(
     private val countQues: Int,
     private val time: Int,
     private val imageId: Int,
-    private val context: TestActivity,
 ) : BindableItem<ItemTestBinding>() {
     override fun bind(binding: ItemTestBinding, position: Int) {
         binding.nameItemTest.text = title
@@ -171,6 +177,8 @@ class TestItem(
         binding.quesItemTest.text = "$countQues вопроса"
         binding.timeItemTest.text = "Время прохождения: $time минут"
         binding.imgItemTest.setImageResource(R.drawable.exampl)
+
+
 
         val colors = listOf(R.color.skin, R.color.red, R.color.blue)
         binding.circleTestItem.setColorFilter(colors[(0..2).random()], PorterDuff.Mode.ADD)
