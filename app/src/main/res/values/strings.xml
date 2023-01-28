@@ -377,4 +377,5 @@
     <string name="OHQVeryLowRes">Вы находитесь в состоянии неудовлетворенности жизнью, не видите целей в жизни, практически не испытываете радость и удовольствие от бытия.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="startTest">Пройти тест</string>
 </resources>
