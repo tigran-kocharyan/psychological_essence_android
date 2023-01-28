@@ -9,6 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:elevation="10dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="4dp"
         app:cardMaxElevation="0dp"
@@ -77,29 +78,62 @@
                 app:layout_constraintStart_toEndOf="@+id/cardView"
                 app:layout_constraintTop_toBottomOf="@+id/timeItemTest" />
 
-            <TextView
+            <com.ms.square.android.expandabletextview.ExpandableTextView
                 android:id="@+id/descItemTest"
-                android:layout_width="270dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="12dp"
-                android:fontFamily="@font/montserrat_regular"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam dictum nulla nullam. Lorem ipsum dolor sit amet, consectetur adipiscing"
-                android:textColor="@color/blackDark"
-                android:textSize="12sp"
+                android:gravity="center"
+                app:animDuration="200"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:lineHeight="15.6sp" />
+                app:maxCollapsedLines="1">
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="12dp"
-                app:layout_constraintBottom_toBottomOf="@+id/descItemTest"
-                app:layout_constraintStart_toEndOf="@+id/descItemTest"
-                app:srcCompat="@drawable/ep_arrow_down_bold" />
+                <TextView
+                    android:id="@id/expandable_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#666666"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@id/expand_collapse"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="-20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@android:color/transparent" />
+            </com.ms.square.android.expandabletextview.ExpandableTextView>
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/descItemTest"-->
+            <!--                android:layout_width="270dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="16dp"-->
+            <!--                android:layout_marginTop="8dp"-->
+            <!--                android:layout_marginBottom="12dp"-->
+            <!--                android:fontFamily="@font/montserrat_regular"-->
+            <!--                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam dictum nulla nullam. Lorem ipsum dolor sit amet, consectetur adipiscing"-->
+            <!--                android:textColor="@color/blackDark"-->
+            <!--                android:textSize="12sp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/cardView"-->
+            <!--                app:lineHeight="15.6sp" />-->
+
+            <!--            <ImageView-->
+            <!--                android:layout_width="20dp"-->
+            <!--                android:layout_height="20dp"-->
+            <!--                android:layout_marginStart="12dp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@+id/descItemTest"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/descItemTest"-->
+            <!--                app:srcCompat="@drawable/ep_arrow_down_bold" />-->
 
             <ImageView
                 android:id="@+id/circleTestItem"

@@ -1,11 +1,11 @@
 package ru.hse.pe.presentation.test
 
+import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -72,21 +72,24 @@ class TestActivity : AppCompatActivity() {
                     getString(R.string.tempLorem),
                     24,
                     10,
-                    R.drawable.exampl
+                    R.drawable.exampl,
+                    context
                 ),
                 TestItem(
                     "Тест на определение типа личности",
                     getString(R.string.tempLorem),
                     24,
                     10,
-                    R.drawable.exampl
+                    R.drawable.exampl,
+                    context
                 ),
                 TestItem(
                     "Тест на определение типа личности",
                     getString(R.string.tempLorem),
                     24,
                     10,
-                    R.drawable.exampl
+                    R.drawable.exampl,
+                    context
                 ),
             ),
         )
@@ -160,6 +163,7 @@ class TestItem(
     private val countQues: Int,
     private val time: Int,
     private val imageId: Int,
+    private val context: TestActivity,
 ) : BindableItem<ItemTestBinding>() {
     override fun bind(binding: ItemTestBinding, position: Int) {
         binding.nameItemTest.text = title
@@ -167,7 +171,10 @@ class TestItem(
         binding.quesItemTest.text = "$countQues вопроса"
         binding.timeItemTest.text = "Время прохождения: $time минут"
         binding.imgItemTest.setImageResource(R.drawable.exampl)
-     //   binding.circleTestItem.drawable.colorFilter
+
+        val colors = listOf(R.color.skin, R.color.red, R.color.blue)
+        binding.circleTestItem.setColorFilter(colors[(0..2).random()], PorterDuff.Mode.ADD)
+        //context.getDrawable(R.drawable.circle_test_item))
     }
 
     override fun getLayout() = R.layout.item_test

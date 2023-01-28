@@ -23,8 +23,12 @@
     <color name="blackDark">#262626</color>
     <color name="grayLight">#C2C9D1</color>
     <color name="red">#B3261E</color>
+    <color name="red2">#B3261E</color>
     <color name="pink">#e9c8ff</color>
     <color name="purplelight">#9392F7</color>
     <color name="graylight">#B6B6B6</color>
+    <color name="skin">#fadac1</color>
+
+
 
 </resources>
