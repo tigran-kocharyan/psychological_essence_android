@@ -1,5 +1,6 @@
 package ru.hse.pe.presentation.content
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
 import ru.hse.pe.presentation.content.type.technique.TechniquesFragment
+import ru.hse.pe.presentation.test.TestActivity
 
 /**
  * [Fragment] to display the trending events.
@@ -33,6 +35,11 @@ class ContentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).isBottomNavVisible(true)
+        binding.tests.setOnClickListener {
+            val intent = Intent(activity, TestActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.articles.setOnClickListener {
             setCurrentFragment(
                 ArticlesFragment.newInstance(),
