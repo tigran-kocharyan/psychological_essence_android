@@ -34,7 +34,8 @@
             android:layout_weight="0"
             android:text="@string/seeAll"
             android:textColor="@color/purple"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

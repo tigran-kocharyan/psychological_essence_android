@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.hse.pe.R
 import ru.hse.pe.domain.model.TestItem
-import ru.hse.pe.presentation.test.TestActivity
 import ru.hse.pe.utils.Utils
 
 

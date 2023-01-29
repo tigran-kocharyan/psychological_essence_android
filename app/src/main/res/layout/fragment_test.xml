@@ -25,6 +25,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topappbar" />
+        app:layout_constraintTop_toBottomOf="@+id/topappbar" >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/progressbarTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/purple"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

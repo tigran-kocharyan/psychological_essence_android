@@ -26,16 +26,6 @@
             android:text="@string/specCourses"
             android:textColor="@color/blackDark"
             android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/seeAllTest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/seeAll"
-            android:textColor="@color/purple"
-            android:textSize="12sp" />
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

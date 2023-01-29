@@ -13,7 +13,7 @@ import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
 import ru.hse.pe.presentation.content.type.technique.TechniquesFragment
-import ru.hse.pe.presentation.test.TestActivity
+import ru.hse.pe.presentation.test.TestFragment
 
 /**
  * [Fragment] to display the trending events.
@@ -36,7 +36,7 @@ class ContentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).isBottomNavVisible(true)
         binding.tests.setOnClickListener {
-            val intent = Intent(activity, TestActivity::class.java)
+            val intent = Intent(activity, TestFragment::class.java)
             startActivity(intent)
         }
 

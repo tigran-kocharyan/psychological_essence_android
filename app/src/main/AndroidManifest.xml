@@ -27,7 +27,7 @@
             android:name=".presentation.MainActivity"
             android:exported="false" />
         <activity
-            android:name="ru.hse.pe.presentation.test.TestActivity"
+            android:name="ru.hse.pe.presentation.test.TestFragment"
             android:exported="false" />
 
         <meta-data

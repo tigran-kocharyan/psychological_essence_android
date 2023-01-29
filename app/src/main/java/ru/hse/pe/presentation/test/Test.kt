@@ -23,19 +23,19 @@ import androidx.navigation.NavController
 import ru.hse.pe.R
 import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.domain.model.TestItem
-import ru.hse.pe.presentation.test.TestActivity
+import ru.hse.pe.presentation.test.TestFragment
 import ru.hse.pe.presentation.test.utils.sealed.Routes
 import ru.hse.pe.utils.Utils
 
 @Composable
-fun Test(navController: NavController, context: TestActivity) {
+fun Test(navController: NavController, context: TestFragment) {
     Utils.SystemBarsNotVisible()
     ShowData(navController, context)
 }
 
 
 @Composable
-fun ShowData(navController: NavController, context: TestActivity) {
+fun ShowData(navController: NavController, context: TestFragment) {
     val entity = QuizEntity()
 
 //        val name = entity.name.toString()

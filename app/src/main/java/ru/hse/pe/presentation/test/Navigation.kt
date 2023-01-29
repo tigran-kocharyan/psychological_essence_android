@@ -10,7 +10,7 @@ import ru.hse.pe.presentation.test.utils.sealed.Routes
 
 
 @Composable
-fun Navigation(context: TestActivity) {
+fun Navigation(context: TestFragment) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Routes.Test.route) {
         composable(Routes.Test.route) {

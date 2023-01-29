@@ -8,7 +8,7 @@ import androidx.activity.compose.setContent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.hse.pe.databinding.BottomTestLayoutBinding
 import ru.hse.pe.presentation.test.Navigation
-import ru.hse.pe.presentation.test.TestActivity
+import ru.hse.pe.presentation.test.TestFragment
 import ru.hse.pe.presentation.test.utils.theme.TestTheme
 
 
@@ -30,7 +30,7 @@ class ActionTestBottomDialogFragment : BottomSheetDialogFragment(), View.OnClick
         bindingClass.btnStartCourse.setOnClickListener {
             activity?.setContent {
                 TestTheme {
-                    Navigation(context = activity as TestActivity)
+                    Navigation(context = activity as TestFragment)
                 }
             }
             dismiss()
