@@ -22,7 +22,7 @@ class TestViewModel : ViewModel() {
         name = "Название теста",
         description = "описание теста",
         questions = listOf("вопрос 1?", "вопрос 2?", "вопрос 3?"),
-        answers = listOf("ответ 1", "ответ 2", "ответ 3")
+        answers = listOf(listOf("ответ 1", "ответ 2", "ответ 3"))
     )
     val result =
         QuizResultEntity(markdown = "ваш результат ваш результат ваш результат ваш результат ваш результат ваш результат ваш результат ваш результат ваш результат ")

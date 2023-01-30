@@ -6,6 +6,8 @@ import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.R
 import ru.hse.pe.databinding.SpecItemTestBinding
 import ru.hse.pe.databinding.SpecTestContainerBinding
+import ru.hse.pe.domain.model.QuizEntity
+import ru.hse.pe.utils.callback.ContentClickListener
 
 class SpecTestContainer(
     private val name: String,
@@ -26,21 +28,22 @@ class SpecTestContainer(
 
 
 class SpecTestItem(
-    private val title: String,
-    private val countQues: Int,
-    private val time: Int,
-    private val imageId: Int,
-    private val onClick: (String) -> Unit,
+    private val test: QuizEntity,
+//    private val title: String,
+//    private val countQues: Int,
+//    private val time: Int,
+//    private val imageId: Int,
+    private val clickListener: ContentClickListener
 ) : BindableItem<SpecItemTestBinding>() {
     override fun bind(binding: SpecItemTestBinding, position: Int) {
-        binding.specNameTest.text = title
-        binding.specTestQues.text = "$countQues вопроса"
-        binding.specTestTime.text = "$time минут"
+        binding.specNameTest.text = test.name
+        binding.specTestQues.text = "${test.questions.size} вопроса"
+        binding.specTestTime.text = "${test.time} минут"
         binding.specImageTest.setImageResource(R.drawable.exampl)
 
-        binding.cardViewCont.setOnClickListener {
-            onClick("")
-        }
+//        binding.cardViewCont.setOnClickListener {
+//            onClick("")
+//        }
     }
 
     override fun getLayout() = R.layout.spec_item_test

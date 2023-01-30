@@ -1,6 +1,5 @@
 package ru.hse.pe.presentation.content
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,8 +35,10 @@ class ContentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).isBottomNavVisible(true)
         binding.tests.setOnClickListener {
-            val intent = Intent(activity, TestFragment::class.java)
-            startActivity(intent)
+            setCurrentFragment(
+                TestFragment.newInstance(),
+                TestFragment.TAG
+            )
         }
 
         binding.articles.setOnClickListener {

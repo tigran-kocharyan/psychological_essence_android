@@ -87,7 +87,7 @@ fun ShowData(navController: NavController, context: TestFragment) {
         TestItem.userAnswers = userAnswers
         TestItem.answersPoint = answersPoint
         TestItem.answersBoolean = answersBoolean
-        TestItem.context = context
+     //   TestItem.context = context
 
         Column(
             modifier = Modifier.background(Color.White)
