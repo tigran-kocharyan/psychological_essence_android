@@ -21,7 +21,7 @@ interface ApiService {
     /**
      * Method calls API to get the quizzes data from DB
      */
-    @GET(GET_QUIZ_RESULT)
+    @POST(GET_QUIZ_RESULT)
     fun getQuizResult(@Body answer: QuizAnswerEntity): Single<QuizResultEntity>
 
     /**

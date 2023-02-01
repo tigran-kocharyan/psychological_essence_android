@@ -19,7 +19,9 @@ import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentTestsBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.ContentEntity
+import ru.hse.pe.domain.model.QuizAnswerEntity
 import ru.hse.pe.domain.model.QuizEntity
+import ru.hse.pe.domain.model.QuizResultEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.SpecialTestItem
 import ru.hse.pe.presentation.content.item.Test
@@ -68,6 +70,7 @@ class TestsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeLiveData()
         viewModel.getQuizzes()
+
         (activity as MainActivity).isBottomNavVisible(false)
     }
 
@@ -119,15 +122,6 @@ class TestsFragment : Fragment() {
         viewModel.getErrorLiveData().observe(viewLifecycleOwner, this::showError)
         viewModel.getProgressLiveData().observe(viewLifecycleOwner, this::showProgress)
         viewModel.getQuizzesLiveData().observe(viewLifecycleOwner, this::showQizizz)
-    }
-
-    private fun onTestClick(url: String) {
-        val bottomDialogFrag = ActionTestBottom.newInstance()
-        if(activity != null){
-            bottomDialogFrag.show(
-                requireActivity().supportFragmentManager, ActionTestBottom.TAG
-            )
-        }
     }
 
     companion object {

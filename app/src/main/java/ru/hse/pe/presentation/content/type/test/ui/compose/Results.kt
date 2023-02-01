@@ -14,18 +14,31 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.viewModelScope
 import ru.hse.pe.R
+import ru.hse.pe.domain.model.QuizAnswerEntity
+import ru.hse.pe.domain.model.QuizResultEntity
+import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.utils.Utils
 
 
 @Composable
-fun Results() {
+fun Results(viewModel: ContentViewModel, viewLifecycleOwner: LifecycleOwner) {
     Column {
         Utils.SystemBarsNotVisible()
-        Utils.MyTopAppBar("Просто тестик", false)
+        Utils.MyTopAppBar("Тест", false)
+
 
         Test.userAnswers.removeAt(0)
-        Log.d("userAnswers", Test.userAnswers.toString())
+
+        viewModel.getQuizResult(QuizAnswerEntity(answers = Test.userAnswers))
+        viewModel.getQuizResultLiveData().observe(viewLifecycleOwner) {
+            Log.d("checkcheck", it.toString())
+        }
+
+        val res = viewModel.getQuizResultLiveData().value
+        Log.d("res", res.toString())
 
         Box(
             modifier = Modifier
@@ -71,4 +84,15 @@ fun Results() {
             Text(text = stringResource(id = R.string.backToTests))
         }
     }
+
+
 }
+
+fun showResult() {
+    TODO("Not yet implemented")
+}
+
+private fun showResult(res: QuizResultEntity) {
+    TODO("Not yet implemented")
+}
+

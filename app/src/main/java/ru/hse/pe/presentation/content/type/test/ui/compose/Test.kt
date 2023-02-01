@@ -20,9 +20,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
+import ru.hse.pe.domain.model.QuizAnswerEntity
+import ru.hse.pe.domain.model.QuizResultEntity
 import ru.hse.pe.presentation.content.type.test.utils.sealed.Routes
 import ru.hse.pe.utils.Utils
 
@@ -90,7 +93,7 @@ fun CardItem(navController: NavController) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             CreateTopPartCard()
             CreateAnswersCard()
-            Spacer(Modifier.weight(1f, true))
+//            Spacer(Modifier.weight(1f, true))
             CreateBtnCard(navController)
         }
     }
