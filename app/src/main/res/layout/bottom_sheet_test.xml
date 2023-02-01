@@ -53,7 +53,7 @@
                     android:layout_width="44dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_share" />
+                    app:srcCompat="@drawable/ic_close" />
             </LinearLayout>
 
             <ImageView
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="320dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/course_img" />
+                app:srcCompat="@drawable/placeholder_article" />
 
             <LinearLayout
                 android:layout_width="match_parent"

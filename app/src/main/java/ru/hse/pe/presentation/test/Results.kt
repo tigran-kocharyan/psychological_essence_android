@@ -21,7 +21,6 @@ import ru.hse.pe.utils.Utils
 
 @Composable
 fun Results() {
-
     Column {
         Utils.SystemBarsNotVisible()
         Utils.MyTopAppBar("Просто тестик", false)

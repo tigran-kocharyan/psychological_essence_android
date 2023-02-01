@@ -28,7 +28,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcView"
+        android:id="@+id/testList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="50dp"

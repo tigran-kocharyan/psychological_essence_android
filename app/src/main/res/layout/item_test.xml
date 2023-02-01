@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/exampl" />
+                    app:srcCompat="@drawable/placeholder_article" />
             </androidx.cardview.widget.CardView>
 
             <TextView

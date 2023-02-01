@@ -24,11 +24,11 @@ import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
 import ru.hse.pe.presentation.test.bottomSheetFragment.ActionTestBottom
-import ru.hse.pe.presentation.test.groupie.SpecTestContainer
 import ru.hse.pe.presentation.test.groupie.SpecTestItem
-import ru.hse.pe.presentation.test.groupie.TestContainer
 import ru.hse.pe.presentation.test.groupie.TestItem
 import ru.hse.pe.utils.callback.ContentClickListener
+import ru.hse.pe.utils.container.HorizontalContentContainer
+import ru.hse.pe.utils.container.VerticalContentContainer
 import ru.hse.pe.utils.scheduler.SchedulersProvider
 import javax.inject.Inject
 
@@ -95,21 +95,21 @@ class TestsFragment : Fragment() {
     }
 
     private fun showQizizz(quizizz: List<QuizEntity>) {
-        val listTests = listOf(getSpecQuizItems(quizizz), getQuizItems(quizizz))
+        val listTests = listOf(getSpecialQuizItems(quizizz), getQuizItems(quizizz))
 
-        binding.rcView.adapter = GroupieAdapter().apply { addAll(listTests) }
-        //binding.rcView.adapter = GroupieAdapter().apply { add(getSpecQuizItems(quizizz)) }
+        binding.testList.adapter = GroupieAdapter().apply { addAll(listTests) }
     }
 
-    private fun getSpecQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
-        return SpecTestContainer(
+    // берем все тесты, специально подобранные под предпочтения пользователя
+    private fun getSpecialQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
+        return HorizontalContentContainer(
             getString(R.string.specCourses),
             quizizz.map { SpecTestItem(it, clickListener) }
         )
     }
 
     private fun getQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
-        return TestContainer(
+        return VerticalContentContainer(
             getString(R.string.tests),
             quizizz.map { TestItem(it, clickListener) }
         )
@@ -131,7 +131,7 @@ class TestsFragment : Fragment() {
     }
 
     companion object {
-        const val TAG = "TestFragment"
+        const val TAG = "TestsFragment"
         private const val TAG_ADD = "$TAG ADD"
         private const val TAG_ERROR = "$TAG ERROR"
         private const val TAG_PROGRESS = "$TAG PROGRESS"

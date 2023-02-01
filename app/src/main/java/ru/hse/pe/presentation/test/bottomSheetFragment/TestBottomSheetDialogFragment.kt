@@ -16,7 +16,7 @@ import ru.hse.pe.presentation.test.Navigation
 import ru.hse.pe.presentation.test.utils.theme.TestTheme
 
 
-class TestBottomSheetDialogFragment : BottomSheetDialogFragment(), View.OnClickListener{
+class TestBottomSheetDialogFragment : BottomSheetDialogFragment(){
     private lateinit var binding: BottomSheetTestBinding
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
@@ -65,9 +65,5 @@ class TestBottomSheetDialogFragment : BottomSheetDialogFragment(), View.OnClickL
     }
 
     private fun showMarkdown(text: String?) {
-    }
-
-    override fun onClick(v: View?) {
-
     }
 }
