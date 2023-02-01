@@ -7,6 +7,8 @@ import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.R
 import ru.hse.pe.databinding.ItemTestBinding
 import ru.hse.pe.databinding.TestContainerBinding
+import ru.hse.pe.domain.model.QuizEntity
+import ru.hse.pe.utils.callback.ContentClickListener
 
 class TestContainer(
     private val name: String,
@@ -16,7 +18,6 @@ class TestContainer(
         binding.titleTest.text = name
         binding.recyclerView.adapter = GroupieAdapter().apply { addAll(items) }
     }
-
     override fun getLayout() = R.layout.test_container
 
     override fun initializeViewBinding(view: View): TestContainerBinding {
@@ -25,27 +26,21 @@ class TestContainer(
 }
 
 class TestItem(
-    private val title: String,
-    private val desc: String,
-    private val countQues: Int,
-    private val time: Int,
-    private val imageId: Int,
-    private val onClick: (String) -> Unit,
+    private val test: QuizEntity,
+    private val clickListener: ContentClickListener,
 ) : BindableItem<ItemTestBinding>() {
     override fun bind(binding: ItemTestBinding, position: Int) {
-        binding.nameItemTest.text = title
-        binding.descItemTest.text = desc
-        binding.quesItemTest.text = "$countQues вопроса"
-        binding.timeItemTest.text = "Время прохождения: $time минут"
+        binding.nameItemTest.text = test.name
+        binding.descItemTest.text = test.description
+        binding.quesItemTest.text = "${test.questions.size} вопроса"
+        binding.timeItemTest.text = "Время прохождения: ${test.time} минут"
         binding.imgItemTest.setImageResource(R.drawable.exampl)
-
-        binding.cardViewCont.setOnClickListener {
-            onClick("")
-        }
 
         val colors = listOf(R.color.skin, R.color.red, R.color.blue)
         binding.circleTestItem.setColorFilter(colors[(0..2).random()], PorterDuff.Mode.ADD)
         //context.getDrawable(R.drawable.circle_test_item))
+
+        binding.root.setOnClickListener { clickListener.onContentClick(test, position) }
     }
 
     override fun getLayout() = R.layout.item_test

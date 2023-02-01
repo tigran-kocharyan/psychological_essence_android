@@ -9,6 +9,9 @@ import ru.hse.pe.databinding.SpecTestContainerBinding
 import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.utils.callback.ContentClickListener
 
+
+// Special Test Container (SpecTestContainer) - специально для вас
+// (контейнер где будут показываться подобранные тесты для пользователя
 class SpecTestContainer(
     private val name: String,
     private val items: List<BindableItem<*>>
@@ -26,13 +29,9 @@ class SpecTestContainer(
     }
 }
 
-
+// Special Test Item (SpecTestItem) - соответственно сам элемент
 class SpecTestItem(
     private val test: QuizEntity,
-//    private val title: String,
-//    private val countQues: Int,
-//    private val time: Int,
-//    private val imageId: Int,
     private val clickListener: ContentClickListener
 ) : BindableItem<SpecItemTestBinding>() {
     override fun bind(binding: SpecItemTestBinding, position: Int) {
@@ -41,9 +40,7 @@ class SpecTestItem(
         binding.specTestTime.text = "${test.time} минут"
         binding.specImageTest.setImageResource(R.drawable.exampl)
 
-//        binding.cardViewCont.setOnClickListener {
-//            onClick("")
-//        }
+        binding.root.setOnClickListener { clickListener.onContentClick(test, position) }
     }
 
     override fun getLayout() = R.layout.spec_item_test

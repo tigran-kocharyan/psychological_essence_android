@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -15,14 +16,13 @@ import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.App
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
-import ru.hse.pe.databinding.*
+import ru.hse.pe.databinding.FragmentTestsBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
-import ru.hse.pe.presentation.courses.viewmodel.TopAbbBarViewModel
 import ru.hse.pe.presentation.test.bottomSheetFragment.ActionTestBottom
 import ru.hse.pe.presentation.test.groupie.SpecTestContainer
 import ru.hse.pe.presentation.test.groupie.SpecTestItem
@@ -33,15 +33,14 @@ import ru.hse.pe.utils.scheduler.SchedulersProvider
 import javax.inject.Inject
 
 
-class TestFragment : Fragment() {
+class TestsFragment : Fragment() {
     @Inject
     lateinit var interactor: ContentInteractor
 
     @Inject
     lateinit var schedulers: SchedulersProvider
 
-    private lateinit var binding: FragmentTestBinding
-    private val topAppBarModel: TopAbbBarViewModel by viewModels()
+    private lateinit var binding: FragmentTestsBinding
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private val viewModel: ContentViewModel by viewModels {
@@ -61,7 +60,7 @@ class TestFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTestBinding.inflate(inflater, container, false)
+        binding = FragmentTestsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -74,13 +73,13 @@ class TestFragment : Fragment() {
 
     private var clickListener = object : ContentClickListener {
         override fun onContentClick(content: ContentEntity, position: Int) {
-//            if (content is QuizEntity) {
-//                sharedViewModel.setFact(content)
-//                FactBottomSheetDialogFragment.newInstance().show(
-//                    (activity as AppCompatActivity).supportFragmentManager,
-//                    FactBottomSheetDialogFragment.TAG
-//                )
-//            }
+            if (content is QuizEntity) {
+                sharedViewModel.setQuiz(content)
+                ActionTestBottom.newInstance().show(
+                    (activity as AppCompatActivity).supportFragmentManager,
+                    ActionTestBottom.TAG
+                )
+            }
         }
     }
 
@@ -96,13 +95,23 @@ class TestFragment : Fragment() {
     }
 
     private fun showQizizz(quizizz: List<QuizEntity>) {
-        binding.rcView.adapter = GroupieAdapter().apply { add(getQuizItems(quizizz)) }
+        val listTests = listOf(getSpecQuizItems(quizizz), getQuizItems(quizizz))
+
+        binding.rcView.adapter = GroupieAdapter().apply { addAll(listTests) }
+        //binding.rcView.adapter = GroupieAdapter().apply { add(getSpecQuizItems(quizizz)) }
     }
 
-    private fun getQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
+    private fun getSpecQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
         return SpecTestContainer(
             getString(R.string.specCourses),
             quizizz.map { SpecTestItem(it, clickListener) }
+        )
+    }
+
+    private fun getQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
+        return TestContainer(
+            getString(R.string.tests),
+            quizizz.map { TestItem(it, clickListener) }
         )
     }
 
@@ -110,38 +119,6 @@ class TestFragment : Fragment() {
         viewModel.getErrorLiveData().observe(viewLifecycleOwner, this::showError)
         viewModel.getProgressLiveData().observe(viewLifecycleOwner, this::showProgress)
         viewModel.getQuizzesLiveData().observe(viewLifecycleOwner, this::showQizizz)
-    }
-
-    private fun getAllTests(): BindableItem<TestContainerBinding> {
-        return TestContainer(
-            getString(R.string.tests),
-            listOf(
-                TestItem(
-                    "Тест на определение типа личности",
-                    getString(R.string.tempLorem),
-                    24,
-                    10,
-                    R.drawable.exampl,
-                    ::onTestClick,
-                ),
-                TestItem(
-                    "Тест на определение типа личности",
-                    getString(R.string.tempLorem),
-                    24,
-                    10,
-                    R.drawable.exampl,
-                    ::onTestClick,
-                ),
-                TestItem(
-                    "Тест на определение типа личности",
-                    getString(R.string.tempLorem),
-                    24,
-                    10,
-                    R.drawable.exampl,
-                    ::onTestClick,
-                ),
-            ),
-        )
     }
 
     private fun onTestClick(url: String) {
@@ -160,54 +137,9 @@ class TestFragment : Fragment() {
         private const val TAG_PROGRESS = "$TAG PROGRESS"
 
         /**
-         * Получение объекта [TestFragment]
+         * Получение объекта [TestsFragment]
          */
-        fun newInstance() = TestFragment()
+        fun newInstance() = TestsFragment()
     }
 }
 
-
-//    private fun getSpecTests(): BindableItem<SpecTestContainerBinding> {
-//        return SpecTestContainer(
-//            getString(R.string.specCourses),
-//            listOf(
-//                SpecTestItem(
-//                    "Тест на определение типа личности",
-//                    24,
-//                    10,
-//                    R.drawable.exampl,
-//                    ::onTestClick,
-//                ),
-//                SpecTestItem(
-//                    "Тест на определение типа личности",
-//                    24,
-//                    10,
-//                    R.drawable.exampl,
-//                    ::onTestClick
-//                ),
-//                SpecTestItem(
-//                    "Тест на определение типа личности",
-//                    24,
-//                    10,
-//                    R.drawable.exampl,
-//                    ::onTestClick
-//                ),
-//            ),
-//        )
-//    }
-
-
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        binding = ActivityTestBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-//
-//        val tests = listOf(getSpecTests(), getAllTests())
-//        binding.rcView.adapter = GroupAdapter<GroupieViewHolder>().apply { addAll(tests) }
-//
-//        openFragment(R.id.topappbar, TopAppBarFragment.newInstance())
-//        topAppBarModel.title.value = getString(R.string.tests)
-//
-//        ContentInteractor().getQuizzes()
-//    }

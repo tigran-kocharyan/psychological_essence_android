@@ -11,7 +11,7 @@ import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
 import ru.hse.pe.presentation.content.type.technique.TechniquesFragment
-import ru.hse.pe.presentation.test.TestFragment
+import ru.hse.pe.presentation.test.TestsFragment
 import javax.inject.Singleton
 
 /**
@@ -29,7 +29,7 @@ interface AppComponent {
     fun inject(fragment: AuthFragment)
     fun inject(fragment: ContentFragment)
     fun inject(fragment: FactsFragment)
-    fun inject(fragment: TestFragment)
+    fun inject(fragment: TestsFragment)
     fun inject(fragment: RecommendationsFragment)
     fun inject(fragment: ArticlesFragment)
     fun inject(fragment: TechniquesFragment)
