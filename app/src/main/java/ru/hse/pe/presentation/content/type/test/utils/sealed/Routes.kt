@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.test.utils.sealed
+package ru.hse.pe.presentation.content.type.test.utils.sealed
 
 // It contains route names to all three screens
 sealed class Routes(val route: String) {

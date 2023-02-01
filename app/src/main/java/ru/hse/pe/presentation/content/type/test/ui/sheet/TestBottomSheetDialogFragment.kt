@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.test.bottomSheetFragment
+package ru.hse.pe.presentation.content.type.test.ui.sheet
 
 import android.os.Bundle
 import android.util.Log
@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import androidx.activity.compose.setContent
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_test.*
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.BottomSheetTestBinding
 import ru.hse.pe.presentation.MainActivity
-import ru.hse.pe.presentation.test.Navigation
-import ru.hse.pe.presentation.test.utils.theme.TestTheme
+import ru.hse.pe.presentation.content.type.test.ui.compose.Navigation
+import ru.hse.pe.presentation.content.type.test.utils.theme.TestTheme
 
 
 class TestBottomSheetDialogFragment : BottomSheetDialogFragment(){

@@ -12,7 +12,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowFullscreen">true</item>
 
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
@@ -25,115 +24,12 @@
         <item name="android:background">@drawable/rounded_dialog</item>
     </style>
 
-
     <style name="Theme.PE.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-
-
     <style name="Theme.PE.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.PE.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-
-    <!-- TEST -->
-
-
-
-    <style name="test__textItem">
-        <item name="android:layout_marginBottom">15dp</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
-    </style>
-
-    <style name="test__textView">
-        <item name="android:fontFamily">@font/montserrat_alternates</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">#fff</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <!-- Shape with rounded corners (use register, settings...) -->
-    <style name="shapeWithRoundedCorners"  parent="Widget.AppCompat.ProgressBar.Horizontal">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/whiteReal70</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:paddingTop">30dp</item>
-        <item name="android:paddingRight">15dp</item>
-    </style>
-
-    <!-- TestItems new design -->
-    <style name="testItem_wrapper">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">215dp</item>
-        <item name="android:layout_marginBottom">40dp</item>
-        <item name="android:background">@drawable/news_item</item>
-        <item name="android:gravity">center</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:padding">10dp</item>
-    </style>
-
-    <style name="testItem_title">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginBottom">7dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:fontFamily">@font/montserrat_alternates</item>
-    </style>
-
-    <style name="testItem_wrapperHint">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">14dp</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:orientation">horizontal</item>
-    </style>
-
-    <style name="testItem_img">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">3dp</item>
-        <item name="android:layout_marginRight">7dp</item>
-        <item name="android:layout_weight">1</item>
-    </style>
-
-    <style name="testItem_txtHint">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginRight">15dp</item>
-        <item name="android:layout_marginBottom">7dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:fontFamily">@font/montserrat_alternates</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="testItem_des">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">46dp</item>
-        <item name="android:layout_marginBottom">15dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:fontFamily">@font/montserrat_alternates</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="testItem_btn">
-        <item name="android:layout_width">125dp</item>
-        <item name="android:layout_height">23dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/news_btn</item>
-        <item name="android:fontFamily">@font/montserrat_alternates</item>
-        <item name="android:onClick">solveTest</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:text">@string/news_new_btn</item>
-    </style>
-
-
 </resources>

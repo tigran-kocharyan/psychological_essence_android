@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.test.utils.theme
+package ru.hse.pe.presentation.content.type.test.utils.theme
 
 import androidx.compose.ui.graphics.Color
 

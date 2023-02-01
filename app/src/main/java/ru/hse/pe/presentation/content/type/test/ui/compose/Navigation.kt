@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.test
+package ru.hse.pe.presentation.content.type.test.ui.compose
 
 import Results
 import Test
@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ru.hse.pe.SharedViewModel
-import ru.hse.pe.presentation.test.utils.sealed.Routes
+import ru.hse.pe.presentation.content.type.test.utils.sealed.Routes
 
 
 @Composable

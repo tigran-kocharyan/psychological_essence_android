@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.test.bottomSheetFragment
+package ru.hse.pe.presentation.content.type.test.ui.sheet
 
 class ActionTestBottom {
     companion object{

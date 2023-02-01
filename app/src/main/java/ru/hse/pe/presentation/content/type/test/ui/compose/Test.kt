@@ -1,4 +1,3 @@
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -8,11 +7,13 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -22,9 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
-import ru.hse.pe.domain.model.TestItem
-import ru.hse.pe.domain.model.TestItem.answersPoint
-import ru.hse.pe.presentation.test.utils.sealed.Routes
+import ru.hse.pe.presentation.content.type.test.utils.sealed.Routes
 import ru.hse.pe.utils.Utils
 
 @Composable
@@ -56,20 +55,20 @@ fun ShowData(navController: NavController, sharedViewModel: SharedViewModel) {
             userAnswers.add("")
         }
 
-        for (i in listAnswers!!.indices){
+        for (i in listAnswers!!.indices) {
             answers[i] = listAnswers[i]
         }
 
-        TestItem.counter = counter
-        TestItem.maxCounter = maxCounter
-        TestItem.counterQ = counterQ
-        TestItem.progress = progress
-        TestItem.toggleBtn = toggleBtn
-        TestItem.questions = listQuestions
-        TestItem.answers = answers
-        TestItem.userAnswers = userAnswers
-        TestItem.answersPoint = answersPoint
-        TestItem.answersBoolean = answersBoolean
+        Test.counter = counter
+        Test.maxCounter = maxCounter
+        Test.counterQ = counterQ
+        Test.progress = progress
+        Test.toggleBtn = toggleBtn
+        Test.questions = listQuestions
+        Test.answers = answers
+        Test.userAnswers = userAnswers
+        Test.answersPoint = answersPoint
+        Test.answersBoolean = answersBoolean
 
         Column(
             modifier = Modifier.background(Color.White)
@@ -107,10 +106,10 @@ fun CreateTopPartCard() {
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
-            text = if (TestItem.counterQ.value in 1..9) {
-                "0${TestItem.counterQ.value}/"
+            text = if (Test.counterQ.value in 1..9) {
+                "0${Test.counterQ.value}/"
             } else {
-                "${TestItem.counterQ.value}/"
+                "${Test.counterQ.value}/"
             },
             style = TextStyle(
                 fontWeight = FontWeight.SemiBold,
@@ -120,12 +119,12 @@ fun CreateTopPartCard() {
             color = colorResource(id = R.color.black)
         )
         Text(
-            text = "${TestItem.maxCounter.value}",
+            text = "${Test.maxCounter.value}",
             style = MaterialTheme.typography.subtitle1
         )
     }
     LinearProgressIndicator(
-        progress = TestItem.progress.value.toFloat(),
+        progress = Test.progress.value.toFloat(),
         modifier = Modifier
             .width(310.dp)
             .padding(bottom = 32.dp, start = 40.dp),
@@ -142,14 +141,14 @@ fun CreateTopPartCard() {
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp
         ),
-        text = TestItem.counter.value.toString() + "."
+        text = Test.counter.value.toString() + "."
     )
 
     Text(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp, bottom = 35.dp, start = 40.dp),
-        text = TestItem.questions[TestItem.counter.value - 1],
+        text = Test.questions[Test.counter.value - 1],
         style = MaterialTheme.typography.subtitle1
     )
 }
@@ -165,38 +164,41 @@ fun CreateAnswersCard() {
                 .padding(bottom = 57.dp, start = 40.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            val diff = 1.0 / TestItem.maxCounter.value
-            items(TestItem.answers.size) { index ->
+            val diff = 1.0 / Test.maxCounter.value
+            items(Test.answers.size) { index ->
                 Row(
                     modifier = Modifier.height(30.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                     Box(modifier = Modifier
-                        .width(20.dp)
-                        .height(20.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .width(20.dp)
+                            .height(20.dp)
+                    ) {
                         RadioButton(
-                            selected = (TestItem.answers.keys.toList()[index] == TestItem.answersPoint[TestItem.counter.value]),
+                            selected = (Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value]),
                             onClick = {
-                                onOptionSelected(TestItem.answers.keys.toList()[index])
-                                TestItem.answersPoint[TestItem.counter.value] = TestItem.answers.keys.toList()[index]
-                                TestItem.userAnswers[TestItem.counter.value] =
-                                    TestItem.answers[TestItem.answers.keys.toList()[index]].toString()
+                                onOptionSelected(Test.answers.keys.toList()[index])
+                                Test.answersPoint[Test.counter.value] =
+                                    Test.answers.keys.toList()[index]
+                                Test.userAnswers[Test.counter.value] =
+                                    Test.answers[Test.answers.keys.toList()[index]].toString()
 
-                                if (!TestItem.answersBoolean[TestItem.counter.value]) {
-                                    TestItem.counterQ.value++
-                                    if (TestItem.progress.value < 1.0f) TestItem.progress.value += diff
-                                    TestItem.answersBoolean[TestItem.counter.value] = true
+                                if (!Test.answersBoolean[Test.counter.value]) {
+                                    Test.counterQ.value++
+                                    if (Test.progress.value < 1.0f) Test.progress.value += diff
+                                    Test.answersBoolean[Test.counter.value] = true
 
                                     var c = 0
-                                    for (i in 1 until TestItem.answersBoolean.size) {
-                                        if (TestItem.answersBoolean[i]) {
+                                    for (i in 1 until Test.answersBoolean.size) {
+                                        if (Test.answersBoolean[i]) {
                                             c++
                                         }
                                     }
 
-                                    if (c == TestItem.maxCounter.value) {
-                                        TestItem.toggleBtn.value = true
+                                    if (c == Test.maxCounter.value) {
+                                        Test.toggleBtn.value = true
                                     }
                                 }
                             },
@@ -208,7 +210,7 @@ fun CreateAnswersCard() {
                     }
 
                     Text(
-                        text = TestItem.answers[TestItem.answers.keys.toList()[index]].toString(),
+                        text = Test.answers[Test.answers.keys.toList()[index]].toString(),
                         fontSize = 13.sp,
                         modifier = Modifier.padding(start = 22.dp),
                         style = MaterialTheme.typography.subtitle2
@@ -228,24 +230,28 @@ fun CreateBtnCard(navController: NavController) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        val context = LocalContext.current
         Button(
             onClick = {
-                if (!TestItem.answersBoolean[TestItem.counter.value]) {
+                if (!Test.answersBoolean[Test.counter.value]) {
                     Toast.makeText(
-                        TestItem.context,
+                        context,
                         "Выберите вариант ответа или нажмите кнопку пропустить",
                         Toast.LENGTH_SHORT
                     ).show()
                     return@Button
                 } else {
-                    TestItem.counter.value--
+                    Test.counter.value--
 
-                    if (TestItem.counter.value < 1) {
-                        TestItem.counter.value = TestItem.maxCounter.value
+                    if (Test.counter.value < 1) {
+                        Test.counter.value = Test.maxCounter.value
                     }
                 }
             },
-            modifier = Modifier.width(163.dp).height(45.dp).padding(end = 16.dp),
+            modifier = Modifier
+                .width(163.dp)
+                .height(45.dp)
+                .padding(end = 16.dp),
             shape = RoundedCornerShape(15.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             border = BorderStroke(2.dp, color = colorResource(id = R.color.purple))
@@ -257,24 +263,24 @@ fun CreateBtnCard(navController: NavController) {
         }
         Button(
             onClick = {
-                if (!TestItem.answersBoolean[TestItem.counter.value]) {
+                if (!Test.answersBoolean[Test.counter.value]) {
                     Toast.makeText(
-                        TestItem.context,
+                        context,
                         "Выберите вариант ответа или нажмите кнопку пропустить",
                         Toast.LENGTH_SHORT
                     ).show()
                     return@Button
                 } else {
-                    TestItem.counter.value++
-                    if (TestItem.counter.value > TestItem.maxCounter.value) {
-                        TestItem.counter.value = 1
+                    Test.counter.value++
+                    if (Test.counter.value > Test.maxCounter.value) {
+                        Test.counter.value = 1
                     }
                 }
             },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
-                .width(if (TestItem.toggleBtn.value) 0.dp else 165.dp)
-                .height(if (TestItem.toggleBtn.value) 0.dp else 45.dp),
+                .width(if (Test.toggleBtn.value) 0.dp else 165.dp)
+                .height(if (Test.toggleBtn.value) 0.dp else 45.dp),
             colors = ButtonDefaults
                 .buttonColors(
                     backgroundColor = colorResource(id = R.color.purple),
@@ -289,8 +295,8 @@ fun CreateBtnCard(navController: NavController) {
             },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
-                .width(if (TestItem.toggleBtn.value) 165.dp else 0.dp)
-                .height(if (TestItem.toggleBtn.value) 45.dp else 0.dp),
+                .width(if (Test.toggleBtn.value) 165.dp else 0.dp)
+                .height(if (Test.toggleBtn.value) 45.dp else 0.dp),
             colors = ButtonDefaults
                 .buttonColors(
                     backgroundColor = colorResource(id = R.color.purple),
@@ -309,13 +315,13 @@ fun CreateBtnCard(navController: NavController) {
     ) {
         Button(
             onClick = {
-                TestItem.counter.value++
-                if (TestItem.counter.value > TestItem.maxCounter.value) {
-                    TestItem.counter.value = 1
+                Test.counter.value++
+                if (Test.counter.value > Test.maxCounter.value) {
+                    Test.counter.value = 1
                 }
             },
             modifier = Modifier
-                .fillMaxWidth(if (TestItem.toggleBtn.value) 0.0f else 0.7f),
+                .fillMaxWidth(if (Test.toggleBtn.value) 0.0f else 0.7f),
             elevation = ButtonDefaults.elevation(0.dp, 0.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         ) {
@@ -326,3 +332,17 @@ fun CreateBtnCard(navController: NavController) {
         }
     }
 }
+
+object Test {
+    lateinit var counter: MutableState<Int>
+    lateinit var maxCounter: MutableState<Int>
+    lateinit var counterQ: MutableState<Int>
+    lateinit var progress: MutableState<Double>
+    lateinit var toggleBtn: MutableState<Boolean>
+    lateinit var questions: List<String>
+    lateinit var answers: HashMap<Int, String>
+    lateinit var userAnswers: MutableList<String>
+    lateinit var answersPoint: MutableList<Int>
+    lateinit var answersBoolean: MutableList<Boolean>
+}
+

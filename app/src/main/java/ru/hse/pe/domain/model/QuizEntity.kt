@@ -19,8 +19,14 @@ data class QuizEntity(
 ) : Parcelable, ContentEntity
 
 @Parcelize
+data class QuizAnswerEntity(
+    @SerializedName("quiz_id") val quiz_id: String? = "",
+    @SerializedName("user_id") val user_id: String? = "",
+    @SerializedName("answers") val answers: List<String>? = arrayListOf()
+) : Parcelable, ContentEntity
+
+@Parcelize
 data class QuizResultEntity(
-    @SerializedName("test_id") val test_id: Int? = 0,
-    @SerializedName("user_id") val user_id: Int? = 0,
-    @SerializedName("markdown") val markdown: String? = ""
-) : Parcelable
+    @SerializedName("images") val images: List<String>? = arrayListOf(),
+    @SerializedName("content") val content: String? = ""
+) : Parcelable, ContentEntity

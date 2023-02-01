@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.hse.pe.R
-import ru.hse.pe.domain.model.TestItem
 import ru.hse.pe.utils.Utils
 
 
@@ -25,8 +24,8 @@ fun Results() {
         Utils.SystemBarsNotVisible()
         Utils.MyTopAppBar("Просто тестик", false)
 
-        TestItem.userAnswers.removeAt(0)
-        Log.d("userAnswers", TestItem.userAnswers.toString())
+        Test.userAnswers.removeAt(0)
+        Log.d("userAnswers", Test.userAnswers.toString())
 
         Box(
             modifier = Modifier
@@ -59,7 +58,9 @@ fun Results() {
                 TODO()
             },
             shape = RoundedCornerShape(15.dp),
-            modifier = Modifier.padding(start = 25.dp, end = 25.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(start = 25.dp, end = 25.dp)
+                .fillMaxWidth()
                 .height(45.dp),
             colors = ButtonDefaults
                 .buttonColors(
