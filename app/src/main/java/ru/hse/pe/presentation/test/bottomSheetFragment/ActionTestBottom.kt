@@ -7,5 +7,4 @@ class ActionTestBottom {
             return TestBottomSheetDialogFragment()
         }
     }
-
 }

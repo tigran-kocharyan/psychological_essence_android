@@ -24,10 +24,10 @@ class TopAppBarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         dataModel.title.observe(activity as LifecycleOwner) {
-            binding.titleTopAppBar.text = it
+            binding.title.text = it
         }
 
-        binding.imageBack.setOnClickListener{
+        binding.back.setOnClickListener{
             activity?.finish()
         }
 

@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
-import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.domain.model.TestItem
 import ru.hse.pe.domain.model.TestItem.answersPoint
 import ru.hse.pe.presentation.test.utils.sealed.Routes
@@ -34,28 +33,21 @@ fun Test(navController: NavController, sharedViewModel: SharedViewModel) {
     ShowData(navController, sharedViewModel)
 }
 
-
 @Composable
 fun ShowData(navController: NavController, sharedViewModel: SharedViewModel) {
-    Log.d("quiz", sharedViewModel.quiz.value.toString())
-
     val name = sharedViewModel.quiz.value?.name.toString()
     val listQuestions = sharedViewModel.quiz.value?.questions?.toList()
     val listAnswers = sharedViewModel.quiz.value?.answers?.get(0)?.toList()
-
     val userAnswers = mutableListOf<String>()
     val countQuestions = listQuestions!!.size
     val answers = hashMapOf<Int, String>()
     val answersPoint = mutableListOf<Int>()
     val answersBoolean = mutableListOf<Boolean>()
-
     val progress = remember { mutableStateOf(0.0) }
     val toggleBtn = remember { mutableStateOf(false) }
     val counter = remember { mutableStateOf(1) }
     val maxCounter = remember { mutableStateOf(countQuestions) }
     val counterQ = remember { mutableStateOf(0) }
-
-
 
     Box {
         for (i in 1 until maxCounter.value + 2) {
@@ -73,7 +65,6 @@ fun ShowData(navController: NavController, sharedViewModel: SharedViewModel) {
         TestItem.counterQ = counterQ
         TestItem.progress = progress
         TestItem.toggleBtn = toggleBtn
-
         TestItem.questions = listQuestions
         TestItem.answers = answers
         TestItem.userAnswers = userAnswers
@@ -96,7 +87,6 @@ fun CardItem(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 32.dp, end = 27.dp, bottom = 20.dp),
-
         ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             CreateTopPartCard()
@@ -152,7 +142,6 @@ fun CreateTopPartCard() {
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp
         ),
-
         text = TestItem.counter.value.toString() + "."
     )
 
@@ -160,7 +149,6 @@ fun CreateTopPartCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp, bottom = 35.dp, start = 40.dp),
-
         text = TestItem.questions[TestItem.counter.value - 1],
         style = MaterialTheme.typography.subtitle1
     )
@@ -184,9 +172,7 @@ fun CreateAnswersCard() {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-//                        Log.e("testItemanswers", testItem.answers.keys.toList()[0].toString())
-//                        Log.e("testItemanswersPoint", testItem.answersPoint.toString())
-                    Box(modifier = Modifier
+                     Box(modifier = Modifier
                         .width(20.dp)
                         .height(20.dp)) {
                         RadioButton(
@@ -194,18 +180,8 @@ fun CreateAnswersCard() {
                             onClick = {
                                 onOptionSelected(TestItem.answers.keys.toList()[index])
                                 TestItem.answersPoint[TestItem.counter.value] = TestItem.answers.keys.toList()[index]
-
-//                                    if(testItem.userAnswers[testItem.counter.value] == ""){
-//                                        testItem.userAnswers.add(testItem.answers[testItem.answers.keys.toList()[index]].toString())
-//                                    }else{
-//                                        testItem.userAnswers[testItem.counter.value] =
-//                                            testItem.answers[testItem.answers.keys.toList()[index]].toString()
-//                                    }
-
                                 TestItem.userAnswers[TestItem.counter.value] =
                                     TestItem.answers[TestItem.answers.keys.toList()[index]].toString()
-
-
 
                                 if (!TestItem.answersBoolean[TestItem.counter.value]) {
                                     TestItem.counterQ.value++
@@ -242,7 +218,6 @@ fun CreateAnswersCard() {
         }
     }
 }
-
 
 @Composable
 fun CreateBtnCard(navController: NavController) {
@@ -295,7 +270,6 @@ fun CreateBtnCard(navController: NavController) {
                         TestItem.counter.value = 1
                     }
                 }
-                Log.d("answersPoint", answersPoint.toString())
             },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
@@ -309,7 +283,6 @@ fun CreateBtnCard(navController: NavController) {
         ) {
             Text(text = stringResource(id = R.string.nextBtn))
         }
-
         Button(
             onClick = {
                 navController.navigate(Routes.Results.route)

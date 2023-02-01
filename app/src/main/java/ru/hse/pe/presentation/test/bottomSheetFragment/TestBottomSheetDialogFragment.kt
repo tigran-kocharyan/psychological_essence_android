@@ -41,15 +41,15 @@ class TestBottomSheetDialogFragment : BottomSheetDialogFragment(), View.OnClickL
         binding.apply {
             Log.d("test", sharedViewModel.quiz.value.toString())
             if(sharedViewModel.quiz.value?.name?.length?.compareTo(20)!! > 0){
-                tvName.text = sharedViewModel.quiz.value?.name?.substring(0, 20) + "..."
+                name.text = sharedViewModel.quiz.value?.name?.substring(0, 20) + "..."
             }else{
-                tvName.text = sharedViewModel.quiz.value?.name
+                name.text = sharedViewModel.quiz.value?.name
             }
-            tvTitle.text = sharedViewModel.quiz.value?.name
-            tvContent.text = sharedViewModel.quiz.value?.description
+            title.text = sharedViewModel.quiz.value?.name
+            desc.text = sharedViewModel.quiz.value?.description
 
 
-            btnStartCourse.setOnClickListener {
+            start.setOnClickListener {
                 activity?.setContent {
                     TestTheme {
                         Navigation(sharedViewModel)
@@ -58,7 +58,7 @@ class TestBottomSheetDialogFragment : BottomSheetDialogFragment(), View.OnClickL
                 dismiss()
             }
 
-            image_close.setOnClickListener{
+            close.setOnClickListener{
                 dismiss()
             }
         }
