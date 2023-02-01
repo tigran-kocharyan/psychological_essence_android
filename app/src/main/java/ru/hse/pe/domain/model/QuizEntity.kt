@@ -12,7 +12,7 @@ data class QuizEntity(
     @SerializedName("description") val description: String? = "",
     @SerializedName("time") val time: String? = "",
     @SerializedName("questions") val questions: List<String> = emptyList(),
-    @SerializedName("answers") val answers: List<String> = emptyList(),
+    @SerializedName("answers") val answers: List<List<String>> = emptyList(),
     @SerializedName("views") val views: Int? = 0,
     @SerializedName("likes") val likes: Int? = 0,
     @SerializedName("needs_subscription") val requiresSubscription: Boolean = false

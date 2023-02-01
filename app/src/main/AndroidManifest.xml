@@ -26,9 +26,6 @@
         <activity
             android:name=".presentation.MainActivity"
             android:exported="false" />
-        <activity
-            android:name="ru.hse.pe.presentation.test.TestActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

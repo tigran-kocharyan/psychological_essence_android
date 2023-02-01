@@ -45,7 +45,7 @@ class ContentViewModel(
     }
 
     /**
-     * Скачать статьи из БД
+     * Скачать тесты из БД
      */
     fun getQuizzes() {
         disposables.add(contentInteractor.getQuizzes()

@@ -1,5 +1,12 @@
 package ru.hse.pe.domain.model
 
+import android.content.Context
+import android.os.Parcelable
+import androidx.compose.runtime.MutableState
+import androidx.navigation.NavController
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+
 data class Test(
     var name: String? = null,
     var desc: String? = null,
@@ -7,14 +14,20 @@ data class Test(
     var countQuestions: Int? = null,
     var questions: List<String>? = null,
     var answers: HashMap<String, String>? = null,
-    var scales: HashMap<String, Scale>? = null
 ) {}
 
+object TestItem {
+    lateinit var counter: MutableState<Int>
+    lateinit var maxCounter: MutableState<Int>
+    lateinit var counterQ: MutableState<Int>
+    lateinit var progress: MutableState<Double>
+    lateinit var toggleBtn: MutableState<Boolean>
 
-data class Scale(
-    var counting: String? = null,
-    var countingR: String? = null,
-    var text: String? = null,
-    var desc: String? = null,
-    var res: HashMap<String, HashMap<String, String>>? = null
-) {}
+    lateinit var questions: List<String>
+    lateinit var answers: HashMap<Int, String>
+    lateinit var userAnswers: MutableList<String>
+    lateinit var answersPoint: MutableList<Int>
+    lateinit var answersBoolean: MutableList<Boolean>
+
+    lateinit var context: Context
+}
