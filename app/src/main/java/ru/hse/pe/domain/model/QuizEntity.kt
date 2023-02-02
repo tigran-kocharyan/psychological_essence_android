@@ -15,6 +15,7 @@ data class QuizEntity(
     @SerializedName("answers") val answers: List<List<String>> = emptyList(),
     @SerializedName("views") val views: Int? = 0,
     @SerializedName("likes") val likes: Int? = 0,
+    @SerializedName("image_url") val imageUrl: String? = "",
     @SerializedName("needs_subscription") val requiresSubscription: Boolean = false
 ) : Parcelable, ContentEntity
 

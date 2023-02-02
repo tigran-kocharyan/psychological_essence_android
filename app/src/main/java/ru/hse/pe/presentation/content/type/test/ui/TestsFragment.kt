@@ -1,6 +1,5 @@
 package ru.hse.pe.presentation.content.type.test.ui
 
-import Test.userAnswers
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,9 +19,7 @@ import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentTestsBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.ContentEntity
-import ru.hse.pe.domain.model.QuizAnswerEntity
 import ru.hse.pe.domain.model.QuizEntity
-import ru.hse.pe.domain.model.QuizResultEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.SpecialTestItem
 import ru.hse.pe.presentation.content.item.Test
