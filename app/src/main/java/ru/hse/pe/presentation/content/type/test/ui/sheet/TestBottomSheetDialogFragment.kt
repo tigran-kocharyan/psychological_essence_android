@@ -57,7 +57,7 @@ class TestBottomSheetDialogFragment : BottomSheetDialogFragment(){
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).isBottomNavVisible(false)
-        showMarkdown(sharedViewModel.quiz.value?.description)
+        parseDesc(sharedViewModel.quiz.value?.description)
         setContent()
     }
 
@@ -87,8 +87,12 @@ class TestBottomSheetDialogFragment : BottomSheetDialogFragment(){
         }
     }
 
-    private fun showMarkdown(text: String?) {
-        val sentences = text?.split(". ")
-        Log.d("content", sentences.toString())
+    private fun parseDesc(text: String?) {
+        val temp = "Опросник «Отчуждение моральной ответственности» измеряет 8 механизмов, лежащих в основе данного феномена, которые могут применяться как при объяснении своих неэтичных поступков, так и при оправдании поведения других людей, которых мы не хотим по каким-либо причинам обвинять и осуждать.Инструкция:Опросник состоит из 24 утверждений, примерное время прохождения – 5 минут. Внимательно прочитайте утверждения и оцените степень согласия с ними по шкале: Совершенно не согласен, Не согласен, Скорее не согласен, Не могу сказать, Cогласен или не согласен, Скорее согласен, Согласен, Совершенно согласен.Пожалуйста, будьте искренни и честны в Ваших ответах для достоверных результатов. Помните, что опросником не предусмотрены правильные или неправильные ответы, поэтому выбирайте тот, который в наибольше степени отражает ваше мнение."
+        val sentences = temp.split("Инструкция:")
+
+        val desc = sentences[0]
+        val instruction = sentences[1]
+        Log.d("content", instruction)
     }
 }

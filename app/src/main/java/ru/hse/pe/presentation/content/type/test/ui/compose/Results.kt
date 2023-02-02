@@ -8,6 +8,8 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -28,17 +30,13 @@ fun Results(viewModel: ContentViewModel, viewLifecycleOwner: LifecycleOwner) {
     Column {
         Utils.SystemBarsNotVisible()
         Utils.MyTopAppBar("Тест", false)
-
-
         Test.userAnswers.removeAt(0)
 
         viewModel.getQuizResult(QuizAnswerEntity(answers = Test.userAnswers))
-        viewModel.getQuizResultLiveData().observe(viewLifecycleOwner) {
-            Log.d("checkcheck", it.toString())
-        }
+        val res by viewModel.getQuizResultLiveData().observeAsState()
+        Log.d("quizItems", res.toString())
 
-        val res = viewModel.getQuizResultLiveData().value
-        Log.d("res", res.toString())
+
 
         Box(
             modifier = Modifier
@@ -84,15 +82,4 @@ fun Results(viewModel: ContentViewModel, viewLifecycleOwner: LifecycleOwner) {
             Text(text = stringResource(id = R.string.backToTests))
         }
     }
-
-
 }
-
-fun showResult() {
-    TODO("Not yet implemented")
-}
-
-private fun showResult(res: QuizResultEntity) {
-    TODO("Not yet implemented")
-}
-

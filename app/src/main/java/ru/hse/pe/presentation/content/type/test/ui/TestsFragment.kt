@@ -1,5 +1,6 @@
 package ru.hse.pe.presentation.content.type.test.ui
 
+import Test.userAnswers
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -99,7 +100,6 @@ class TestsFragment : Fragment() {
 
     private fun showQizizz(quizizz: List<QuizEntity>) {
         val listTests = listOf(getSpecialQuizItems(quizizz), getQuizItems(quizizz))
-
         binding.testList.adapter = GroupieAdapter().apply { addAll(listTests) }
     }
 
