@@ -1,6 +1,5 @@
 import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectableGroup
@@ -20,12 +19,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
-import ru.hse.pe.domain.model.QuizAnswerEntity
-import ru.hse.pe.domain.model.QuizResultEntity
 import ru.hse.pe.presentation.content.type.test.utils.sealed.Routes
 import ru.hse.pe.utils.Utils
 
@@ -92,9 +88,7 @@ fun CardItem(navController: NavController) {
         ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             CreateTopPartCard()
-            CreateAnswersCard()
-//            Spacer(Modifier.weight(1f, true))
-            CreateBtnCard(navController)
+            CreateAnswersCard(navController)
         }
     }
 }
@@ -157,20 +151,24 @@ fun CreateTopPartCard() {
 }
 
 @Composable
-fun CreateAnswersCard() {
-    Column(Modifier.selectableGroup(), horizontalAlignment = Alignment.Start) {
+fun CreateAnswersCard(navController: NavController) {
+    Column(
+        Modifier
+            .selectableGroup(), horizontalAlignment = Alignment.Start) {
         val (selectedOption, onOptionSelected) = remember { mutableStateOf(0) }
         LazyColumn(
             modifier = Modifier
                 .selectableGroup()
                 .fillMaxWidth()
-                .padding(bottom = 57.dp, start = 40.dp),
+                .padding(bottom = 40.dp, start = 40.dp)
+                .weight(1f),
+
             horizontalAlignment = Alignment.Start
         ) {
             val diff = 1.0 / Test.maxCounter.value
             items(Test.answers.size) { index ->
                 Row(
-                    modifier = Modifier.height(30.dp),
+                    modifier = Modifier.padding(bottom = 30.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -219,8 +217,10 @@ fun CreateAnswersCard() {
                         style = MaterialTheme.typography.subtitle2
                     )
                 }
+
             }
         }
+        CreateBtnCard(navController)
     }
 }
 
@@ -324,7 +324,8 @@ fun CreateBtnCard(navController: NavController) {
                 }
             },
             modifier = Modifier
-                .fillMaxWidth(if (Test.toggleBtn.value) 0.0f else 0.7f),
+                .width(if (Test.toggleBtn.value) 0.dp else 200.dp)
+                .height(if (Test.toggleBtn.value) 0.dp else 45.dp),
             elevation = ButtonDefaults.elevation(0.dp, 0.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         ) {
