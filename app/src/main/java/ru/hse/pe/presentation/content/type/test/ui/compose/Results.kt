@@ -17,10 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.viewModelScope
 import ru.hse.pe.R
 import ru.hse.pe.domain.model.QuizAnswerEntity
-import ru.hse.pe.domain.model.QuizResultEntity
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.utils.Utils
 
@@ -33,10 +31,8 @@ fun Results(viewModel: ContentViewModel, viewLifecycleOwner: LifecycleOwner) {
         Test.userAnswers.removeAt(0)
 
         viewModel.getQuizResult(QuizAnswerEntity(answers = Test.userAnswers))
-        val res by viewModel.getQuizResultLiveData().observeAsState()
-        Log.d("quizItems", res.toString())
-
-
+        val result by viewModel.getQuizResultLiveData().observeAsState()
+        Log.d("quizItems", result?.content ?: "")
 
         Box(
             modifier = Modifier
