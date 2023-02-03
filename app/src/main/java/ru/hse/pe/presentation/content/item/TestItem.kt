@@ -34,7 +34,6 @@ class Test(
                 transformations(RoundedCornersTransformation(10f))
             }
         }
-            //  binding.image.setImageResource(R.drawable.placeholder_article)
 
         binding.root.setOnClickListener { clickListener.onContentClick(test, position) }
     }
