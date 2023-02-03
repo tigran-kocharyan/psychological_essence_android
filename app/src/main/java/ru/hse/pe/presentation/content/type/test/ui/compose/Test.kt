@@ -162,6 +162,7 @@ fun CreateAnswersCard(navController: NavController) {
                 .fillMaxWidth()
                 .padding(bottom = 40.dp, start = 40.dp)
                 .weight(1f),
+
             horizontalAlignment = Alignment.Start
         ) {
             val diff = 1.0 / Test.maxCounter.value
@@ -323,7 +324,8 @@ fun CreateBtnCard(navController: NavController) {
                 }
             },
             modifier = Modifier
-                .fillMaxWidth(if (Test.toggleBtn.value) 0.0f else 0.7f),
+                .width(if (Test.toggleBtn.value) 0.dp else 200.dp)
+                .height(if (Test.toggleBtn.value) 0.dp else 45.dp),
             elevation = ButtonDefaults.elevation(0.dp, 0.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         ) {
