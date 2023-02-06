@@ -40,7 +40,6 @@ class ContentFragment : Fragment() {
                 TestsFragment.TAG
             )
         }
-
         binding.articles.setOnClickListener {
             setCurrentFragment(
                 ArticlesFragment.newInstance(),

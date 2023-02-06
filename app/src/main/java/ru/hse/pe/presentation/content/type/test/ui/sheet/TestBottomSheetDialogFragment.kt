@@ -2,11 +2,9 @@ package ru.hse.pe.presentation.content.type.test.ui.sheet
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.compose.setContent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -15,18 +13,13 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.SoftBreakAddsNewLinePlugin
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.image.ImagesPlugin
-import org.commonmark.internal.ListItemParser
-import org.commonmark.node.BulletList
 import ru.hse.pe.App
+import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.BottomSheetTestBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.presentation.MainActivity
-import ru.hse.pe.presentation.content.type.article.view.ArticleFragment
-import ru.hse.pe.presentation.content.type.fact.view.FactBottomSheetDialogFragment
-import ru.hse.pe.presentation.content.type.test.ui.TestsFragment
-import ru.hse.pe.presentation.content.type.test.ui.compose.Navigation
-import ru.hse.pe.presentation.content.type.test.utils.theme.TestTheme
+import ru.hse.pe.presentation.content.type.test.ui.ComposeFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
 import ru.hse.pe.utils.scheduler.SchedulersProvider
@@ -81,13 +74,19 @@ class TestBottomSheetDialogFragment : BottomSheetDialogFragment(){
             }
             title.text = sharedViewModel.quiz.value?.name
 
-
             start.setOnClickListener {
-                activity?.setContent {
-                    TestTheme {
-                        Navigation(sharedViewModel, viewModel, viewLifecycleOwner)
-                    }
-                }
+                activity?.supportFragmentManager
+                    ?.beginTransaction()
+                    ?.setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.pop_enter,
+                        R.anim.pop_exit
+                    )
+                    ?.add(R.id.fragment_container, ComposeFragment.newInstance(), tag)
+                    ?.addToBackStack(null)
+                    ?.commit()
+
                 dismiss()
             }
 

@@ -1,5 +1,6 @@
 import android.widget.Toast
-import androidx.compose.foundation.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectableGroup
@@ -19,20 +20,24 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
-import ru.hse.pe.presentation.content.type.test.utils.sealed.Routes
-import ru.hse.pe.utils.Utils
+import ru.hse.pe.domain.model.QuizAnswerEntity
+import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 
 @Composable
-fun Test(navController: NavController, sharedViewModel: SharedViewModel) {
-    Utils.SystemBarsNotVisible()
-    ShowData(navController, sharedViewModel)
+fun Test(
+    sharedViewModel: SharedViewModel,
+    viewModel: ContentViewModel,
+) {
+    ShowData(sharedViewModel, viewModel)
 }
 
 @Composable
-fun ShowData(navController: NavController, sharedViewModel: SharedViewModel) {
+fun ShowData(
+    sharedViewModel: SharedViewModel,
+    viewModel: ContentViewModel,
+) {
     val name = sharedViewModel.quiz.value?.name.toString()
     val listQuestions = sharedViewModel.quiz.value?.questions?.toList()
     val listAnswers = sharedViewModel.quiz.value?.answers?.get(0)?.toList()
@@ -72,14 +77,16 @@ fun ShowData(navController: NavController, sharedViewModel: SharedViewModel) {
         Column(
             modifier = Modifier.background(Color.White)
         ) {
-            Utils.MyTopAppBar(name, true)
-            CardItem(navController)
+            CardItem(sharedViewModel, viewModel)
         }
     }
 }
 
 @Composable
-fun CardItem(navController: NavController) {
+fun CardItem(
+    sharedViewModel: SharedViewModel,
+    viewModel: ContentViewModel,
+) {
     Card(
         elevation = 0.dp,
         modifier = Modifier
@@ -88,7 +95,7 @@ fun CardItem(navController: NavController) {
         ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             CreateTopPartCard()
-            CreateAnswersCard(navController)
+            CreateAnswersCard(sharedViewModel, viewModel)
         }
     }
 }
@@ -151,7 +158,10 @@ fun CreateTopPartCard() {
 }
 
 @Composable
-fun CreateAnswersCard(navController: NavController) {
+fun CreateAnswersCard(
+    sharedViewModel: SharedViewModel,
+    viewModel: ContentViewModel,
+) {
     Column(
         Modifier
             .selectableGroup(), horizontalAlignment = Alignment.Start) {
@@ -220,12 +230,15 @@ fun CreateAnswersCard(navController: NavController) {
 
             }
         }
-        CreateBtnCard(navController)
+        CreateBtnCard(sharedViewModel, viewModel)
     }
 }
 
 @Composable
-fun CreateBtnCard(navController: NavController) {
+fun CreateBtnCard(
+    sharedViewModel: SharedViewModel,
+    viewModel: ContentViewModel,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -294,7 +307,11 @@ fun CreateBtnCard(navController: NavController) {
         }
         Button(
             onClick = {
-                navController.navigate(Routes.Results.route)
+                Test.userAnswers.removeAt(0)
+                viewModel.getQuizResult(QuizAnswerEntity(
+                    sharedViewModel.quiz.value?.id.toString(),
+                    "32344",
+                    Test.userAnswers))
             },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
@@ -349,4 +366,6 @@ object Test {
     lateinit var answersPoint: MutableList<Int>
     lateinit var answersBoolean: MutableList<Boolean>
 }
+
+
 

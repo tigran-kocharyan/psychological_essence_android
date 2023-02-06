@@ -64,7 +64,7 @@ interface ApiService {
         private const val GET_ARTICLES = "articles"
         private const val GET_TECHNIQUES = "techniques"
         private const val GET_QUIZZES = "quizzes"
-        private const val GET_QUIZ_RESULT = "quiz/result"
+        private const val GET_QUIZ_RESULT = "quiz/submit-answers"
         private const val GET_RECOMMENDATIONS = "recommendations"
         private const val GET_FACTS = "facts"
         private const val GET_USER = ""
