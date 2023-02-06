@@ -10,7 +10,7 @@ import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.utils.callback.ContentClickListener
 
 
-class Test(
+class TestItem(
     private val test: QuizEntity,
     private val clickListener: ContentClickListener,
 ) : BindableItem<HolderTestBinding>() {

@@ -5,22 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_test_result.*
 import ru.hse.pe.App
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentTestResultBinding
-import ru.hse.pe.databinding.FragmentTestsBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.QuizAnswerEntity
 import ru.hse.pe.domain.model.QuizResultEntity
 import ru.hse.pe.presentation.MainActivity
+import ru.hse.pe.presentation.content.type.test.ui.compose.Test
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
 import ru.hse.pe.utils.scheduler.SchedulersProvider
@@ -29,6 +27,7 @@ import javax.inject.Inject
 
 class TestResultFragment : Fragment() {
     private lateinit var binding: FragmentTestResultBinding
+
     @Inject
     lateinit var interactor: ContentInteractor
 
@@ -48,7 +47,6 @@ class TestResultFragment : Fragment() {
         (activity?.applicationContext as App).getAppComponent().inject(this)
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,12 +62,13 @@ class TestResultFragment : Fragment() {
 
         viewModel.getQuizResult(
             QuizAnswerEntity(
-            sharedViewModel.quiz.value?.id.toString(),
-            "32344",
-            Test.userAnswers)
+                sharedViewModel.quiz.value?.id.toString(),
+                sharedViewModel.user.value?.uid.toString(),
+                Test.userAnswers
+            )
         )
 
-        binding.finish.setOnClickListener{
+        binding.finish.setOnClickListener {
             activity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.setCustomAnimations(
@@ -102,7 +101,8 @@ class TestResultFragment : Fragment() {
 
     private fun showError(throwable: Throwable) {
         Log.d(TestsFragment.TAG, "showError() called with: throwable = $throwable")
-        Snackbar.make(binding.root, throwable.toString(), BaseTransientBottomBar.LENGTH_SHORT).show()
+        Snackbar.make(binding.root, throwable.toString(), BaseTransientBottomBar.LENGTH_SHORT)
+            .show()
     }
 
     private fun showResults(quizResultEntity: QuizResultEntity) {
@@ -114,7 +114,5 @@ class TestResultFragment : Fragment() {
         viewModel.getProgressLiveData().observe(viewLifecycleOwner, this::showProgress)
         viewModel.getQuizResultLiveData().observe(viewLifecycleOwner, this::showResults)
     }
-
-
 }
 
