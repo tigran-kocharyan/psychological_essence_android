@@ -27,6 +27,7 @@ import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.presentation.content.type.test.ui.TestResultFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
+import ru.hse.pe.utils.Utils
 
 @Composable
 fun Test(
@@ -46,6 +47,7 @@ fun Test(
     val counter = remember { mutableStateOf(1) }
     val maxCounter = remember { mutableStateOf(countQuestions) }
     val counterQ = remember { mutableStateOf(0) }
+
 
     Box {
         for (i in 1 until maxCounter.value + 2) {
@@ -72,6 +74,12 @@ fun Test(
         Column(
             modifier = Modifier.background(Color.White)
         ) {
+            val title: String = if (sharedViewModel.quiz.value?.name?.length?.compareTo(30)!! > 0) {
+                sharedViewModel.quiz.value?.name?.substring(0, 30) + "..."
+            } else {
+                sharedViewModel.quiz.value?.name.toString()
+            }
+            Utils.MyTopAppBar(name = title, arrow = false)
             CardItem(sharedViewModel, viewModel)
         }
     }

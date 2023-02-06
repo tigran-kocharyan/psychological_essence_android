@@ -43,11 +43,3 @@ val typography = Typography(
 
 
 )
-
-val nunitoSansTypography = Typography(
-    subtitle1 = TextStyle(
-        fontFamily = nunitoSans,
-        fontWeight = FontWeight.Normal,
-        fontSize = 20.sp
-    )
-)

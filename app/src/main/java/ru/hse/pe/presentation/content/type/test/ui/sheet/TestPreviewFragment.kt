@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
@@ -18,31 +17,14 @@ import ru.hse.pe.App
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.BottomSheetTestBinding
-import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.type.test.ui.TestContentFragment
-import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
-import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
-import ru.hse.pe.utils.scheduler.SchedulersProvider
-import javax.inject.Inject
 
 
-class TestPreviewFragment : BottomSheetDialogFragment(){
-    @Inject
-    lateinit var interactor: ContentInteractor
-
-    @Inject
-    lateinit var schedulers: SchedulersProvider
-
+class TestPreviewFragment : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetTestBinding
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
-    private val viewModel: ContentViewModel by viewModels {
-        ContentViewModelFactory(
-            schedulers,
-            interactor
-        )
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,13 +48,14 @@ class TestPreviewFragment : BottomSheetDialogFragment(){
         setContent()
     }
 
-    private fun setContent(){
+    private fun setContent() {
         binding.apply {
             if (sharedViewModel.quiz.value?.name?.length?.compareTo(20)!! > 0) {
                 name.text = sharedViewModel.quiz.value?.name?.substring(0, 20) + "..."
             } else {
                 name.text = sharedViewModel.quiz.value?.name
             }
+
             title.text = sharedViewModel.quiz.value?.name
 
             start.setOnClickListener {
@@ -93,7 +76,7 @@ class TestPreviewFragment : BottomSheetDialogFragment(){
                 dismiss()
             }
 
-            close.setOnClickListener{
+            close.setOnClickListener {
                 dismiss()
             }
         }
@@ -120,7 +103,6 @@ class TestPreviewFragment : BottomSheetDialogFragment(){
                 .build()
             markwon.setMarkdown(binding.instruction, sentences?.get(1) ?: "")
         }
-
         binding.desc.text = sentences?.get(0) ?: ""
     }
 

@@ -122,9 +122,6 @@ class TestsFragment : Fragment() {
 
     companion object {
         const val TAG = "TestsFragment"
-        private const val TAG_ADD = "$TAG ADD"
-        private const val TAG_ERROR = "$TAG ERROR"
-        private const val TAG_PROGRESS = "$TAG PROGRESS"
 
         /**
          * Получение объекта [TestsFragment]
