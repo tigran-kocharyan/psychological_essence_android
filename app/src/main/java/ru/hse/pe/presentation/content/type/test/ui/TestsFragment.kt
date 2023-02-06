@@ -22,7 +22,7 @@ import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.SpecialTestItem
-import ru.hse.pe.presentation.content.item.Test
+import ru.hse.pe.presentation.content.item.TestItem
 import ru.hse.pe.presentation.content.type.test.ui.sheet.TestPreviewFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
@@ -110,7 +110,7 @@ class TestsFragment : Fragment() {
     private fun getQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
         return VerticalContentContainer(
             getString(R.string.tests),
-            quizizz.map { Test(it, clickListener) }
+            quizizz.map { TestItem(it, clickListener) }
         )
     }
 

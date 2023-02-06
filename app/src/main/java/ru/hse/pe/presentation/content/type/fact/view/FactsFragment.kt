@@ -75,7 +75,6 @@ class FactsFragment : Fragment() {
         observeLiveData()
         viewModel.getFacts()
         (activity as MainActivity).isBottomNavVisible(false)
-        Log.d("totowka", sharedViewModel.user.value?.uid ?: "")
     }
 
     private fun showProgress(isVisible: Boolean) {

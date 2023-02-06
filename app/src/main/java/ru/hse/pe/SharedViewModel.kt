@@ -12,7 +12,7 @@ class SharedViewModel : ViewModel() {
     private var _quiz = MutableLiveData<QuizEntity?>(null)
     private var _recommendation = MutableLiveData<RecommendationEntity?>(null)
 
-    val user: LiveData<UserEntity> get() = _user
+    val user: LiveData<UserEntity> = _user
     var article: LiveData<ArticleEntity?> = _article
     var recommendation: LiveData<RecommendationEntity?> = _recommendation
     var fact: LiveData<FactEntity?> = _fact

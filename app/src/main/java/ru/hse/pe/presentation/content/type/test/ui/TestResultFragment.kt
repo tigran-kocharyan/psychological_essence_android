@@ -59,11 +59,11 @@ class TestResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLiveData()
-
+        // TODO: использовать FirebaseAuth.getInstance().currentUser?.uid
         viewModel.getQuizResult(
             QuizAnswerEntity(
                 sharedViewModel.quiz.value?.id.toString(),
-                sharedViewModel.user.value?.uid.toString(),
+                "123123",
                 Test.userAnswers
             )
         )
