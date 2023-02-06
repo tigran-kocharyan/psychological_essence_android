@@ -23,7 +23,7 @@ import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.SpecialTestItem
 import ru.hse.pe.presentation.content.item.Test
-import ru.hse.pe.presentation.content.type.test.ui.sheet.ActionTestBottom
+import ru.hse.pe.presentation.content.type.test.ui.sheet.TestPreviewFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
 import ru.hse.pe.utils.callback.ContentClickListener
@@ -75,9 +75,9 @@ class TestsFragment : Fragment() {
         override fun onContentClick(content: ContentEntity, position: Int) {
             if (content is QuizEntity) {
                 sharedViewModel.setQuiz(content)
-                ActionTestBottom.newInstance().show(
+                TestPreviewFragment.newInstance().show(
                     (activity as AppCompatActivity).supportFragmentManager,
-                    ActionTestBottom.TAG
+                    TestPreviewFragment.TAG
                 )
             }
         }

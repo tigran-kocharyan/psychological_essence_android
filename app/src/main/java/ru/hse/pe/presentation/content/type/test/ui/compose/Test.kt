@@ -1,4 +1,5 @@
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,21 +21,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.commit
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.domain.model.QuizAnswerEntity
+import ru.hse.pe.presentation.MainActivity
+import ru.hse.pe.presentation.content.type.test.ui.TestResultFragment
+import ru.hse.pe.presentation.content.type.test.ui.TestsFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
+
 
 @Composable
 fun Test(
-    sharedViewModel: SharedViewModel,
-    viewModel: ContentViewModel,
-) {
-    ShowData(sharedViewModel, viewModel)
-}
-
-@Composable
-fun ShowData(
     sharedViewModel: SharedViewModel,
     viewModel: ContentViewModel,
 ) {
@@ -81,6 +79,7 @@ fun ShowData(
         }
     }
 }
+
 
 @Composable
 fun CardItem(
@@ -305,13 +304,22 @@ fun CreateBtnCard(
         ) {
             Text(text = stringResource(id = R.string.nextBtn))
         }
+        val activity = LocalContext.current as? MainActivity
         Button(
             onClick = {
+                activity?.supportFragmentManager
+                    ?.beginTransaction()
+                    ?.setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.pop_enter,
+                        R.anim.pop_exit
+                    )?.add(R.id.fragment_container, TestResultFragment.newInstance(),
+                        "TestResultFragment")
+                    ?.addToBackStack(null)
+                    ?.commit()
+
                 Test.userAnswers.removeAt(0)
-                viewModel.getQuizResult(QuizAnswerEntity(
-                    sharedViewModel.quiz.value?.id.toString(),
-                    "32344",
-                    Test.userAnswers))
             },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier

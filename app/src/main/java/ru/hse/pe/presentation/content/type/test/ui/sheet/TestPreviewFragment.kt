@@ -1,10 +1,12 @@
 package ru.hse.pe.presentation.content.type.test.ui.sheet
 
+import Test
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.compose.setContent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -14,19 +16,18 @@ import io.noties.markwon.SoftBreakAddsNewLinePlugin
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.image.ImagesPlugin
 import ru.hse.pe.App
-import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.BottomSheetTestBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.presentation.MainActivity
-import ru.hse.pe.presentation.content.type.test.ui.ComposeFragment
+import ru.hse.pe.presentation.content.type.test.utils.theme.TestTheme
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
 import ru.hse.pe.utils.scheduler.SchedulersProvider
 import javax.inject.Inject
 
 
-class TestBottomSheetDialogFragment : BottomSheetDialogFragment(){
+class TestPreviewFragment : BottomSheetDialogFragment(){
     @Inject
     lateinit var interactor: ContentInteractor
 
@@ -61,7 +62,7 @@ class TestBottomSheetDialogFragment : BottomSheetDialogFragment(){
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).isBottomNavVisible(false)
-        parseDesc(sharedViewModel.quiz.value?.description)
+        parseDescription(sharedViewModel.quiz.value?.description)
         setContent()
     }
 
@@ -75,17 +76,11 @@ class TestBottomSheetDialogFragment : BottomSheetDialogFragment(){
             title.text = sharedViewModel.quiz.value?.name
 
             start.setOnClickListener {
-                activity?.supportFragmentManager
-                    ?.beginTransaction()
-                    ?.setCustomAnimations(
-                        R.anim.slide_in,
-                        R.anim.fade_out,
-                        R.anim.pop_enter,
-                        R.anim.pop_exit
-                    )
-                    ?.add(R.id.fragment_container, ComposeFragment.newInstance(), tag)
-                    ?.addToBackStack(null)
-                    ?.commit()
+                activity?.setContent {
+                    TestTheme {
+                        Test(sharedViewModel, viewModel)
+                    }
+                }
 
                 dismiss()
             }
@@ -97,7 +92,7 @@ class TestBottomSheetDialogFragment : BottomSheetDialogFragment(){
     }
 
     // парсим описание на само описание и инструкции
-    private fun parseDesc(text: String?) {
+    private fun parseDescription(text: String?) {
         val sentences = text?.split("Инструкция:")
 
         context?.let { context ->
@@ -110,7 +105,6 @@ class TestBottomSheetDialogFragment : BottomSheetDialogFragment(){
                             .headingTextSizeMultipliers(MULTIPLIERS)
                             .headingBreakHeight(0)
                             .linkColor(Color.parseColor(LINK_COLOR))
-
                     }
                 })
                 .usePlugin(SoftBreakAddsNewLinePlugin.create())
@@ -123,32 +117,13 @@ class TestBottomSheetDialogFragment : BottomSheetDialogFragment(){
     }
 
     companion object {
-        const val TAG = "TestBottomSheetDialogFragment"
+        const val TAG = "TestPreviewFragment"
         private val MULTIPLIERS = floatArrayOf(1.5F, 1.17F, 1F, 1F, .83F, .67F)
         private val LINK_COLOR = "#6766D8"
 
         /**
-         * Получение объекта [TestBottomSheetDialogFragment]
+         * Получение объекта [TestPreviewFragment]
          */
-        fun newInstance() = TestBottomSheetDialogFragment()
+        fun newInstance() = TestPreviewFragment()
     }
 }
-
-
-/*
-
- val desc = sentences[0]
-        val instruction = sentences[1].split("(варианты ответов)")
-
-        // варианты ответов
-        val answers = instruction[1].split("\n\t").toList().toMutableList()
-        var answersStr = StringBuilder()
-        for (i in (answers.indices) - 1){
-            answersStr.append("\t•${answers[i]}\n")
-        }
-
-        Log.d("answers", answers.toString())
-
-        binding.desc.text = desc
-        binding.instruction.text = sentences[1]
- */
