@@ -5,11 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import ru.hse.pe.App
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
@@ -59,27 +61,26 @@ class TestResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLiveData()
-        // TODO: использовать FirebaseAuth.getInstance().currentUser?.uid
         viewModel.getQuizResult(
             QuizAnswerEntity(
                 sharedViewModel.quiz.value?.id.toString(),
-                "123123",
+                FirebaseAuth.getInstance().currentUser?.uid,
                 Test.userAnswers
             )
         )
 
         binding.finish.setOnClickListener {
-            activity?.supportFragmentManager
-                ?.beginTransaction()
-                ?.setCustomAnimations(
+            (activity as AppCompatActivity).supportFragmentManager
+                .beginTransaction()
+                .setCustomAnimations(
                     R.anim.slide_in,
                     R.anim.fade_out,
                     R.anim.pop_enter,
                     R.anim.pop_exit
                 )
-                ?.add(R.id.fragment_container, TestsFragment.newInstance(), tag)
-                ?.addToBackStack(null)
-                ?.commit()
+                .add(R.id.fragment_container, TestsFragment.newInstance(), tag)
+                .addToBackStack(null)
+                .commit()
         }
         (activity as MainActivity).isBottomNavVisible(false)
     }
