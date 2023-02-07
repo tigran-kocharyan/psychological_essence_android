@@ -69,6 +69,16 @@ class TestResultFragment : Fragment() {
             )
         )
 
+        binding.error.setOnClickListener{
+            viewModel.getQuizResult(
+                QuizAnswerEntity(
+                    sharedViewModel.quiz.value?.id.toString(),
+                    FirebaseAuth.getInstance().currentUser?.uid,
+                    Test.userAnswers
+                )
+            )
+        }
+
         binding.finish.setOnClickListener {
             (activity as AppCompatActivity).supportFragmentManager
                 .beginTransaction()
@@ -96,18 +106,19 @@ class TestResultFragment : Fragment() {
 
     private fun showProgress(isVisible: Boolean) {
         Log.i(TestsFragment.TAG, "showProgress called with param = $isVisible")
-
         binding.progressbar.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     private fun showError(throwable: Throwable) {
         Log.d(TestsFragment.TAG, "showError() called with: throwable = $throwable")
+        binding.error.visibility = View.VISIBLE
         Snackbar.make(binding.root, throwable.toString(), BaseTransientBottomBar.LENGTH_SHORT)
             .show()
     }
 
     private fun showResults(quizResultEntity: QuizResultEntity) {
         binding.result.text = quizResultEntity.content
+        binding.error.visibility = View.GONE
         Log.d("QuizResultEntity", quizResultEntity.toString())
     }
 
