@@ -1,5 +1,6 @@
 package ru.hse.pe.presentation.content.type.test.ui.compose
 
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
@@ -32,7 +33,6 @@ import ru.hse.pe.utils.Utils
 @Composable
 fun Test(
     sharedViewModel: SharedViewModel,
-    viewModel: ContentViewModel,
 ) {
     val name = sharedViewModel.quiz.value?.name.toString()
     val listQuestions = sharedViewModel.quiz.value?.questions?.toList()
@@ -80,17 +80,14 @@ fun Test(
                 sharedViewModel.quiz.value?.name.toString()
             }
             Utils.MyTopAppBar(name = title, arrow = false)
-            CardItem(sharedViewModel, viewModel)
+            CardItem()
         }
     }
 }
 
 
 @Composable
-fun CardItem(
-    sharedViewModel: SharedViewModel,
-    viewModel: ContentViewModel,
-) {
+fun CardItem() {
     Card(
         elevation = 0.dp,
         modifier = Modifier
@@ -99,7 +96,7 @@ fun CardItem(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             CreateTopPartCard()
-            CreateAnswersCard(sharedViewModel, viewModel)
+            CreateAnswersCard()
         }
     }
 }
@@ -162,10 +159,7 @@ fun CreateTopPartCard() {
 }
 
 @Composable
-fun CreateAnswersCard(
-    sharedViewModel: SharedViewModel,
-    viewModel: ContentViewModel,
-) {
+fun CreateAnswersCard() {
     Column(
         Modifier
             .selectableGroup(), horizontalAlignment = Alignment.Start) {
@@ -191,10 +185,10 @@ fun CreateAnswersCard(
                             .width(20.dp)
                             .height(20.dp)
                     ) {
+                        onOptionSelected(Test.answers.keys.toList()[index])
                         RadioButton(
                             selected = (Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value]),
                             onClick = {
-                                onOptionSelected(Test.answers.keys.toList()[index])
                                 Test.answersPoint[Test.counter.value] =
                                     Test.answers.keys.toList()[index]
                                 Test.userAnswers[Test.counter.value] =
@@ -234,15 +228,12 @@ fun CreateAnswersCard(
 
             }
         }
-        CreateBtnCard(sharedViewModel, viewModel)
+        CreateBtnCard()
     }
 }
 
 @Composable
-fun CreateBtnCard(
-    sharedViewModel: SharedViewModel,
-    viewModel: ContentViewModel,
-) {
+fun CreateBtnCard() {
     Row(
         modifier = Modifier
             .fillMaxWidth()

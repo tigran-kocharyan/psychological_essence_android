@@ -70,10 +70,11 @@ class TestResultFragment : Fragment() {
         )
 
         binding.error.setOnClickListener{
+            Log.d("FirebaseAuth", FirebaseAuth.getInstance().currentUser?.uid.toString())
             viewModel.getQuizResult(
                 QuizAnswerEntity(
                     sharedViewModel.quiz.value?.id.toString(),
-                    FirebaseAuth.getInstance().currentUser?.uid,
+                    "12",
                     Test.userAnswers
                 )
             )

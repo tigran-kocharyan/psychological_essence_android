@@ -19,19 +19,7 @@ import javax.inject.Inject
 
 
 class TestContentFragment : Fragment() {
-    @Inject
-    lateinit var interactor: ContentInteractor
-
-    @Inject
-    lateinit var schedulers: SchedulersProvider
-
     private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val viewModel: ContentViewModel by viewModels {
-        ContentViewModelFactory(
-            schedulers,
-            interactor
-        )
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +33,7 @@ class TestContentFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             TestTheme {
-                Test(sharedViewModel, viewModel)
+                Test(sharedViewModel)
             }
         }
     }
