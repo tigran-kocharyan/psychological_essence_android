@@ -102,8 +102,8 @@ class RecommendationFragment : Fragment() {
         binding.category.text =
             context?.getString(R.string.category_recommendation, recommendation.category) ?: ""
         binding.image.load(recommendation.imageUrls.firstOrNull()) {
-            placeholder(R.drawable.article)
-            error(R.drawable.article)
+            placeholder(R.drawable.placeholder_article)
+            error(R.drawable.placeholder_article)
             crossfade(true)
         }
         adapter.updateData(recommendation.imageUrls.drop(1))

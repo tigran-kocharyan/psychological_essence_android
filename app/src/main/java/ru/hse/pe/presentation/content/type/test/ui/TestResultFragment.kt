@@ -13,7 +13,6 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import ru.hse.pe.App
-import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentTestResultBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
@@ -29,6 +28,7 @@ import javax.inject.Inject
 
 class TestResultFragment : Fragment() {
     private lateinit var binding: FragmentTestResultBinding
+    private lateinit var result: QuizAnswerEntity
 
     @Inject
     lateinit var interactor: ContentInteractor
@@ -61,37 +61,17 @@ class TestResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLiveData()
-        viewModel.getQuizResult(
-            QuizAnswerEntity(
-                sharedViewModel.quiz.value?.id.toString(),
-                FirebaseAuth.getInstance().currentUser?.uid,
-                Test.userAnswers
-            )
+        result = QuizAnswerEntity(
+            sharedViewModel.quiz.value?.id,
+            FirebaseAuth.getInstance().currentUser?.uid.toString(),
+            Test.userAnswers
         )
 
-        binding.error.setOnClickListener{
-            Log.d("FirebaseAuth", FirebaseAuth.getInstance().currentUser?.uid.toString())
-            viewModel.getQuizResult(
-                QuizAnswerEntity(
-                    sharedViewModel.quiz.value?.id.toString(),
-                    "12",
-                    Test.userAnswers
-                )
-            )
-        }
-
+        viewModel.getQuizResult(result)
+        Log.d("QuizResulQuizResultEntitytEntity", result.toString())
+        binding.error.setOnClickListener { viewModel.getQuizResult(result) }
         binding.finish.setOnClickListener {
-            (activity as AppCompatActivity).supportFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(
-                    R.anim.slide_in,
-                    R.anim.fade_out,
-                    R.anim.pop_enter,
-                    R.anim.pop_exit
-                )
-                .add(R.id.fragment_container, TestsFragment.newInstance(), tag)
-                .addToBackStack(null)
-                .commit()
+            (activity as AppCompatActivity).supportFragmentManager.popBackStack()
         }
         (activity as MainActivity).isBottomNavVisible(false)
     }

@@ -67,7 +67,6 @@ class TestPreviewFragment : BottomSheetDialogFragment() {
                         R.anim.pop_enter,
                         R.anim.pop_exit
                     )
-                    .addToBackStack(null)
                     .add(
                         R.id.fragment_container, TestContentFragment.newInstance(),
                         TestContentFragment.TAG

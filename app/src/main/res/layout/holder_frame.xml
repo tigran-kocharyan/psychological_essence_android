@@ -6,4 +6,4 @@
     android:layout_height="170dp"
     android:layout_marginRight="16dp"
     android:background="?attr/selectableItemBackground"
-    tools:src="@drawable/article" />
+    tools:src="@drawable/placeholder_article" />

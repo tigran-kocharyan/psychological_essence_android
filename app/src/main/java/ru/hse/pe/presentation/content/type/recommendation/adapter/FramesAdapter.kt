@@ -45,8 +45,8 @@ class FrameViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(url: String) {
         imageView.load(url) {
-            placeholder(R.drawable.article)
-            error(R.drawable.article)
+            placeholder(R.drawable.placeholder_article)
+            error(R.drawable.placeholder_article)
             crossfade(true)
             transformations(RoundedCornersTransformation(15f))
         }
