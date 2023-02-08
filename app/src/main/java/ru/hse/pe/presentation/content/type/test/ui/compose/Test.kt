@@ -1,4 +1,8 @@
+package ru.hse.pe.presentation.content.type.test.ui.compose
+
+import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,20 +24,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
-import ru.hse.pe.presentation.content.type.test.utils.sealed.Routes
+import ru.hse.pe.presentation.content.type.test.ui.TestResultFragment
+import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.utils.Utils
 
 @Composable
-fun Test(navController: NavController, sharedViewModel: SharedViewModel) {
-    Utils.SystemBarsNotVisible()
-    ShowData(navController, sharedViewModel)
-}
-
-@Composable
-fun ShowData(navController: NavController, sharedViewModel: SharedViewModel) {
+fun Test(
+    sharedViewModel: SharedViewModel,
+) {
     val name = sharedViewModel.quiz.value?.name.toString()
     val listQuestions = sharedViewModel.quiz.value?.questions?.toList()
     val listAnswers = sharedViewModel.quiz.value?.answers?.get(0)?.toList()
@@ -47,6 +47,7 @@ fun ShowData(navController: NavController, sharedViewModel: SharedViewModel) {
     val counter = remember { mutableStateOf(1) }
     val maxCounter = remember { mutableStateOf(countQuestions) }
     val counterQ = remember { mutableStateOf(0) }
+
 
     Box {
         for (i in 1 until maxCounter.value + 2) {
@@ -73,25 +74,29 @@ fun ShowData(navController: NavController, sharedViewModel: SharedViewModel) {
         Column(
             modifier = Modifier.background(Color.White)
         ) {
-            Utils.MyTopAppBar(name, true)
-            CardItem(navController)
+            val title: String = if (sharedViewModel.quiz.value?.name?.length?.compareTo(30)!! > 0) {
+                sharedViewModel.quiz.value?.name?.substring(0, 30) + "..."
+            } else {
+                sharedViewModel.quiz.value?.name.toString()
+            }
+            Utils.MyTopAppBar(name = title, arrow = false)
+            CardItem()
         }
     }
 }
 
+
 @Composable
-fun CardItem(navController: NavController) {
+fun CardItem() {
     Card(
         elevation = 0.dp,
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 32.dp, end = 27.dp, bottom = 20.dp),
-        ) {
+    ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             CreateTopPartCard()
             CreateAnswersCard()
-            Spacer(Modifier.weight(1f, true))
-            CreateBtnCard(navController)
         }
     }
 }
@@ -155,19 +160,23 @@ fun CreateTopPartCard() {
 
 @Composable
 fun CreateAnswersCard() {
-    Column(Modifier.selectableGroup(), horizontalAlignment = Alignment.Start) {
+    Column(
+        Modifier
+            .selectableGroup(), horizontalAlignment = Alignment.Start) {
         val (selectedOption, onOptionSelected) = remember { mutableStateOf(0) }
         LazyColumn(
             modifier = Modifier
                 .selectableGroup()
                 .fillMaxWidth()
-                .padding(bottom = 57.dp, start = 40.dp),
+                .padding(bottom = 40.dp, start = 40.dp)
+                .weight(1f),
+
             horizontalAlignment = Alignment.Start
         ) {
             val diff = 1.0 / Test.maxCounter.value
             items(Test.answers.size) { index ->
                 Row(
-                    modifier = Modifier.height(30.dp),
+                    modifier = Modifier.padding(bottom = 30.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -176,10 +185,10 @@ fun CreateAnswersCard() {
                             .width(20.dp)
                             .height(20.dp)
                     ) {
+                        onOptionSelected(Test.answers.keys.toList()[index])
                         RadioButton(
                             selected = (Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value]),
                             onClick = {
-                                onOptionSelected(Test.answers.keys.toList()[index])
                                 Test.answersPoint[Test.counter.value] =
                                     Test.answers.keys.toList()[index]
                                 Test.userAnswers[Test.counter.value] =
@@ -216,13 +225,15 @@ fun CreateAnswersCard() {
                         style = MaterialTheme.typography.subtitle2
                     )
                 }
+
             }
         }
+        CreateBtnCard()
     }
 }
 
 @Composable
-fun CreateBtnCard(navController: NavController) {
+fun CreateBtnCard() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -289,9 +300,24 @@ fun CreateBtnCard(navController: NavController) {
         ) {
             Text(text = stringResource(id = R.string.nextBtn))
         }
+        val activity = LocalContext.current as AppCompatActivity
         Button(
             onClick = {
-                navController.navigate(Routes.Results.route)
+                activity.supportFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.pop_enter,
+                        R.anim.pop_exit
+                    )
+                    .addToBackStack(null)
+                    .add(
+                        R.id.fragment_container, TestResultFragment.newInstance(),
+                        TestResultFragment.TAG
+                    )
+                    .commit()
+                Test.userAnswers.removeAt(0)
             },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
@@ -321,7 +347,8 @@ fun CreateBtnCard(navController: NavController) {
                 }
             },
             modifier = Modifier
-                .fillMaxWidth(if (Test.toggleBtn.value) 0.0f else 0.7f),
+                .width(if (Test.toggleBtn.value) 0.dp else 200.dp)
+                .height(if (Test.toggleBtn.value) 0.dp else 45.dp),
             elevation = ButtonDefaults.elevation(0.dp, 0.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         ) {
@@ -345,4 +372,6 @@ object Test {
     lateinit var answersPoint: MutableList<Int>
     lateinit var answersBoolean: MutableList<Boolean>
 }
+
+
 

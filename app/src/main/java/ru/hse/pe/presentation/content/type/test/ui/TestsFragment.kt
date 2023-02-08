@@ -22,8 +22,8 @@ import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.SpecialTestItem
-import ru.hse.pe.presentation.content.item.Test
-import ru.hse.pe.presentation.content.type.test.ui.sheet.ActionTestBottom
+import ru.hse.pe.presentation.content.item.TestItem
+import ru.hse.pe.presentation.content.type.test.ui.sheet.TestPreviewFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
 import ru.hse.pe.utils.callback.ContentClickListener
@@ -75,9 +75,9 @@ class TestsFragment : Fragment() {
         override fun onContentClick(content: ContentEntity, position: Int) {
             if (content is QuizEntity) {
                 sharedViewModel.setQuiz(content)
-                ActionTestBottom.newInstance().show(
+                TestPreviewFragment.newInstance().show(
                     (activity as AppCompatActivity).supportFragmentManager,
-                    ActionTestBottom.TAG
+                    TestPreviewFragment.TAG
                 )
             }
         }
@@ -96,7 +96,6 @@ class TestsFragment : Fragment() {
 
     private fun showQizizz(quizizz: List<QuizEntity>) {
         val listTests = listOf(getSpecialQuizItems(quizizz), getQuizItems(quizizz))
-
         binding.testList.adapter = GroupieAdapter().apply { addAll(listTests) }
     }
 
@@ -111,7 +110,7 @@ class TestsFragment : Fragment() {
     private fun getQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
         return VerticalContentContainer(
             getString(R.string.tests),
-            quizizz.map { Test(it, clickListener) }
+            quizizz.map { TestItem(it, clickListener) }
         )
     }
 
@@ -121,20 +120,8 @@ class TestsFragment : Fragment() {
         viewModel.getQuizzesLiveData().observe(viewLifecycleOwner, this::showQizizz)
     }
 
-    private fun onTestClick(url: String) {
-        val bottomDialogFrag = ActionTestBottom.newInstance()
-        if(activity != null){
-            bottomDialogFrag.show(
-                requireActivity().supportFragmentManager, ActionTestBottom.TAG
-            )
-        }
-    }
-
     companion object {
         const val TAG = "TestsFragment"
-        private const val TAG_ADD = "$TAG ADD"
-        private const val TAG_ERROR = "$TAG ERROR"
-        private const val TAG_PROGRESS = "$TAG PROGRESS"
 
         /**
          * Получение объекта [TestsFragment]

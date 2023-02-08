@@ -66,8 +66,8 @@ object Utils {
         Card(
             backgroundColor = colorResource(id = R.color.purple),
             contentColor = Color.White,
-            modifier = Modifier.height(78.dp),
-            shape = RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp),
+            modifier = Modifier.height(40.dp),
+            shape = RoundedCornerShape(bottomStart = 25.dp, bottomEnd = 25.dp),
         ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -83,7 +83,7 @@ object Utils {
                 }
                 Text(
                     text = name,
-                    modifier = Modifier.padding(horizontal = 30.dp).width(250.dp),
+                    modifier = Modifier.padding(horizontal = 10.dp).fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.subtitle1
                 )

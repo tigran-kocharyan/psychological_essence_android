@@ -21,7 +21,7 @@ interface ApiService {
     /**
      * Method calls API to get the quizzes data from DB
      */
-    @GET(GET_QUIZ_RESULT)
+    @POST(GET_QUIZ_RESULT)
     fun getQuizResult(@Body answer: QuizAnswerEntity): Single<QuizResultEntity>
 
     /**
@@ -64,7 +64,7 @@ interface ApiService {
         private const val GET_ARTICLES = "articles"
         private const val GET_TECHNIQUES = "techniques"
         private const val GET_QUIZZES = "quizzes"
-        private const val GET_QUIZ_RESULT = "quiz/result"
+        private const val GET_QUIZ_RESULT = "quiz/submit-answers"
         private const val GET_RECOMMENDATIONS = "recommendations"
         private const val GET_FACTS = "facts"
         private const val GET_USER = ""

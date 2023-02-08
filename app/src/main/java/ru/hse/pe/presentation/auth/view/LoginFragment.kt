@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseUser
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentLoginBinding
+import ru.hse.pe.domain.model.UserEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
@@ -70,6 +71,7 @@ class LoginFragment : Fragment() {
             .addOnSuccessListener { result ->
                 result.user?.let { user ->
                     if (user.isEmailVerified) {
+                        sharedViewModel.setUser(UserEntity(uid = user.uid))
                         val intent = Intent(activity, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)

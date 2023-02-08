@@ -117,10 +117,11 @@
     <string name="skipBtn">Пропустить вопрос</string>
     <string name="finishBtn">Завершить тест</string>
     <string name="results">Результаты</string>
-    <string name="backToTests">К списку тестов</string>
+    <string name="listTests">К списку тестов</string>
     <string name="startTest">Пройти тест</string>
     <string name="description">Описание</string>
     <string name="instruction">Инструкция</string>
+    <string name="error">Отправить ответы повторно</string>
 
 
 
