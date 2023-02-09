@@ -68,7 +68,6 @@ class TestResultFragment : Fragment() {
         )
 
         viewModel.getQuizResult(result)
-        Log.d("QuizResulQuizResultEntitytEntity", result.toString())
         binding.error.setOnClickListener { viewModel.getQuizResult(result) }
         binding.finish.setOnClickListener {
             (activity as AppCompatActivity).supportFragmentManager.popBackStack()
@@ -100,7 +99,6 @@ class TestResultFragment : Fragment() {
     private fun showResults(quizResultEntity: QuizResultEntity) {
         binding.result.text = quizResultEntity.content
         binding.error.visibility = View.GONE
-        Log.d("QuizResultEntity", quizResultEntity.toString())
     }
 
     private fun observeLiveData() {
