@@ -11,5 +11,5 @@ data class UserEntity(
     @SerializedName("sex") val sex: String = "",
     @SerializedName("email") val email: String = "",
     @SerializedName("password") val password: String = "",
-    @SerializedName("isSubscribed") val isSubscribed: Boolean = false,
+    @Transient @SerializedName("is_subscribed") val isSubscribed: Boolean = false,
 ) : Parcelable
