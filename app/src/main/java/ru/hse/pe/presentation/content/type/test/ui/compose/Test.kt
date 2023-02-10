@@ -1,12 +1,12 @@
 package ru.hse.pe.presentation.content.type.test.ui.compose
 
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.sp
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.presentation.content.type.test.ui.TestResultFragment
-import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.utils.Utils
 
 @Composable
@@ -175,18 +174,11 @@ fun CreateAnswersCard() {
         ) {
             val diff = 1.0 / Test.maxCounter.value
             items(Test.answers.size) { index ->
+                onOptionSelected(Test.answers.keys.toList()[index])
                 Row(
-                    modifier = Modifier.padding(bottom = 30.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .width(20.dp)
-                            .height(20.dp)
-                    ) {
-                        onOptionSelected(Test.answers.keys.toList()[index])
-                        RadioButton(
+                    modifier = Modifier
+                        .padding(bottom = 30.dp)
+                        .selectable(
                             selected = (Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value]),
                             onClick = {
                                 Test.answersPoint[Test.counter.value] =
@@ -210,7 +202,19 @@ fun CreateAnswersCard() {
                                         Test.toggleBtn.value = true
                                     }
                                 }
-                            },
+                            }
+                        ),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .width(20.dp)
+                            .height(20.dp)
+                    ) {
+                        RadioButton(
+                            selected = (Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value]),
+                            onClick = null,
                             modifier = Modifier
                                 .fillMaxSize(),
                             colors = RadioButtonDefaults
@@ -225,7 +229,6 @@ fun CreateAnswersCard() {
                         style = MaterialTheme.typography.subtitle2
                     )
                 }
-
             }
         }
         CreateBtnCard()
