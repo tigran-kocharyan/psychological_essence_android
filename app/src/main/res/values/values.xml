@@ -7,12 +7,21 @@
     </style>
 
     <style name="AppTheme.Text">
-        <item name="android:lineSpacingMultiplier">1.2</item>
+
     </style>
 
     <style name="AppTheme.Text.Title" parent="AppTheme.Text">
+        <item name="android:lineSpacingMultiplier">1.2</item>
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/blackLight</item>
+    </style>
+
+    <style name="AppTheme.Text.Content.Title" parent="AppTheme.Text">
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">@color/blackLight</item>
     </style>
 
@@ -22,9 +31,18 @@
         <item name="android:textColor">@color/blackLight</item>
     </style>
 
+    <style name="AppTheme.Text.Subtitle.Recommendation" parent="AppTheme.Text.Subtitle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+        <item name="android:textColor">@color/blackLight</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:lineSpacingExtra">3.6sp</item>
+    </style>
+
     <style name="AppTheme.Text.BarTitle" parent="AppTheme.Text">
-        <item name="android:textSize">24sp</item>
-        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
@@ -50,31 +68,6 @@
         <item name="android:textColor">@color/blackLight</item>
     </style>
 
-    <style name="AppTheme.Text.Transcription" parent="AppTheme.Text">
-        <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textColor">@color/blackLight</item>
-    </style>
-
-
-    <style name="AppTheme.Text.Title1" parent="AppTheme.Text">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:textColor">@color/blue</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="AppTheme.Text.Title2" parent="AppTheme.Text">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/blue</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="AppTheme.Text.Title3" parent="AppTheme.Text.Title2">
-        <item name="android:textColor">@color/blackLight</item>
-    </style>
 
     <style name="OutlinedButtonWhite" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textSize">16sp</item>

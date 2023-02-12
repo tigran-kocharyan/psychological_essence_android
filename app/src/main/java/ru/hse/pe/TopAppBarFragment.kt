@@ -23,13 +23,13 @@ class TopAppBarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataModel.title.observe(activity as LifecycleOwner) {
-            binding.titleTopAppBar.text = it
-        }
-
-        binding.imageBack.setOnClickListener{
-            activity?.finish()
-        }
+//        dataModel.title.observe(activity as LifecycleOwner) {
+//            binding.titleTopAppBar.text = it
+//        }
+//
+//        binding.imageBack.setOnClickListener{
+//            activity?.finish()
+//        }
     }
 
     companion object {

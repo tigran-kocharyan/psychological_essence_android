@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
 
     <ImageView
@@ -125,10 +126,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:hint="Ваша электронная почта"
                 android:id="@+id/email_input"
-                android:text="tigrankocharyan9@gmail.com"
+                tools:text="tigrankocharyan9@gmail.com"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:hintEnabled="false" />
 
@@ -165,6 +167,8 @@
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusTopStart="16dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             app:boxStrokeWidth="1dp"
             app:endIconMode="password_toggle">
 
@@ -175,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textColor="@color/gray"
-                android:text="pass123"
+                tools:text="pass123"
                 app:hintEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>

@@ -30,18 +30,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/title"
-        style="@style/AppTheme.Text.Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:paddingHorizontal="24dp"
-        android:text="Регистрация"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bar" />
-
-    <TextView
         android:id="@+id/subtitle"
         style="@style/AppTheme.Text.Subtitle"
         android:layout_width="match_parent"
@@ -52,7 +40,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/bar" />
 
     <ScrollView
         android:id="@+id/fill_info"
@@ -109,86 +97,6 @@
                             android:hint="Ваше имя"
                             android:inputType="textPersonName"
                             android:textSize="16sp"
-                            app:hintEnabled="false" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/surname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/AppTheme.Text.InputTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Фамилия"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="parent" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:boxBackgroundColor="@color/white"
-                        app:boxCornerRadiusBottomEnd="16dp"
-                        app:boxCornerRadiusBottomStart="16dp"
-                        app:boxCornerRadiusTopEnd="16dp"
-                        app:boxCornerRadiusTopStart="16dp"
-                        app:boxStrokeWidth="1dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/surname_input"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Ваша фамилия"
-                            android:inputType="textPersonName"
-                            android:textColor="@color/gray"
-                            app:hintEnabled="false" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/patronymic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/AppTheme.Text.InputTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Фамилия"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="parent" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:boxBackgroundColor="@color/white"
-                        app:boxCornerRadiusBottomEnd="16dp"
-                        app:boxCornerRadiusBottomStart="16dp"
-                        app:boxCornerRadiusTopEnd="16dp"
-                        app:boxCornerRadiusTopStart="16dp"
-                        app:boxStrokeWidth="1dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/patronymic_input"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Ваше отчество"
-                            android:inputType="textPersonName"
-                            android:textColor="@color/gray"
                             app:hintEnabled="false" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -373,6 +281,8 @@
                         app:layout_constraintTop_toTopOf="@id/accept" />
 
                     <TextView
+                        android:clickable="true"
+                        android:textColor="@color/purple"
                         android:id="@+id/accept"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

@@ -19,6 +19,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/purple"
+            app:title=""
             app:expandedTitleMarginStart="15dp"
             app:layout_scrollFlags="scroll">
 
@@ -32,6 +33,7 @@
                 app:layout_collapseMode="parallax" />
 
             <androidx.appcompat.widget.Toolbar
+                app:title=""
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -85,10 +87,11 @@
             </LinearLayout>
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_semibold2"
+                android:fontFamily="@font/montserrat_semibold"
                 android:lineSpacingExtra="6sp"
                 android:textColor="#22272f"
                 android:textSize="20sp"
@@ -113,6 +116,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         android:layout_marginTop="?actionBarSize"
         android:layout_marginRight="48dp"

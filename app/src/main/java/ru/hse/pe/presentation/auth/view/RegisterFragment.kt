@@ -10,24 +10,27 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import ru.hse.pe.App
 import ru.hse.pe.BuildConfig
 import ru.hse.pe.R
-import ru.hse.pe.data.model.User
 import ru.hse.pe.databinding.FragmentRegisterBinding
+import ru.hse.pe.domain.interactor.AuthInteractor
+import ru.hse.pe.domain.model.UserEntity
+import ru.hse.pe.presentation.auth.viewmodel.AuthViewModel
+import ru.hse.pe.presentation.auth.viewmodel.AuthViewModelFactory
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
-import ru.hse.pe.utils.Utils.isInvalid
 import ru.hse.pe.utils.Utils.setGone
 import ru.hse.pe.utils.Utils.setVisible
 import ru.hse.pe.utils.Utils.validateEmail
+import ru.hse.pe.utils.scheduler.SchedulersProvider
+import javax.inject.Inject
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
@@ -35,6 +38,24 @@ class RegisterFragment : Fragment() {
 
     private var auth = FirebaseAuth.getInstance()
     private var users = FirebaseDatabase.getInstance(FIREBASE_URL).getReference(USER_KEY)
+
+    @Inject
+    lateinit var interactor: AuthInteractor
+
+    @Inject
+    lateinit var schedulers: SchedulersProvider
+
+    private val viewModel: AuthViewModel by viewModels {
+        AuthViewModelFactory(
+            schedulers,
+            interactor
+        )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (activity?.applicationContext as App).getAppComponent().inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,12 +71,12 @@ class RegisterFragment : Fragment() {
         root = binding.root
         binding.buttonRegister.setOnClickListener { registerUser() }
         binding.buttonLogin.setOnClickListener { openLogin() }
+        binding.accept.setOnClickListener { openToU() }
+//        observeLiveData()
     }
 
     private fun registerUser() {
         val name = binding.nameInput.text.toString()
-        val surname = binding.surnameInput.text.toString()
-        val patronymic = binding.patronymicInput.text.toString()
         val email = binding.emailInput.text.toString()
         val password = binding.passwordInput.text.toString()
         val repeatPassword = binding.passwordRepeatInput.text.toString()
@@ -65,14 +86,6 @@ class RegisterFragment : Fragment() {
         when {
             name.isEmpty() -> {
                 binding.nameInput.error = "Введите ваше имя"
-                binding.nameInput.requestFocus()
-            }
-            binding.surnameInput.isInvalid() -> {
-                binding.nameInput.error = "Введите вашу фамилию"
-                binding.nameInput.requestFocus()
-            }
-            binding.patronymicInput.isInvalid() -> {
-                binding.nameInput.error = "Введите ваше отчество"
                 binding.nameInput.requestFocus()
             }
             email.isEmpty() -> {
@@ -101,48 +114,30 @@ class RegisterFragment : Fragment() {
             }
             else -> {
                 showProgress(true)
-                val user = UserData(name, surname, patronymic, email, password, sex)
-                createUser(user)
+                createUser(UserCredentials(name, email, password, sex))
             }
         }
     }
 
-    private fun isRegistered(user: UserData) {
-        val valueEventListener: ValueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (ds in snapshot.children) {
-                    val emailDB = ds.child("email").getValue(String::class.java)
-                    if (user.email == emailDB) {
-                        getSnackbar(root, "Данная почта уже зарегистрирована!").show()
-                        return
-                    }
-                }
-                createUser(user)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                throw error.toException()
-            }
-        }
-        users.addValueEventListener(valueEventListener)
-    }
-
-    private fun createUser(data: UserData) {
-        auth.createUserWithEmailAndPassword(data.email, data.password)
+    private fun createUser(credentials: UserCredentials) {
+        auth.createUserWithEmailAndPassword(credentials.email, credentials.password)
             .addOnSuccessListener {
                 auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
                     if (!it.isSuccessful) getSnackbar(root, "Не удается создать аккаунт").show()
                 }
-
-                val user = User(
-                    "${data.surname} ${data.name} ${data.patronymic}",
-                    data.sex,
-                    data.email,
-                    data.password
+                val uid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+                val user = UserEntity(
+                    uid,
+                    credentials.name,
+                    credentials.sex,
+                    credentials.email,
+                    credentials.password,
+                    false
                 )
-                users.child(FirebaseAuth.getInstance().currentUser?.uid ?: "")
+                users.child(uid)
                     .setValue(user)
                     .addOnSuccessListener {
+                        viewModel.addUser(user)
                         update()
                     }.addOnFailureListener {
                         getSnackbar(binding.root, it.message.toString()).show()
@@ -171,13 +166,22 @@ class RegisterFragment : Fragment() {
             }
     }
 
-    private fun showProgress(isVisible: Boolean) {
-        binding.progressbar.visibility = if (isVisible) View.VISIBLE else View.GONE
+    private fun openToU() {
+        ToUBottomSheetDialogFragment.newInstance().show(
+            (activity as AppCompatActivity).supportFragmentManager,
+            ToUBottomSheetDialogFragment.TAG
+        )
     }
 
     private fun openLogin() {
         (activity as AppCompatActivity).supportFragmentManager
             .beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.fade_out,
+                R.anim.pop_enter,
+                R.anim.pop_exit
+            )
             .addToBackStack(null)
             .add(
                 R.id.fragment_container,
@@ -205,6 +209,21 @@ class RegisterFragment : Fragment() {
         }
     }
 
+//    private fun observeLiveData() {
+//        viewModel.errorLiveData.observe(viewLifecycleOwner, this::showError)
+//        viewModel.progressLiveData.observe(viewLifecycleOwner, this::showProgress)
+//    }
+
+    private fun showProgress(isVisible: Boolean) {
+        binding.progressbar.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+//
+//    private fun showError(throwable: Throwable) {
+//        Log.d(ArticlesFragment.TAG, "showError() called with: throwable = $throwable")
+//        Snackbar.make(binding.root, throwable.toString(), BaseTransientBottomBar.LENGTH_SHORT)
+//            .show()
+//    }
+
     companion object {
         const val TAG = "RegisterFragment"
         const val FIREBASE_URL: String = BuildConfig.FirebaseUrl
@@ -217,10 +236,8 @@ class RegisterFragment : Fragment() {
             return RegisterFragment()
         }
 
-        data class UserData(
+        data class UserCredentials(
             val name: String,
-            val surname: String,
-            val patronymic: String,
             val email: String,
             val password: String,
             val sex: String

@@ -7,7 +7,8 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.hse.pe.R
 import ru.hse.pe.databinding.ActivityMainBinding
-import ru.hse.pe.presentation.article.view.ArticleFragment
+import ru.hse.pe.presentation.content.ContentFragment
+import ru.hse.pe.presentation.shop.ShopFragment
 
 /**
  * Main [Activity]. All fragments will be added on top of it.
@@ -23,18 +24,28 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragment_container, ArticleFragment.newInstance(), ArticleFragment.TAG)
+                .add(R.id.fragment_container, ContentFragment.newInstance(), ContentFragment.TAG)
                 .commit()
         }
         bottom_nav.setOnItemSelectedListener {
             when (it.itemId) {
-//                R.id.profile -> setCurrentFragment(ProfileFragment.newInstance(), ProfileFragment.TAG)
-                R.id.trending -> {}
-                R.id.shop -> {}
-                R.id.settings -> {}
+                R.id.content -> setCurrentFragment(
+                    ContentFragment.newInstance(),
+                    ContentFragment.TAG
+                )
+                R.id.shop -> setCurrentFragment(ShopFragment.newInstance(), ContentFragment.TAG)
+                R.id.profile -> setCurrentFragment(
+                    PlaceholderFragment.newInstance(),
+                    PlaceholderFragment.TAG
+                )
             }
             true
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        supportFragmentManager.popBackStack()
+        return true
     }
 
     fun isBottomNavVisible(isVisible: Boolean) {

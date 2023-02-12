@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="24dp"
     android:layout_marginRight="24dp"
-    tools:context=".presentation.courses.view.CourseFragment">
+    tools:context=".presentation.courses.view.CoursesFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@string/newCourses"
-                android:textColor="@color/blackLightText"
+                android:textColor="@color/blackDark"
                 android:textSize="20sp" />
 
             <TextView
