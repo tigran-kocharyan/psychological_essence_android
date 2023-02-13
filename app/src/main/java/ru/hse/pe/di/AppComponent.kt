@@ -15,7 +15,7 @@ import ru.hse.pe.presentation.content.type.test.ui.TestContentFragment
 import ru.hse.pe.presentation.content.type.test.ui.TestResultFragment
 import ru.hse.pe.presentation.content.type.test.ui.TestsFragment
 import ru.hse.pe.presentation.content.type.test.ui.sheet.TestPreviewFragment
-import ru.hse.pe.presentation.courses.view.CoursesFragment
+import ru.hse.pe.presentation.content.type.courses.view.CoursesFragment
 import javax.inject.Singleton
 
 /**

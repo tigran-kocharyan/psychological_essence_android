@@ -1,7 +1,6 @@
-package ru.hse.pe.presentation.courses.allCourses
+package ru.hse.pe.presentation.content.type.courses.allCourses
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -12,9 +11,9 @@ import ru.hse.pe.TopAppBarFragment
 import ru.hse.pe.databinding.ActivityAllCoursesBinding
 import ru.hse.pe.databinding.AllCoursesContainerBinding
 import ru.hse.pe.databinding.AllCoursesItemBinding
-import ru.hse.pe.presentation.courses.BottomSheetCourse.ActionBottomCourse
-import ru.hse.pe.presentation.courses.BottomSheetCourse.ItemClickListener
-import ru.hse.pe.presentation.courses.viewmodel.TopAbbBarViewModel
+import ru.hse.pe.presentation.content.type.courses.sheet.ActionBottomCourse
+import ru.hse.pe.presentation.content.type.courses.sheet.ItemClickListener
+import ru.hse.pe.presentation.content.type.courses.viewmodel.TopAbbBarViewModel
 import ru.hse.pe.utils.Utils.openFragment
 
 class AllCourses : AppCompatActivity(), ItemClickListener {

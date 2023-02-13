@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="24dp"
     android:layout_marginRight="24dp"
-    tools:context=".presentation.courses.view.CoursesFragment">
+    tools:context=".presentation.content.type.courses.view.CoursesFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.courses.view
+package ru.hse.pe.presentation.content.type.courses.view
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.App
 import ru.hse.pe.R
@@ -18,14 +19,15 @@ import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentCoursesBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.ContentEntity
+import ru.hse.pe.domain.model.CourseEntity
 import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.presentation.MainActivity
-import ru.hse.pe.presentation.content.item.SpecialTestItem
-import ru.hse.pe.presentation.content.item.TestItem
+import ru.hse.pe.presentation.content.item.CourseBigItem
 import ru.hse.pe.presentation.content.type.test.ui.TestsFragment
 import ru.hse.pe.presentation.content.type.test.ui.sheet.TestPreviewFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
+import ru.hse.pe.presentation.content.item.CourseItem
 import ru.hse.pe.utils.callback.ContentClickListener
 import ru.hse.pe.utils.container.HorizontalContentContainer
 import ru.hse.pe.utils.container.VerticalContentContainer
@@ -67,7 +69,7 @@ class CoursesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLiveData()
-        viewModel.getQuizzes()
+        viewModel.getCourses()
         (activity as MainActivity).isBottomNavVisible(false)
     }
 
@@ -85,7 +87,7 @@ class CoursesFragment : Fragment() {
 
     private fun showProgress(isVisible: Boolean) {
         Log.i(TestsFragment.TAG, "showProgress called with param = $isVisible")
-       // binding.progressbar.visibility = if (isVisible) View.VISIBLE else View.GONE
+        binding.progressbar.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     private fun showError(throwable: Throwable) {
@@ -94,30 +96,32 @@ class CoursesFragment : Fragment() {
             .show()
     }
 
-    private fun showQizizz(quizizz: List<QuizEntity>) {
-        val listTests = listOf(getSpecialQuizItems(quizizz), getQuizItems(quizizz))
-     //   binding.testList.adapter = GroupieAdapter().apply { addAll(listTests) }
+    private fun showCourses(courses: List<CourseEntity>) {
+        Log.d("coursesList", courses.toString())
+        val listTests = listOf(getBigCoursesItems(courses), getCoursesItems(courses))
+        binding.coursesList.adapter = GroupieAdapter().apply { addAll(listTests) }
     }
 
-    // берем все тесты, специально подобранные под предпочтения пользователя
-    private fun getSpecialQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
+    // берем все курсы, которые будут в большой картинке
+    private fun getBigCoursesItems(courses: List<CourseEntity>): BindableItem<*> {
         return HorizontalContentContainer(
-            getString(R.string.specCourses),
-            quizizz.map { SpecialTestItem(it, clickListener) }
+            "Специально для вас",
+            courses.map { CourseBigItem(it, clickListener) }
         )
     }
 
-    private fun getQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
+    // берем все курсы,
+    private fun getCoursesItems(courses: List<CourseEntity>): BindableItem<*> {
         return VerticalContentContainer(
-            getString(R.string.tests),
-            quizizz.map { TestItem(it, clickListener) }
+            getString(R.string.newCourses),
+            courses.map { CourseItem(it, clickListener) }
         )
     }
 
     private fun observeLiveData() {
         viewModel.getErrorLiveData().observe(viewLifecycleOwner, this::showError)
         viewModel.getProgressLiveData().observe(viewLifecycleOwner, this::showProgress)
-        viewModel.getQuizzesLiveData().observe(viewLifecycleOwner, this::showQizizz)
+        viewModel.getCourseLiveData().observe(viewLifecycleOwner, this::showCourses)
     }
 
     companion object {

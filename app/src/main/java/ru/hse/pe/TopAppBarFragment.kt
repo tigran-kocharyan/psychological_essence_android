@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
 import ru.hse.pe.databinding.FragmentTopAppBarBinding
-import ru.hse.pe.presentation.courses.viewmodel.TopAbbBarViewModel
+import ru.hse.pe.presentation.content.type.courses.viewmodel.TopAbbBarViewModel
 
 class TopAppBarFragment : Fragment() {
     private lateinit var binding: FragmentTopAppBarBinding

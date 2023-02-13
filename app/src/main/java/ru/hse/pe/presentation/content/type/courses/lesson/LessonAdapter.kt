@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.courses.lesson
+package ru.hse.pe.presentation.content.type.courses.lesson
 
 import android.view.LayoutInflater
 import android.view.View
