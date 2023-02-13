@@ -8,15 +8,11 @@ import ru.hse.pe.R
 import ru.hse.pe.databinding.LessonItemBinding
 
 class LessonAdapter: RecyclerView.Adapter<LessonAdapter.BackgroundHolder>() {
-
-    val lessonsList =  ArrayList<LessonData>()
-
-
+    val lessonsList =  ArrayList<Lesson>()
     class BackgroundHolder(item: View): RecyclerView.ViewHolder(item) {
         val binding = LessonItemBinding.bind(item)
 
-
-        fun bind(lesson: LessonData) = with(binding){
+        fun bind(lesson: Lesson) = with(binding){
             binding.titleLesson.text = lesson.title
             binding.descLesson.text = lesson.desc
 
@@ -57,7 +53,7 @@ class LessonAdapter: RecyclerView.Adapter<LessonAdapter.BackgroundHolder>() {
         return lessonsList.size
     }
 
-    fun addLesson(lesson: LessonData){
+    fun addLesson(lesson: Lesson){
         lessonsList.add(lesson)
         notifyDataSetChanged()
     }

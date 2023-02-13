@@ -12,7 +12,7 @@ import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
 import ru.hse.pe.presentation.content.type.technique.TechniquesFragment
-import ru.hse.pe.presentation.content.type.courses.view.CoursesFragment
+import ru.hse.pe.presentation.content.type.courses.CoursesFragment
 
 /**
  * [Fragment] to display the trending events.

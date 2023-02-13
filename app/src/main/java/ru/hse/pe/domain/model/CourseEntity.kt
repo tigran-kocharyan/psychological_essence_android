@@ -4,7 +4,6 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
-import ru.hse.pe.presentation.content.type.courses.lesson.Lesson
 
 @Parcelize
 data class CourseEntity (

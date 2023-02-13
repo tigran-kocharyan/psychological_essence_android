@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.content.type.courses.view
+package ru.hse.pe.presentation.content.type.courses
 
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +28,7 @@ import ru.hse.pe.presentation.content.type.test.ui.sheet.TestPreviewFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
 import ru.hse.pe.presentation.content.item.CourseItem
+import ru.hse.pe.presentation.content.type.courses.sheet.CoursePreviewFragment
 import ru.hse.pe.utils.callback.ContentClickListener
 import ru.hse.pe.utils.container.HorizontalContentContainer
 import ru.hse.pe.utils.container.VerticalContentContainer
@@ -75,11 +76,11 @@ class CoursesFragment : Fragment() {
 
     private var clickListener = object : ContentClickListener {
         override fun onContentClick(content: ContentEntity, position: Int) {
-            if (content is QuizEntity) {
-                sharedViewModel.setQuiz(content)
-                TestPreviewFragment.newInstance().show(
+            if (content is CourseEntity) {
+                sharedViewModel.setCourse(content)
+                CoursePreviewFragment.newInstance().show(
                     (activity as AppCompatActivity).supportFragmentManager,
-                    TestPreviewFragment.TAG
+                    CoursePreviewFragment.TAG
                 )
             }
         }
@@ -97,7 +98,6 @@ class CoursesFragment : Fragment() {
     }
 
     private fun showCourses(courses: List<CourseEntity>) {
-        Log.d("coursesList", courses.toString())
         val listTests = listOf(getBigCoursesItems(courses), getCoursesItems(courses))
         binding.coursesList.adapter = GroupieAdapter().apply { addAll(listTests) }
     }

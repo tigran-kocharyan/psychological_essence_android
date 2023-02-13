@@ -1,52 +1,92 @@
 package ru.hse.pe.presentation.content.type.courses.sheet
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import ru.hse.pe.databinding.BottomCourseLayoutBinding
-import ru.hse.pe.presentation.content.type.courses.lesson.Lesson
-import ru.hse.pe.presentation.content.type.courses.lesson.LessonData
+import ru.hse.pe.R
+import ru.hse.pe.SharedViewModel
+import ru.hse.pe.databinding.BottomSheetCourseBinding
+import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.type.courses.lesson.LessonAdapter
+import ru.hse.pe.presentation.content.type.courses.lesson.Lesson
 
-class CoursePreviewFragment : BottomSheetDialogFragment(), View.OnClickListener{
-    private lateinit var binding: BottomCourseLayoutBinding
+class CoursePreviewFragment : BottomSheetDialogFragment(){
+    private lateinit var binding: BottomSheetCourseBinding
     private val adapter = LessonAdapter()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = BottomCourseLayoutBinding.inflate(inflater, container, false)
+        binding = BottomSheetCourseBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).isBottomNavVisible(false)
 
+        setContent()
+    }
+
+    private fun setContent() {
+        val course = sharedViewModel.course.value ?: return
 
         binding.apply {
-            rcviewLesson.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
-            rcviewLesson.adapter = adapter
+            if (course.name?.length?.compareTo(20)!! > 0) {
+                name.text = course.name.substring(0, 20) + "..."
+            } else {
+                name.text = course.name
+            }
 
-            val lesson1 = LessonData("Грани моего Я. Из чего складывается наше представление о себе",
-                "Выделите качества своей личности и сильные черты, которые помогут реализоваться и достичь целей. Познакомитесь с моделью личности Big Five. Узнаете, как черты личности влияют на поведение и общение с окружающими.")
+            if (course.imageUrl != null &&
+                course.imageUrl.isNotBlank()) {
+                binding.image.load(course.imageUrl) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_launcher)
+                    error(R.drawable.ic_launcher)
+                    transformations(RoundedCornersTransformation(10f))
+                }
+            } else {
+                binding.image.load(R.drawable.placeholder_article) {
+                    crossfade(true)
+                    transformations(RoundedCornersTransformation(10f))
+                }
+            }
+            title.text = course.name
+            countLessons.text = course.lessons.size.toString() + " модулей"
+            description.text = course.description
 
-            adapter.addLesson(lesson1)
-            adapter.addLesson(lesson1)
-            adapter.addLesson(lesson1)
-        }
+            listLessons.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
+            listLessons.adapter = adapter
 
-        binding.btnStartCourse.setOnClickListener {
-            val intent = Intent(context, Lesson::class.java)
-            startActivity(intent)
+            for(lesson in course.lessons){
+                adapter.addLesson(Lesson(
+                    lesson.name.toString(),
+                    lesson.description.toString()
+                ))
+            }
+
+            close.setOnClickListener {
+                dismiss()
+            }
         }
     }
 
-    override fun onClick(v: View?) {
+    companion object {
+        const val TAG = "CoursePreviewFragment"
+
+        /**
+         * Получение объекта [CoursePreviewFragment]
+         */
+        fun newInstance() = CoursePreviewFragment()
     }
 }

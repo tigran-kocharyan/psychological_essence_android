@@ -30,6 +30,8 @@ class CourseBigItem(
                 transformations(RoundedCornersTransformation(10f))
             }
         }
+
+        binding.root.setOnClickListener { clickListener.onContentClick(course, position) }
     }
 
     override fun getLayout() = R.layout.holder_big_course

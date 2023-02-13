@@ -25,7 +25,6 @@ class TestPreviewFragment : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetTestBinding
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity?.applicationContext as App).getAppComponent().inject(this)
