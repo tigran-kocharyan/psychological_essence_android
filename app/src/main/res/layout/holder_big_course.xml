@@ -31,7 +31,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/course_big" />
+                app:srcCompat="@drawable/placeholder_article" />
 
             <TextView
                 android:id="@+id/name"

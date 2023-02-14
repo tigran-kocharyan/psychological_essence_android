@@ -16,7 +16,7 @@ import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.type.courses.lesson.LessonAdapter
 import ru.hse.pe.presentation.content.type.courses.lesson.Lesson
 
-class CoursePreviewFragment : BottomSheetDialogFragment(){
+class CoursePreviewFragment : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetCourseBinding
     private val adapter = LessonAdapter()
     private val sharedViewModel: SharedViewModel by activityViewModels()
@@ -48,7 +48,8 @@ class CoursePreviewFragment : BottomSheetDialogFragment(){
             }
 
             if (course.imageUrl != null &&
-                course.imageUrl.isNotBlank()) {
+                course.imageUrl.isNotBlank()
+            ) {
                 binding.image.load(course.imageUrl) {
                     crossfade(true)
                     placeholder(R.drawable.ic_launcher)
@@ -65,14 +66,17 @@ class CoursePreviewFragment : BottomSheetDialogFragment(){
             countLessons.text = course.lessons.size.toString() + " модулей"
             description.text = course.description
 
-            listLessons.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
+            listLessons.layoutManager =
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
             listLessons.adapter = adapter
 
-            for(lesson in course.lessons){
-                adapter.addLesson(Lesson(
-                    lesson.name.toString(),
-                    lesson.description.toString()
-                ))
+            for (lesson in course.lessons) {
+                adapter.addLesson(
+                    Lesson(
+                        lesson.name.toString(),
+                        lesson.description.toString()
+                    )
+                )
             }
 
             close.setOnClickListener {

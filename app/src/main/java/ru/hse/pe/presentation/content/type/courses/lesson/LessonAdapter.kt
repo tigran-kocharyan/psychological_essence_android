@@ -5,19 +5,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.hse.pe.R
-import ru.hse.pe.databinding.LessonItemBinding
+import ru.hse.pe.databinding.HolderLessonBinding
 
-class LessonAdapter: RecyclerView.Adapter<LessonAdapter.BackgroundHolder>() {
-    val lessonsList =  ArrayList<Lesson>()
-    class BackgroundHolder(item: View): RecyclerView.ViewHolder(item) {
-        val binding = LessonItemBinding.bind(item)
+class LessonAdapter : RecyclerView.Adapter<LessonAdapter.BackgroundHolder>() {
+    val lessonsList = ArrayList<Lesson>()
 
-        fun bind(lesson: Lesson) = with(binding){
+    class BackgroundHolder(item: View) : RecyclerView.ViewHolder(item) {
+        val binding = HolderLessonBinding.bind(item)
+
+        fun bind(lesson: Lesson) = with(binding) {
             binding.titleLesson.text = lesson.title
-            binding.descLesson.text = lesson.desc
+            binding.descriptionLesson.text = lesson.desc
 
             var isOpen = true
-            binding.openDesc.setOnClickListener {
+            binding.openDescription.setOnClickListener {
                 openLesson(isOpen)
                 isOpen = !isOpen
             }
@@ -28,20 +29,20 @@ class LessonAdapter: RecyclerView.Adapter<LessonAdapter.BackgroundHolder>() {
             }
         }
 
-        private fun openLesson(isOpen: Boolean){
-            if(isOpen){
-                binding.openDesc.rotation = 180F
-                binding.descLesson.maxLines = 100
-            }else{
-                binding.openDesc.rotation = 0F
-                binding.descLesson.maxLines = 0
+        private fun openLesson(isOpen: Boolean) {
+            if (isOpen) {
+                binding.openDescription.rotation = 180F
+                binding.descriptionLesson.maxLines = 100
+            } else {
+                binding.openDescription.rotation = 0F
+                binding.descriptionLesson.maxLines = 0
             }
 
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BackgroundHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.lesson_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.holder_lesson, parent, false)
         return BackgroundHolder(view)
     }
 
@@ -53,10 +54,8 @@ class LessonAdapter: RecyclerView.Adapter<LessonAdapter.BackgroundHolder>() {
         return lessonsList.size
     }
 
-    fun addLesson(lesson: Lesson){
+    fun addLesson(lesson: Lesson) {
         lessonsList.add(lesson)
         notifyDataSetChanged()
     }
-
-
 }

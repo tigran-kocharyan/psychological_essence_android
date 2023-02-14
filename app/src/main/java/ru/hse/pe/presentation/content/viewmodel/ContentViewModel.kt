@@ -35,7 +35,7 @@ class ContentViewModel(
      */
     fun getArticles() {
         disposables.add(contentInteractor.getArticles()
-            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())
@@ -49,7 +49,7 @@ class ContentViewModel(
      */
     fun getQuizzes() {
         disposables.add(contentInteractor.getQuizzes()
-            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())
@@ -63,7 +63,7 @@ class ContentViewModel(
      */
     fun getQuizResult(answers: QuizAnswerEntity) {
         disposables.add(contentInteractor.getQuizResult(answers)
-            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())
@@ -77,7 +77,7 @@ class ContentViewModel(
      */
     fun getCourses() {
         disposables.add(contentInteractor.getCourses()
-            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())
@@ -91,7 +91,7 @@ class ContentViewModel(
      */
     fun getRecommendations() {
         disposables.add(contentInteractor.getRecommendations()
-            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())
@@ -105,7 +105,7 @@ class ContentViewModel(
      */
     fun getFacts() {
         disposables.add(contentInteractor.getFacts()
-            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())

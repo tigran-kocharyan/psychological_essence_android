@@ -3,6 +3,7 @@ package ru.hse.pe.data
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import ru.hse.pe.domain.model.ArticleEntity
+import ru.hse.pe.domain.model.CourseEntity
 
 /**
  * Object for converting the entities to json string and vice versa.
@@ -42,5 +43,19 @@ object Converters {
      * Converts JSON string to list of profile entities.
      */
     @TypeConverter
-    fun jsonToArticles(value: String) = Gson().fromJson(value, Array<ArticleEntity>::class.java).toList()
+    fun jsonToArticles(value: String) =
+        Gson().fromJson(value, Array<ArticleEntity>::class.java).toList()
+
+    /**
+     * Converts list of profile entities to JSON string.
+     */
+    @TypeConverter
+    fun coursesToJson(value: List<CourseEntity>) = Gson().toJson(value)
+
+    /**
+     * Converts JSON string to profile entity.
+     */
+    @TypeConverter
+    fun jsonToCourse(value: String) = Gson().fromJson(value, CourseEntity::class.java)
+
 }

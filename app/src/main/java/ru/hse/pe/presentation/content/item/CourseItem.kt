@@ -5,16 +5,16 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.R
-import ru.hse.pe.databinding.HolderCourseBinding
+import ru.hse.pe.databinding.HolderSmallCourseBinding
 import ru.hse.pe.domain.model.CourseEntity
 import ru.hse.pe.utils.callback.ContentClickListener
 
 class CourseItem(
     private val course: CourseEntity,
     private val clickListener: ContentClickListener,
-) : BindableItem<HolderCourseBinding>(){
+) : BindableItem<HolderSmallCourseBinding>(){
 
-    override fun bind(binding: HolderCourseBinding, position: Int) {
+    override fun bind(binding: HolderSmallCourseBinding, position: Int) {
         binding.name.text = course.name
 
         if (course.imageUrl != null && course.imageUrl.isNotBlank()) {
@@ -34,9 +34,9 @@ class CourseItem(
         binding.root.setOnClickListener { clickListener.onContentClick(course, position) }
     }
 
-    override fun getLayout() = R.layout.holder_course
+    override fun getLayout() = R.layout.holder_small_course
 
-    override fun initializeViewBinding(view: View): HolderCourseBinding {
-        return HolderCourseBinding.bind(view)
+    override fun initializeViewBinding(view: View): HolderSmallCourseBinding {
+        return HolderSmallCourseBinding.bind(view)
     }
 }
