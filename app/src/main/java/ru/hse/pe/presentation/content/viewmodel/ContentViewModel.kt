@@ -24,6 +24,7 @@ class ContentViewModel(
     private val articlesLiveData = MutableLiveData<List<ArticleEntity>>()
     private val quizzesLiveData = MutableLiveData<List<QuizEntity>>()
     private val quizResultLiveData = MutableLiveData<QuizResultEntity>()
+    private val courseLiveData = MutableLiveData<List<CourseEntity>>()
     private val factsLiveData = MutableLiveData<List<FactEntity>>()
     private val errorLiveData = MutableLiveData<Throwable>()
 
@@ -34,7 +35,7 @@ class ContentViewModel(
      */
     fun getArticles() {
         disposables.add(contentInteractor.getArticles()
-            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())
@@ -48,7 +49,7 @@ class ContentViewModel(
      */
     fun getQuizzes() {
         disposables.add(contentInteractor.getQuizzes()
-            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())
@@ -62,7 +63,7 @@ class ContentViewModel(
      */
     fun getQuizResult(answers: QuizAnswerEntity) {
         disposables.add(contentInteractor.getQuizResult(answers)
-            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())
@@ -72,11 +73,25 @@ class ContentViewModel(
     }
 
     /**
+     * Скачать курсы из БД
+     */
+    fun getCourses() {
+        disposables.add(contentInteractor.getCourses()
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
+            .doOnSubscribe { progressLiveData.postValue(true) }
+            .doAfterTerminate { progressLiveData.postValue(false) }
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(courseLiveData::setValue, errorLiveData::setValue)
+        )
+    }
+
+    /**
      * Скачать статьи из БД
      */
     fun getRecommendations() {
         disposables.add(contentInteractor.getRecommendations()
-            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())
@@ -90,7 +105,7 @@ class ContentViewModel(
      */
     fun getFacts() {
         disposables.add(contentInteractor.getFacts()
-            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())
@@ -128,6 +143,9 @@ class ContentViewModel(
 
     fun getQuizResultLiveData(): MutableLiveData<QuizResultEntity> =
         quizResultLiveData
+
+    fun getCourseLiveData(): MutableLiveData<List<CourseEntity>> =
+        courseLiveData
 
     fun getRecommendationsLiveData(): MutableLiveData<List<RecommendationEntity>> =
         recommendationsLiveData

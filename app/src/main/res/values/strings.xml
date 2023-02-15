@@ -35,12 +35,10 @@
     <string name="register_hintSex">Выберите пол</string>
     <string name="register_hintRepeatPassword">Повторите пароль</string>
 
-
-    <string name="news_new_btn">Пройти</string>
-
     /* Курсы */
     <string name="courses">Курсы</string>
     <string name="course">Курс</string>
+    <string name="startCourse">Начать курс</string>
     <string name="newCourses">Новинки</string>
     <string name="specCourses">Специально для вас</string>
     <string name="seeAll">Смотреть все</string>
@@ -122,8 +120,4 @@
     <string name="description">Описание</string>
     <string name="instruction">Инструкция</string>
     <string name="error">Отправить ответы повторно</string>
-
-
-
-
 </resources>
