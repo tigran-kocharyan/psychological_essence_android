@@ -42,7 +42,8 @@ class LessonAdapter : RecyclerView.Adapter<LessonAdapter.BackgroundHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BackgroundHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.holder_lesson, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.holder_lesson, parent, false)
         return BackgroundHolder(view)
     }
 

@@ -40,7 +40,7 @@ class CoursePreviewFragment : BottomSheetDialogFragment() {
     private fun setContent() {
         val course = sharedViewModel.course.value ?: return
 
-        binding.apply {
+        with(binding) {
             if (course.name?.length?.compareTo(20)!! > 0) {
                 name.text = course.name.substring(0, 20) + "..."
             } else {

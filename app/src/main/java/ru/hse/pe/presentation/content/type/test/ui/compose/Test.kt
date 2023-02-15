@@ -161,7 +161,8 @@ fun CreateTopPartCard() {
 fun CreateAnswersCard() {
     Column(
         Modifier
-            .selectableGroup(), horizontalAlignment = Alignment.Start) {
+            .selectableGroup(), horizontalAlignment = Alignment.Start
+    ) {
         val (selectedOption, onOptionSelected) = remember { mutableStateOf(0) }
         LazyColumn(
             modifier = Modifier

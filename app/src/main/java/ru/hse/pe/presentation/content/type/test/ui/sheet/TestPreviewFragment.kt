@@ -48,7 +48,7 @@ class TestPreviewFragment : BottomSheetDialogFragment() {
     }
 
     private fun setContent() {
-        binding.apply {
+        with(binding) {
             if (sharedViewModel.quiz.value?.name?.length?.compareTo(20)!! > 0) {
                 name.text = sharedViewModel.quiz.value?.name?.substring(0, 20) + "..."
             } else {
