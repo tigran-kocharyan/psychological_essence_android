@@ -10,6 +10,7 @@ class SharedViewModel : ViewModel() {
     private var _article = MutableLiveData<ArticleEntity?>(null)
     private var _fact = MutableLiveData<FactEntity?>(null)
     private var _quiz = MutableLiveData<QuizEntity?>(null)
+    private var _course = MutableLiveData<CourseEntity?>(null)
     private var _recommendation = MutableLiveData<RecommendationEntity?>(null)
 
     val user: LiveData<UserEntity> = _user
@@ -17,6 +18,7 @@ class SharedViewModel : ViewModel() {
     var recommendation: LiveData<RecommendationEntity?> = _recommendation
     var fact: LiveData<FactEntity?> = _fact
     var quiz: LiveData<QuizEntity?> = _quiz
+    var course: LiveData<CourseEntity?> = _course
 
     fun setUser(user: UserEntity) {
         _user.value = user
@@ -32,6 +34,10 @@ class SharedViewModel : ViewModel() {
 
     fun setQuiz(quiz: QuizEntity) {
         _quiz.value = quiz
+    }
+
+    fun setCourse(course: CourseEntity) {
+        _course.value = course
     }
 
     fun setFact(fact: FactEntity) {

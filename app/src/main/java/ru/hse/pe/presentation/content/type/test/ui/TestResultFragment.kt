@@ -66,7 +66,6 @@ class TestResultFragment : Fragment() {
             FirebaseAuth.getInstance().currentUser?.uid.toString(),
             Test.userAnswers
         )
-
         viewModel.getQuizResult(result)
         binding.error.setOnClickListener { viewModel.getQuizResult(result) }
         binding.finish.setOnClickListener {

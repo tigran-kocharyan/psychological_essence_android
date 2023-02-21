@@ -55,13 +55,6 @@ object Utils {
     fun View.setInvisible() = run { this.visibility = View.INVISIBLE }
 
     @Composable
-    fun SystemBarsNotVisible() {
-        val systemUiController: SystemUiController = rememberSystemUiController()
-        systemUiController.isSystemBarsVisible = false
-    }
-
-
-    @Composable
     fun MyTopAppBar(name: String, arrow: Boolean) {
         Card(
             backgroundColor = colorResource(id = R.color.purple),

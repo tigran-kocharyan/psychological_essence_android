@@ -25,7 +25,6 @@ class TestPreviewFragment : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetTestBinding
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity?.applicationContext as App).getAppComponent().inject(this)
@@ -49,7 +48,7 @@ class TestPreviewFragment : BottomSheetDialogFragment() {
     }
 
     private fun setContent() {
-        binding.apply {
+        with(binding) {
             if (sharedViewModel.quiz.value?.name?.length?.compareTo(20)!! > 0) {
                 name.text = sharedViewModel.quiz.value?.name?.substring(0, 20) + "..."
             } else {
