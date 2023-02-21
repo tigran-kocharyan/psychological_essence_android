@@ -5,6 +5,10 @@
         android:icon="@drawable/ic_content"
         android:title="Разделы" />
     <item
+        android:id="@+id/course"
+        android:icon="@drawable/ic_course"
+        android:title="Курсы" />
+    <item
         android:id="@+id/shop"
         android:icon="@drawable/ic_shopping"
         android:title="Магазин" />

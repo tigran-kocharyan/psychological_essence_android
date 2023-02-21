@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                     PlaceholderFragment.newInstance(),
                     PlaceholderFragment.TAG
                 )
+                R.id.course -> {}
             }
             true
         }
