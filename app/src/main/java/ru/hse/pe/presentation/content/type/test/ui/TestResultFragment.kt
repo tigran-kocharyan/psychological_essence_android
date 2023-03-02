@@ -71,7 +71,6 @@ class TestResultFragment : Fragment() {
         binding.finish.setOnClickListener {
             (activity as AppCompatActivity).supportFragmentManager.popBackStack()
         }
-        (activity as MainActivity).isBottomNavVisible(false)
     }
 
     companion object {

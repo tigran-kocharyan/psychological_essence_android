@@ -13,54 +13,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="9dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/titleLesson"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="48dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:text="&#8226; Грани моего Я. Из чего складывается наше представление о себе"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/open_description"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginBottom="9dp"
+            android:orientation="horizontal"
+            android:id="@+id/container">
 
             <TextView
-                android:id="@+id/description_lesson"
-                android:layout_width="match_parent"
+                android:id="@+id/title"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="@font/montserrat_regular"
-                android:maxLines="0"
-                android:text="Выделите качества своей личности и сильные черты, которые помогут реализоваться и достичь целей. Познакомитесь с моделью личности Big Five. Узнаете, как черты личности влияют на поведение и общение с окружающими."
-                android:textColor="@color/blackLight" />
-        </LinearLayout>
+                android:layout_marginEnd="48dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="&#8226; Грани моего Я. Из чего складывается наше представление о себе"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

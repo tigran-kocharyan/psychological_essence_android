@@ -10,4 +10,6 @@ data class LessonEntity(
     @SerializedName("name") val name: String? = "",
     @SerializedName("content") val content: String? = "",
     @SerializedName("description") val description: String? = "",
+    @SerializedName("image_url") val imageUrl: String? = "",
+    @SerializedName("quiz") val quiz: QuizEntity? = null,
 ) : Parcelable, ContentEntity

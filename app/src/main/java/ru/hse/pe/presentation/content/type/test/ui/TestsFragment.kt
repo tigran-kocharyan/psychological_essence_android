@@ -68,7 +68,6 @@ class TestsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeLiveData()
         viewModel.getQuizzes()
-        (activity as MainActivity).isBottomNavVisible(false)
     }
 
     private var clickListener = object : ContentClickListener {

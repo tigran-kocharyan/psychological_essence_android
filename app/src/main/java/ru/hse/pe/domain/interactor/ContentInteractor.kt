@@ -11,6 +11,8 @@ class ContentInteractor @Inject constructor(private val apiService: ApiService) 
         apiService.getQuizResult(answer)
 
     fun getCourses(): Single<List<CourseEntity>> = apiService.getCourses()
+    fun getFastCourses(): Single<List<CourseEntity>> = apiService.getShortCourses()
+    fun getLesson(id: String): Single<LessonEntity> = apiService.getLesson(id)
     fun getArticles(): Single<List<ArticleEntity>> = apiService.getArticles()
     fun getFacts(): Single<List<FactEntity>> = apiService.getFacts()
     fun getRecommendations(): Single<List<RecommendationEntity>> =
