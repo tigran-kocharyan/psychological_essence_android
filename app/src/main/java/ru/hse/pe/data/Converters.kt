@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import ru.hse.pe.domain.model.ArticleEntity
 import ru.hse.pe.domain.model.CourseEntity
+import ru.hse.pe.domain.model.QuizEntity
 
 /**
  * Object for converting the entities to json string and vice versa.
@@ -53,9 +54,29 @@ object Converters {
     fun coursesToJson(value: List<CourseEntity>) = Gson().toJson(value)
 
     /**
+     * Converts list of profile entities to JSON string.
+     */
+    @TypeConverter
+    fun quizToJson(value: List<QuizEntity>) = Gson().toJson(value)
+
+    /**
+     * Converts JSON string to quiz entity.
+     */
+    @TypeConverter
+    fun jsonToQuiz(value: String) = run {
+        val quizEntity = Gson().fromJson(value, QuizEntity::class.java)
+        val map = quizEntity.quizMetaData?.toMap()?.forEach{
+            println(it)
+        }
+        assert(map != null)
+    }
+
+    /**
      * Converts JSON string to profile entity.
      */
     @TypeConverter
     fun jsonToCourse(value: String) = Gson().fromJson(value, CourseEntity::class.java)
+
+
 
 }

@@ -23,16 +23,12 @@ import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentLessonBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
-import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.domain.model.LessonEntity
 import ru.hse.pe.domain.model.QuizEntity
-import ru.hse.pe.presentation.MainActivity
-import ru.hse.pe.presentation.content.type.article.view.ArticleFragment
+import ru.hse.pe.presentation.content.type.test.ui.TestContentFragment
 import ru.hse.pe.presentation.content.type.test.ui.TestsFragment
-import ru.hse.pe.presentation.content.type.test.ui.sheet.TestPreviewFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
-import ru.hse.pe.utils.callback.ContentClickListener
 import ru.hse.pe.utils.scheduler.SchedulersProvider
 import javax.inject.Inject
 
@@ -86,12 +82,8 @@ class LessonFragment : Fragment() {
     private fun showLesson(lesson: LessonEntity) {
         binding.title.text = lesson.name
         showMarkdown(lesson.content)
-
         binding.start.setOnClickListener {
-            setCurrentFragment(
-                TestsFragment.newInstance(),
-                TestsFragment.TAG
-            )
+            viewModel.getQuiz(lesson.quiz?.id.toString())
         }
 
         if (lesson.imageUrl != null && lesson.imageUrl.isNotBlank()) {
@@ -113,19 +105,6 @@ class LessonFragment : Fragment() {
         }
     }
 
-    private fun setCurrentFragment(fragment: Fragment, tag: String) =
-        parentFragmentManager
-            .beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.fade_out,
-                R.anim.pop_enter,
-                R.anim.pop_exit
-            )
-            .add(R.id.fragment_container, fragment, tag)
-            .addToBackStack(null)
-            .commit()
-
     private fun showProgress(isVisible: Boolean) {
         Log.i(TestsFragment.TAG, "showProgress called with param = $isVisible")
         binding.progressbar.visibility = if (isVisible) View.VISIBLE else View.GONE
@@ -137,10 +116,30 @@ class LessonFragment : Fragment() {
             .show()
     }
 
+    private fun showQuiz(quiz: QuizEntity) {
+        Log.d("questionsMetaData", quiz.quizMetaData.toString())
+        sharedViewModel.setQuiz(quiz)
+
+        (activity as AppCompatActivity).supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.fade_out,
+                R.anim.pop_enter,
+                R.anim.pop_exit
+            )
+            .add(
+                R.id.fragment_container, TestContentFragment.newInstance(),
+                TestContentFragment.TAG
+            )
+            .commit()
+    }
+
     private fun observeLiveData() {
         viewModel.getErrorLiveData().observe(viewLifecycleOwner, this::showError)
         viewModel.getProgressLiveData().observe(viewLifecycleOwner, this::showProgress)
         viewModel.getLessonLiveData().observe(viewLifecycleOwner, this::showLesson)
+        viewModel.getQuizLiveData().observe(viewLifecycleOwner, this::showQuiz)
     }
 
     private fun showMarkdown(text: String?) {

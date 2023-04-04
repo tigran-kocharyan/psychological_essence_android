@@ -52,6 +52,6 @@ class RetrofitModule {
         HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
 
     companion object {
-        private const val SERVER_BASE_URL = "https://bbadu7erhpc2uc4c9cla.containers.yandexcloud.net/extapi/"
+        private const val SERVER_BASE_URL = "https://psessence.ru//extapi/"
     }
 }

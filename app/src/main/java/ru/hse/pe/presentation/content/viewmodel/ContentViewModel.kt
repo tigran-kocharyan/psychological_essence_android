@@ -23,6 +23,7 @@ class ContentViewModel(
     private val recommendationsLiveData = MutableLiveData<List<RecommendationEntity>>()
     private val articlesLiveData = MutableLiveData<List<ArticleEntity>>()
     private val quizzesLiveData = MutableLiveData<List<QuizEntity>>()
+    private val quizLiveData = MutableLiveData<QuizEntity>()
     private val quizResultLiveData = MutableLiveData<QuizResultEntity>()
     private val courseLiveData = MutableLiveData<List<CourseEntity>>()
     private val lessonLiveData = MutableLiveData<LessonEntity>()
@@ -56,6 +57,20 @@ class ContentViewModel(
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.ui())
             .subscribe(quizzesLiveData::setValue, errorLiveData::setValue)
+        )
+    }
+
+    /**
+     * Скачать тест из БД
+     */
+    fun getQuiz(id: String) {
+        disposables.add(contentInteractor.getQuiz(id)
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
+            .doOnSubscribe { progressLiveData.postValue(true) }
+            .doAfterTerminate { progressLiveData.postValue(false) }
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(quizLiveData::setValue, errorLiveData::setValue)
         )
     }
 
@@ -166,6 +181,9 @@ class ContentViewModel(
 
     fun getArticlesLiveData(): MutableLiveData<List<ArticleEntity>> =
         articlesLiveData
+
+    fun getQuizLiveData(): MutableLiveData<QuizEntity> =
+        quizLiveData
 
     fun getQuizzesLiveData(): MutableLiveData<List<QuizEntity>> =
         quizzesLiveData

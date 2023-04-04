@@ -19,6 +19,12 @@ interface ApiService {
     fun getQuizzes(): Single<List<QuizEntity>>
 
     /**
+     * Method calls API to get the quiz from DB
+     */
+    @GET(GET_QUIZ)
+    fun getQuiz(@Path("id") id: String) : Single<QuizEntity>
+
+    /**
      * Method calls API to get the quizzes data from DB
      */
     @POST(GET_QUIZ_RESULT)
@@ -82,6 +88,7 @@ interface ApiService {
         private const val GET_ARTICLES = "articles"
         private const val GET_TECHNIQUES = "techniques"
         private const val GET_QUIZZES = "quizzes"
+        private const val GET_QUIZ = "quizzes/id/{id}"
         private const val GET_QUIZ_RESULT = "quiz/submit-answers"
         private const val GET_COURCES = "courses"
         private const val GET_SHORTCOURCES = "courses/fast"

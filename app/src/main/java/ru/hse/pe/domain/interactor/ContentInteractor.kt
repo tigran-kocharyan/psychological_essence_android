@@ -7,6 +7,7 @@ import javax.inject.Inject
 
 class ContentInteractor @Inject constructor(private val apiService: ApiService) {
     fun getQuizzes(): Single<List<QuizEntity>> = apiService.getQuizzes()
+    fun getQuiz(id: String): Single<QuizEntity> = apiService.getQuiz(id)
     fun getQuizResult(answer: QuizAnswerEntity): Single<QuizResultEntity> =
         apiService.getQuizResult(answer)
 
