@@ -3,10 +3,8 @@ package ru.hse.pe.presentation.content.type.test.ui.compose
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -38,7 +35,7 @@ import ru.hse.pe.utils.Utils
 fun Test(
     sharedViewModel: SharedViewModel,
 ) {
-    val name = sharedViewModel.quiz.value?.name.toString()
+    sharedViewModel.quiz.value?.name.toString()
     val listQuestions = sharedViewModel.quiz.value?.questions?.toList()
     val listAnswers = sharedViewModel.quiz.value?.answers?.toList()
     val userAnswers = mutableListOf<Any>()
@@ -51,10 +48,9 @@ fun Test(
     val progress = remember { mutableStateOf(0.0) }
     val toggleBtn = remember { mutableStateOf(false) }
     val counter = remember { mutableStateOf(1) } // общий счетчик
-    val counterAnswers = remember { mutableStateOf(0) } // кол-во вариантов ответа в вопросе
+    val indexCounter = remember { mutableStateOf(0) } // счетчик, который начинается с 0
     val maxCounter = remember { mutableStateOf(countQuestions) } // макс кол-во отвеченных вопросов
     val counterQ = remember { mutableStateOf(0) } // подсчет отвеченных вопросов
-
 
     Box {
         for (i in 1 until maxCounter.value + 2) {
@@ -62,18 +58,28 @@ fun Test(
             answersBoolean.add(false)
         }
 
-        for (i in listAnswers!!.indices) {
+        var k = 1
+        val isOrdinaryTest = listQuestions.size != listAnswers!!.size
+        for (i in listQuestions.indices) {
             val list = mutableListOf<String>()
-            for (j in 0 until listAnswers[i].size) {
-                list.add(listAnswers[i][j])
+
+            if (isOrdinaryTest) {
+                for (j in 0 until listAnswers[0].size) {
+                    list.add(listAnswers[0][j])
+                }
+            } else {
+                for (j in 0 until listAnswers[i].size) {
+                    list.add(listAnswers[i][j])
+                }
             }
-            answers[i] = list
+            answers[k] = list
+            k++
         }
 
         Test.counter = counter
+        Test.indexCounter = indexCounter
         Test.maxCounter = maxCounter
         Test.counterQ = counterQ
-        Test.counterAnswers = counterAnswers
         Test.progress = progress
         Test.toggleBtn = toggleBtn
         Test.questions = listQuestions
@@ -81,39 +87,66 @@ fun Test(
         Test.userAnswers = userAnswers
         Test.answersPoint = answersPoint
         Test.answersBoolean = answersBoolean
-
-        Log.d("answersEnt", quizMetaData.toString())
-
+        Test.dragAndDropData = mutableListOf()
+        Test.answersDataCopied = mutableListOf()
+        Test.answersData = hashMapOf()
 
         // Подготавливаем шаблон с ответами
-        if (quizMetaData != null) {
-            for (i in 1 until maxCounter.value) {
-                if (quizMetaData[i]?.multiple_answers == true) {
-                    Test.userAnswers.add(i, mutableListOf<String>())
-                } else if (quizMetaData[i]?.categories?.isNotEmpty() == true) {
-                    Test.userAnswers.add(i, mutableMapOf<String, String>())
-                } else {
-                    Test.userAnswers.add(i, "")
-                }
+        Test.userAnswers.add("") // Отсчет начинается с 1
+        var j = 1
 
+        if (quizMetaData != null) {
+            for (i in 0 until maxCounter.value) {
+                if (quizMetaData[i]?.multiple_answers == true) {
+                    Test.userAnswers.add(j, mutableListOf<String>())
+                } else if (quizMetaData[i]?.categories?.isNotEmpty() == true) {
+                    Test.userAnswers.add(j, mutableMapOf<String, List<String>>())
+                } else {
+                    Test.userAnswers.add(j, "")
+                }
+                j++
             }
             Test.quizMetaData = quizMetaData
         } else {
             Test.quizMetaData = mapOf()
+            for (i in 0 until maxCounter.value) {
+                Test.userAnswers.add(j, "")
+                j++
+            }
         }
-        Log.d("Test.userAns", Test.userAnswers.toString())
 
         // Это список для сохранения несколько вариантов ответа
         val listOfMultipleAnswers = mutableListOf<MutableList<String>>()
-        for (i in 0 until Test.answers.size) {
+        listOfMultipleAnswers.add(mutableListOf())
+        for (i in 1 until Test.answers.size + 1) {
             val list = mutableListOf<String>()
-            for (j in 0 until Test.answers.size) {
+            for (j in 0 until Test.answers[i]!!.size) {
                 list.add("")
             }
             listOfMultipleAnswers.add(list)
         }
         Test.multipleAnswers = listOfMultipleAnswers
 
+        // Заполняются значения dragAndDrop
+        val dragAndDropAnswers = hashMapOf<Int, HashMap<String, MutableList<String>>>()
+        for ((key, value) in Test.quizMetaData) {
+            val hashMap = hashMapOf<String, MutableList<String>>()
+            val indexKey = key + 1
+            if (value.categories?.isEmpty() == false) {
+                for (i in value.categories.indices) {
+                    if (i == value.categories.size - 1) {
+                        hashMap[value.categories[value.categories.size - 1]] =
+                            Test.answers[indexKey]?.toMutableList()!!
+                    } else {
+                        hashMap[value.categories[i]] = mutableListOf()
+                    }
+
+                }
+            }
+            dragAndDropAnswers[key] = hashMap
+            Test.answersData[key] = mutableListOf()
+        }
+        Test.dragAndDropAnswers = dragAndDropAnswers
         Column(
             modifier = Modifier.background(Color.White)
         ) {
@@ -196,7 +229,11 @@ fun CreateTopPartCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp, bottom = 35.dp, start = 40.dp),
-        text = Test.questions[Test.counter.value - 1],
+        text =
+        if (Test.questions[Test.counter.value - 1].length < 50)
+            Test.questions[Test.counter.value - 1]
+        else
+            Test.questions[Test.counter.value - 1].substring(0, 50),
         style = MaterialTheme.typography.subtitle1
     )
 }
@@ -207,10 +244,20 @@ fun CreateAnswersCard() {
     val counter = Test.counter.value - 1
     if (Test.quizMetaData[counter]?.multiple_answers == true) {
         MultipleAnswers()
-    } else if (Test.quizMetaData[Test.counter.value]?.categories?.isEmpty() == false) {
-        val categories = Test.quizMetaData[Test.counter.value]?.categories
+    } else if (Test.quizMetaData[counter]?.categories?.isEmpty() == false) {
+        val categories = Test.quizMetaData[counter]?.categories
         if (categories != null) {
             DragAndDrop(categories)
+            val diff = 1.0 / Test.maxCounter.value
+            if (!Test.answersBoolean[Test.counter.value]) {
+                Test.counterQ.value++
+                if (Test.progress.value < 1.0f) Test.progress.value += diff
+                Test.answersBoolean[Test.counter.value] = true
+
+                if (isFinish()) {
+                    Test.toggleBtn.value = true
+                }
+            }
         }
     } else {
         OrdinaryAnswers()
@@ -235,7 +282,7 @@ fun MultipleAnswers() {
             horizontalAlignment = Alignment.Start
         ) {
             val diff = 1.0 / Test.maxCounter.value
-            items(Test.answers[Test.counterAnswers.value]!!.size) { index ->
+            items(Test.answers[Test.counter.value]!!.size) { index ->
                 val checkedState = remember { mutableStateOf(false) }
                 onOptionSelected(Test.answers.keys.toList()[index])
                 Row(
@@ -250,19 +297,29 @@ fun MultipleAnswers() {
                             .height(20.dp)
                     ) {
                         Checkbox(
-                            checked = Test.multipleAnswers[Test.counterAnswers.value][index] != "",
+                            checked = Test.multipleAnswers[Test.counter.value][index] != "",
                             onCheckedChange = {
                                 checkedState.value = it
-
+                                // Добавляем ответ в список
                                 if (!checkedState.value) {
-                                    Test.multipleAnswers[Test.counterAnswers.value][index] = ""
+                                    Test.multipleAnswers[Test.counter.value][index] = ""
                                 } else {
-                                    Test.multipleAnswers[Test.counterAnswers.value][index] =
-                                        Test.answers[index]?.get(0).toString()
+                                    Test.multipleAnswers[Test.counter.value][index] =
+                                        Test.answers[Test.counter.value]?.get(index).toString()
                                 }
 
-                                Test.userAnswers[Test.counter.value] = Test.multipleAnswers
-                                Test.answersBoolean[Test.counter.value] = true
+                                if (!Test.answersBoolean[Test.counter.value]) {
+                                    Test.counterQ.value++
+                                    if (Test.progress.value < 1.0f) Test.progress.value += diff
+                                    Test.answersBoolean[Test.counter.value] = true
+
+                                    if (isFinish()) {
+                                        Test.toggleBtn.value = true
+                                    }
+                                }
+
+                                Test.userAnswers[Test.counter.value] =
+                                    Test.multipleAnswers[Test.counter.value]
                             },
                             modifier = Modifier.padding(5.dp),
                             colors = CheckboxDefaults.colors(
@@ -273,7 +330,7 @@ fun MultipleAnswers() {
                     }
 
                     Text(
-                        text = Test.answers[Test.counterAnswers.value]?.get(index).toString(),
+                        text = Test.answers[Test.counter.value]?.get(index).toString(),
                         fontSize = 13.sp,
                         modifier = Modifier.padding(start = 22.dp),
                         style = MaterialTheme.typography.subtitle2
@@ -289,29 +346,30 @@ data class ItemData(val title: String, val key: String, val isLocked: Boolean = 
 
 @Composable
 fun DragAndDrop(categories: List<String>) {
-    val values = mutableListOf<ItemData>()
-    var id = 0
-    for ((i, category) in categories.withIndex()) {
-        values.add(ItemData(category, "id$id", true))
-        id++
+    var values = mutableListOf<ItemData>()
+    Log.d("answersData", Test.answersData[Test.indexCounter.value]!!.isEmpty().toString())
+    if (Test.answersData[Test.indexCounter.value]!!.isEmpty()) {
 
-        // Добавляю скрытый элемент, чтобы можно было вставить ответ между категориями
-        if (i < categories.size - 1) {
-            values.add(ItemData("", "id${id}invisible", false))
+
+        var id = 0
+        for ((i, category) in categories.withIndex()) {
+            values.add(ItemData(category, "id$id", true))
+            id++
+
+            // Добавляю скрытый элемент, чтобы можно было вставить ответ между категориями
+            if (i < categories.size - 1) {
+                values.add(ItemData("", "id${id}invisible", false))
+                id++
+            }
+        }
+
+        val answers = Test.answers[Test.counter.value]
+        for (answer in answers!!) {
+            values.add(ItemData(answer, "id$id", false))
             id++
         }
-    }
-
-
-//    Log.d("Test.answers", Test.answers[0].toString())
-//    for (i in 0..Test.answers[0]!!.length){
-//
-//    }
-
-    val answers = listOf("dsadas", "dsadasd")
-    for (answer in answers) {
-        values.add(ItemData(answer, "id$id", false))
-        id++
+    } else {
+        values = Test.dragAndDropData
     }
 
     var data by remember {
@@ -319,6 +377,7 @@ fun DragAndDrop(categories: List<String>) {
             values
         )
     }
+    Test.dragAndDropData = data
 
     val state = rememberReorderableLazyListState(
         onMove = { from, to ->
@@ -326,77 +385,95 @@ fun DragAndDrop(categories: List<String>) {
                 add(to.index, removeAt(from.index))
             }
         },
-        canDragOver = { draggedOver, dragging ->
-            isDragEnabled(draggedOver, dragging, data)
+        canDragOver = { draggedOver, _ ->
+            isDragEnabled(draggedOver, data)
+        },
+        onDragEnd = { _: Int, _: Int ->
+            // Отслеживаем изменение списка
+            val dragAndDropAnswer = hashMapOf<String, MutableList<String>>()
+            var category = ""
+
+            Test.answersDataCopied = mutableListOf()
+            val iterator = Test.dragAndDropData.iterator()
+            while (iterator.hasNext()) {
+                val itemData = iterator.next()
+                if (itemData.title != "") {
+                    if (itemData.isLocked) {
+                        category = itemData.title
+                        dragAndDropAnswer[itemData.title] = mutableListOf()
+                    } else {
+                        dragAndDropAnswer[category]?.add(itemData.title)
+                    }
+                }
+                Test.answersDataCopied.add(itemData)
+            }
+            // Log.d("answersDataCopied", answersDataCopied.toString())
         }
     )
-
-    LazyColumn(
-        state = state.listState,
-        modifier = Modifier
-            .padding(start = 40.dp)
-            .reorderable(state)
-            .detectReorderAfterLongPress(state),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+    Column(
+        Modifier
+            .selectableGroup(), horizontalAlignment = Alignment.Start
     ) {
-        items(data, { item -> item.key }) { item ->
-            ReorderableItem(state, item.key) { dragging ->
-                val elevation = animateDpAsState(if (dragging) 8.dp else 0.dp)
-                if (item.isLocked) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .pointerInput(Unit) {
-                                detectDragGesturesAfterLongPress(onDragStart = {
-                                    // Специально ничего не писал, чтобы данный элемент нельзя было перетащить
-                                }, onDrag = { change, dragAmount ->
-                                    // Специально ничего не писал, чтобы данный элемент нельзя было перетащить
-                                })
-                            }
-                    ) {
-                        Text(
-                            text = item.title,
-                            fontSize = 20.sp,
-                            modifier = Modifier.padding(bottom = 24.dp),
-                            style = MaterialTheme.typography.subtitle2
-                        )
-                    }
-                } else if (item.key.contains("invisible")) {
-                    Card(
-                        shape = RoundedCornerShape(10.dp),
-                        modifier = Modifier
-                            .alpha(0f)
-                            .height(0.dp),
-                    ) {
-                        Text(
-                            text = item.title,
-                            fontSize = 12.sp,
-                            style = MaterialTheme.typography.subtitle2,
+        LazyColumn(
+            state = state.listState,
+            modifier = Modifier
+                .reorderable(state)
+                .detectReorderAfterLongPress(state)
+                .fillMaxWidth()
+                .padding(bottom = 40.dp, start = 40.dp)
+                .weight(1f),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            items(Test.dragAndDropData, { item -> item.key }) { item ->
+                ReorderableItem(state, item.key) { dragging ->
+                    if (item.isLocked) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                text = item.title,
+                                fontSize = 20.sp,
+                                modifier = Modifier.padding(bottom = 24.dp),
+                                style = MaterialTheme.typography.subtitle2
+                            )
+                        }
+                    } else if (item.key.contains("invisible")) {
+                        Card(
+                            shape = RoundedCornerShape(10.dp),
                             modifier = Modifier
-                                .background(colorResource(id = R.color.purpleTransparent))
-                        )
-                    }
-                } else {
-                    Card(
-                        shape = RoundedCornerShape(10.dp),
-                    ) {
-                        Text(
-                            text = item.title,
-                            fontSize = 12.sp,
-                            style = MaterialTheme.typography.subtitle2,
-                            modifier = Modifier
-                                .background(colorResource(id = R.color.purpleTransparent))
-                                .padding(start = 16.dp, end = 16.dp, top = 7.dp, bottom = 7.dp),
-                        )
+                                .alpha(0f)
+                                .height(0.dp),
+                        ) {
+                            Text(
+                                text = item.title,
+                                fontSize = 12.sp,
+                                style = MaterialTheme.typography.subtitle2,
+                                modifier = Modifier
+                                    .background(colorResource(id = R.color.purpleTransparent))
+                            )
+                        }
+                    } else {
+                        Card(
+                            shape = RoundedCornerShape(10.dp),
+                        ) {
+                            Text(
+                                text = item.title,
+                                fontSize = 12.sp,
+                                style = MaterialTheme.typography.subtitle2,
+                                modifier = Modifier
+                                    .background(colorResource(id = R.color.purpleTransparent))
+                                    .padding(start = 16.dp, end = 16.dp, top = 7.dp, bottom = 7.dp),
+                            )
+                        }
                     }
                 }
             }
         }
-
+        CreateBtnCard()
     }
 }
 
-fun isDragEnabled(draggedOver: ItemPosition, dragging: ItemPosition, data: List<ItemData>) =
+fun isDragEnabled(draggedOver: ItemPosition, data: List<ItemData>) =
     data.getOrNull(draggedOver.index)?.isLocked != true
 
 @Composable
@@ -416,8 +493,7 @@ fun OrdinaryAnswers() {
             horizontalAlignment = Alignment.Start
         ) {
             val diff = 1.0 / Test.maxCounter.value
-            //    Log.d("Test.anss", Test.answers[Test.counter.value]!!.size.toString())
-            items(Test.answers[Test.counterAnswers.value]!!.size) { index ->
+            items(Test.answers[Test.counter.value]!!.size) { index ->
                 onOptionSelected(Test.answers.keys.toList()[index])
                 Row(
                     modifier = Modifier
@@ -427,22 +503,18 @@ fun OrdinaryAnswers() {
                             onClick = {
                                 Test.answersPoint[Test.counter.value] =
                                     Test.answers.keys.toList()[index]
+
                                 Test.userAnswers[Test.counter.value] =
-                                    Test.answers[Test.answers.keys.toList()[index]].toString()
+                                    Test.answers[Test.counter.value]
+                                        ?.get(index)
+                                        .toString()
 
                                 if (!Test.answersBoolean[Test.counter.value]) {
                                     Test.counterQ.value++
                                     if (Test.progress.value < 1.0f) Test.progress.value += diff
                                     Test.answersBoolean[Test.counter.value] = true
 
-                                    var c = 0
-                                    for (i in 1 until Test.answersBoolean.size) {
-                                        if (Test.answersBoolean[i]) {
-                                            c++
-                                        }
-                                    }
-
-                                    if (c == Test.maxCounter.value) {
+                                    if (isFinish()) {
                                         Test.toggleBtn.value = true
                                     }
                                 }
@@ -467,7 +539,7 @@ fun OrdinaryAnswers() {
                     }
 
                     Text(
-                        text = Test.answers[Test.counterAnswers.value]?.get(index).toString(),
+                        text = Test.answers[Test.counter.value]?.get(index).toString(),
                         fontSize = 13.sp,
                         modifier = Modifier.padding(start = 22.dp),
                         style = MaterialTheme.typography.subtitle2
@@ -501,7 +573,10 @@ fun CreateBtnCard() {
                     ).show()
                     return@Button
                 } else {
+                    Test.answersData[Test.indexCounter.value] = Test.answersDataCopied
+                    Test.dragAndDropData = Test.answersDataCopied
                     Test.counter.value--
+                    Test.indexCounter.value--
 
                     if (Test.counter.value < 1) {
                         Test.counter.value = Test.maxCounter.value
@@ -524,7 +599,8 @@ fun CreateBtnCard() {
         Button(
             onClick = {
                 val counterMultipleAnswer = checkMultipleAnswers()
-                Log.d("Test.userAns", Test.userAnswers.toString())
+
+                Log.d("Test.userAns", "onNextCLick: " + Test.userAnswers.toString())
                 if (!Test.answersBoolean[Test.counter.value] || counterMultipleAnswer == 0) {
                     Toast.makeText(
                         context,
@@ -533,8 +609,10 @@ fun CreateBtnCard() {
                     ).show()
                     return@Button
                 } else {
+                    Test.answersData[Test.indexCounter.value] = Test.answersDataCopied
+                    Test.dragAndDropData = Test.answersDataCopied
                     Test.counter.value++
-                    Test.counterAnswers.value++
+                    Test.indexCounter.value++
                     if (Test.counter.value > Test.maxCounter.value) {
                         Test.counter.value = 1
                     }
@@ -594,7 +672,6 @@ fun CreateBtnCard() {
         Button(
             onClick = {
                 Test.counter.value++
-                Test.counterAnswers.value++
                 if (Test.counter.value > Test.maxCounter.value) {
                     Test.counter.value = 1
                 }
@@ -613,10 +690,8 @@ fun CreateBtnCard() {
     }
 }
 
+// Проверяем заполнен ли хотя бы один ответ из множественного выбора
 fun checkMultipleAnswers(): Int {
-    // Проверяем заполнен ли хотя бы один ответ из множественного выбора
-    Log.d("Test.userAns", Test.userAnswers.toString())
-    Log.d("Test.userAns", "with counter: " + Test.userAnswers[Test.counter.value].toString())
     var counterMultipleAnswer = -1
     if (Test.userAnswers[Test.counter.value] is MutableList<*>) {
         counterMultipleAnswer = 0
@@ -631,11 +706,25 @@ fun checkMultipleAnswers(): Int {
     return counterMultipleAnswer
 }
 
+// Проверяем ответил ли пользователь на все вопросы
+fun isFinish(): Boolean {
+    var c = 0
+    for (i in 1 until Test.answersBoolean.size) {
+        if (Test.answersBoolean[i]) {
+            c++
+        }
+    }
+
+    return c == Test.maxCounter.value
+}
+
+
+// Специальный объект для доступа к переменным из любого места программы
 object Test {
     lateinit var counter: MutableState<Int>
+    lateinit var indexCounter: MutableState<Int>
     lateinit var maxCounter: MutableState<Int>
     lateinit var counterQ: MutableState<Int>
-    lateinit var counterAnswers: MutableState<Int>
     lateinit var progress: MutableState<Double>
     lateinit var toggleBtn: MutableState<Boolean>
     lateinit var questions: List<String>
@@ -645,79 +734,10 @@ object Test {
     lateinit var answersPoint: MutableList<Int>
     lateinit var answersBoolean: MutableList<Boolean>
 
-
     lateinit var multipleAnswers: MutableList<MutableList<String>>
+    lateinit var dragAndDropData: MutableList<ItemData>
+    lateinit var answersDataCopied: MutableList<ItemData>
+    lateinit var dragAndDropAnswers: HashMap<Int, HashMap<String, MutableList<String>>>
+    lateinit var answersData: HashMap<Int, MutableList<ItemData>>
 }
-
-//object UserAnswers{
-//    lateinit var multipleAnswers: MutableList<MutableList<String>>
-//    lateinit var ordinaryAnswer: MutableState<String>
-//    lateinit var dragAndDropAnswers: <String, String>
-//}
-
-
-//object MultipleAnswers{
-//    lateinit var multipleAnswers: MutableList<String>
-//}
-
-/*
- items(Test.answers.size) { index ->
-                onOptionSelected(Test.answers.keys.toList()[index])
-                onOptionSelected(Test.answers.keys.toList()[index])
-                Row(
-                    modifier = Modifier
-                        .padding(bottom = 30.dp)
-                        .selectable(
-                            selected = (Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value]),
-                            onClick = {
-                                Test.answersPoint[Test.counter.value] =
-                                    Test.answers.keys.toList()[index]
-                                Test.userAnswers[Test.counter.value] =
-                                    Test.answers[Test.answers.keys.toList()[index]].toString()
-
-                                if (!Test.answersBoolean[Test.counter.value]) {
-                                    Test.counterQ.value++
-                                    if (Test.progress.value < 1.0f) Test.progress.value += diff
-                                    Test.answersBoolean[Test.counter.value] = true
-
-                                    var c = 0
-                                    for (i in 1 until Test.answersBoolean.size) {
-                                        if (Test.answersBoolean[i]) {
-                                            c++
-                                        }
-                                    }
-
-                                    if (c == Test.maxCounter.value) {
-                                        Test.toggleBtn.value = true
-                                    }
-                                }
-                            }
-                        ),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .width(20.dp)
-                            .height(20.dp)
-                    ) {
-                        Checkbox(
-                            checked = Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value],
-                            onCheckedChange = { },
-                            modifier = Modifier.padding(5.dp),
-                            colors = CheckboxDefaults.colors(checkedColor = Color(0xff, 0xb6, 0xc1), checkmarkColor = Color.Red)
-                        )
-                        Log.d("Test.answers",  Test.answers.keys.toList()[index].toString())
-                        Log.d("Test.answers",  Test.answersPoint[Test.counter.value].toString())
-                    }
-
-                    Text(
-                        text = Test.answers[Test.answers.keys.toList()[index]]?.get(0).toString(),
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 22.dp),
-                        style = MaterialTheme.typography.subtitle2
-                    )
-                }
-            }
- */
 
