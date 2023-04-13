@@ -8,6 +8,7 @@ import ru.hse.pe.presentation.auth.view.AuthFragment
 import ru.hse.pe.presentation.auth.view.RegisterFragment
 import ru.hse.pe.presentation.content.ContentFragment
 import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
+import ru.hse.pe.presentation.content.type.courses.CoursesFragment
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
 import ru.hse.pe.presentation.content.type.technique.TechniquesFragment
@@ -15,12 +16,10 @@ import ru.hse.pe.presentation.content.type.test.ui.TestContentFragment
 import ru.hse.pe.presentation.content.type.test.ui.TestResultFragment
 import ru.hse.pe.presentation.content.type.test.ui.TestsFragment
 import ru.hse.pe.presentation.content.type.test.ui.sheet.TestPreviewFragment
-import ru.hse.pe.presentation.content.type.courses.CoursesFragment
 import javax.inject.Singleton
 
 /**
  * Common component fot the whole project.
- * Created by Kocharyan Tigran on 04.03.2022.
  */
 @Singleton
 @Component(

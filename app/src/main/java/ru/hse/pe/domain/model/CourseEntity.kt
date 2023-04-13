@@ -3,8 +3,10 @@ package ru.hse.pe.domain.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
 
+/**
+ * Entity for course
+ */
 @Parcelize
 data class CourseEntity(
     @SerializedName("id") val id: Int? = 0,

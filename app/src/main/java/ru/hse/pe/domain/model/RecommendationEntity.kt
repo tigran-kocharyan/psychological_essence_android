@@ -4,6 +4,9 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * Entity for recommendation
+ */
 @Parcelize
 data class RecommendationEntity(
     @SerializedName("id") val id: Int? = 0,

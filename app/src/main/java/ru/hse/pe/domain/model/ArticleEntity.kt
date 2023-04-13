@@ -4,6 +4,11 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * Entity for article and technique
+ *
+ * Since these entities are mostly the same, this data class will be used to store data
+ */
 @Parcelize
 data class ArticleEntity(
     @SerializedName("id") val id: Int? = 0,

@@ -6,7 +6,7 @@ import retrofit2.http.*
 import ru.hse.pe.domain.model.*
 
 /**
- * Event API for getting content from db.
+ * API service for getting content from db.
  *
  * @author Tigran Kocharyan
  */
@@ -19,7 +19,7 @@ interface ApiService {
     fun getQuizzes(): Single<List<QuizEntity>>
 
     /**
-     * Method calls API to get the quizzes data from DB
+     * Method calls API to get the quizzes result data from DB
      */
     @POST(GET_QUIZ_RESULT)
     fun getQuizResult(@Body answer: QuizAnswerEntity): Single<QuizResultEntity>
@@ -27,7 +27,7 @@ interface ApiService {
     /**
      * Method calls API to get the courses data from DB
      */
-    @GET(GET_COURCES)
+    @GET(GET_COURSES)
     fun getCourses(): Single<List<CourseEntity>>
 
     /**
@@ -71,7 +71,7 @@ interface ApiService {
         private const val GET_TECHNIQUES = "techniques"
         private const val GET_QUIZZES = "quizzes"
         private const val GET_QUIZ_RESULT = "quiz/submit-answers"
-        private const val GET_COURCES = "courses"
+        private const val GET_COURSES = "courses"
         private const val GET_RECOMMENDATIONS = "recommendations"
         private const val GET_FACTS = "facts"
         private const val GET_USER = ""
