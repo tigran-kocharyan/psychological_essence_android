@@ -35,13 +35,11 @@ import ru.hse.pe.utils.Utils
 fun Test(
     sharedViewModel: SharedViewModel,
 ) {
-    sharedViewModel.quiz.value?.name.toString()
     val listQuestions = sharedViewModel.quiz.value?.questions?.toList()
     val listAnswers = sharedViewModel.quiz.value?.answers?.toList()
     val userAnswers = mutableListOf<Any>()
     val countQuestions = listQuestions!!.size
     val quizMetaData = sharedViewModel.quiz.value!!.quizMetaData
-
     val answers = hashMapOf<Int, List<String>>() // вопросы
     val answersPoint = mutableListOf<Int>()
     val answersBoolean = mutableListOf<Boolean>() // ответили ли на вопрос
@@ -87,9 +85,9 @@ fun Test(
         Test.userAnswers = userAnswers
         Test.answersPoint = answersPoint
         Test.answersBoolean = answersBoolean
-        Test.dragAndDropData = mutableListOf()
-        Test.answersDataCopied = mutableListOf()
-        Test.answersData = hashMapOf()
+        Test.dragAndDropItems = mutableListOf()
+        Test.dragAndDropItemsCopied = mutableListOf()
+        Test.dragAndDropAnswersData = hashMapOf()
 
         // Подготавливаем шаблон с ответами
         Test.userAnswers.add("") // Отсчет начинается с 1
@@ -144,7 +142,7 @@ fun Test(
                 }
             }
             dragAndDropAnswers[key] = hashMap
-            Test.answersData[key] = mutableListOf()
+            Test.dragAndDropAnswersData[key] = mutableListOf()
         }
         Test.dragAndDropAnswers = dragAndDropAnswers
         Column(
@@ -282,9 +280,15 @@ fun MultipleAnswers() {
             horizontalAlignment = Alignment.Start
         ) {
             val diff = 1.0 / Test.maxCounter.value
+            val onOptionSelectedKeys = mutableListOf<Int>()
+            for (i in 0 until Test.answers[Test.counter.value]?.size!!) {
+                onOptionSelectedKeys.add(i)
+            }
+
             items(Test.answers[Test.counter.value]!!.size) { index ->
                 val checkedState = remember { mutableStateOf(false) }
-                onOptionSelected(Test.answers.keys.toList()[index])
+
+                onOptionSelected(onOptionSelectedKeys[index])
                 Row(
                     modifier = Modifier
                         .padding(bottom = 30.dp),
@@ -347,10 +351,7 @@ data class ItemData(val title: String, val key: String, val isLocked: Boolean = 
 @Composable
 fun DragAndDrop(categories: List<String>) {
     var values = mutableListOf<ItemData>()
-    Log.d("answersData", Test.answersData[Test.indexCounter.value]!!.isEmpty().toString())
-    if (Test.answersData[Test.indexCounter.value]!!.isEmpty()) {
-
-
+    if (Test.dragAndDropAnswersData[Test.indexCounter.value]!!.isEmpty()) {
         var id = 0
         for ((i, category) in categories.withIndex()) {
             values.add(ItemData(category, "id$id", true))
@@ -369,7 +370,7 @@ fun DragAndDrop(categories: List<String>) {
             id++
         }
     } else {
-        values = Test.dragAndDropData
+        values = Test.dragAndDropItems
     }
 
     var data by remember {
@@ -377,7 +378,7 @@ fun DragAndDrop(categories: List<String>) {
             values
         )
     }
-    Test.dragAndDropData = data
+    Test.dragAndDropItems = data
 
     val state = rememberReorderableLazyListState(
         onMove = { from, to ->
@@ -393,8 +394,8 @@ fun DragAndDrop(categories: List<String>) {
             val dragAndDropAnswer = hashMapOf<String, MutableList<String>>()
             var category = ""
 
-            Test.answersDataCopied = mutableListOf()
-            val iterator = Test.dragAndDropData.iterator()
+            Test.dragAndDropItemsCopied = mutableListOf()
+            val iterator = Test.dragAndDropItems.iterator()
             while (iterator.hasNext()) {
                 val itemData = iterator.next()
                 if (itemData.title != "") {
@@ -405,9 +406,8 @@ fun DragAndDrop(categories: List<String>) {
                         dragAndDropAnswer[category]?.add(itemData.title)
                     }
                 }
-                Test.answersDataCopied.add(itemData)
+                Test.dragAndDropItemsCopied.add(itemData)
             }
-            // Log.d("answersDataCopied", answersDataCopied.toString())
         }
     )
     Column(
@@ -424,7 +424,7 @@ fun DragAndDrop(categories: List<String>) {
                 .weight(1f),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            items(Test.dragAndDropData, { item -> item.key }) { item ->
+            items(Test.dragAndDropItems, { item -> item.key }) { item ->
                 ReorderableItem(state, item.key) { dragging ->
                     if (item.isLocked) {
                         Column(
@@ -493,8 +493,13 @@ fun OrdinaryAnswers() {
             horizontalAlignment = Alignment.Start
         ) {
             val diff = 1.0 / Test.maxCounter.value
+            val onOptionSelectedKeys = mutableListOf<Int>()
+            for (i in 0 until Test.answers[Test.counter.value]?.size!!) {
+                onOptionSelectedKeys.add(i)
+            }
+
             items(Test.answers[Test.counter.value]!!.size) { index ->
-                onOptionSelected(Test.answers.keys.toList()[index])
+                onOptionSelected(onOptionSelectedKeys[index])
                 Row(
                     modifier = Modifier
                         .padding(bottom = 30.dp)
@@ -573,8 +578,7 @@ fun CreateBtnCard() {
                     ).show()
                     return@Button
                 } else {
-                    Test.answersData[Test.indexCounter.value] = Test.answersDataCopied
-                    Test.dragAndDropData = Test.answersDataCopied
+                    checkDragAndDrop()
                     Test.counter.value--
                     Test.indexCounter.value--
 
@@ -599,8 +603,6 @@ fun CreateBtnCard() {
         Button(
             onClick = {
                 val counterMultipleAnswer = checkMultipleAnswers()
-
-                Log.d("Test.userAns", "onNextCLick: " + Test.userAnswers.toString())
                 if (!Test.answersBoolean[Test.counter.value] || counterMultipleAnswer == 0) {
                     Toast.makeText(
                         context,
@@ -609,8 +611,7 @@ fun CreateBtnCard() {
                     ).show()
                     return@Button
                 } else {
-                    Test.answersData[Test.indexCounter.value] = Test.answersDataCopied
-                    Test.dragAndDropData = Test.answersDataCopied
+                    checkDragAndDrop()
                     Test.counter.value++
                     Test.indexCounter.value++
                     if (Test.counter.value > Test.maxCounter.value) {
@@ -633,6 +634,7 @@ fun CreateBtnCard() {
         val activity = LocalContext.current as AppCompatActivity
         Button(
             onClick = {
+                validateTest()
                 activity.supportFragmentManager
                     .beginTransaction()
                     .setCustomAnimations(
@@ -647,7 +649,6 @@ fun CreateBtnCard() {
                         TestResultFragment.TAG
                     )
                     .commit()
-                Test.userAnswers.removeAt(0)
             },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
@@ -693,16 +694,21 @@ fun CreateBtnCard() {
 // Проверяем заполнен ли хотя бы один ответ из множественного выбора
 fun checkMultipleAnswers(): Int {
     var counterMultipleAnswer = -1
+    val tempMultipleAnswersItems = mutableListOf<String>()
     if (Test.userAnswers[Test.counter.value] is MutableList<*>) {
         counterMultipleAnswer = 0
         for (multipleAnswer in Test.userAnswers[Test.counter.value] as MutableList<*>) {
             if (multipleAnswer != null) {
                 if (multipleAnswer == "") {
                     counterMultipleAnswer++
+                } else {
+                    tempMultipleAnswersItems.add(multipleAnswer as String)
                 }
             }
         }
+        Test.userAnswers[Test.counter.value] = tempMultipleAnswersItems
     }
+
     return counterMultipleAnswer
 }
 
@@ -714,10 +720,124 @@ fun isFinish(): Boolean {
             c++
         }
     }
-
     return c == Test.maxCounter.value
 }
 
+// Готовим данные drag and drop для отправки на сервер
+fun checkDragAndDrop() {
+    for ((key, value) in Test.dragAndDropAnswers) {
+        // является ли вопрос dragAndDrop
+        if (key == Test.indexCounter.value && value.isNotEmpty()) {
+            Test.dragAndDropAnswersData[Test.indexCounter.value] = Test.dragAndDropItemsCopied
+            Test.dragAndDropItems = Test.dragAndDropItemsCopied
+
+            val map = mutableMapOf<String, MutableList<String>>()
+            val data = Test.dragAndDropAnswersData[Test.indexCounter.value]
+            var category = ""
+            if (data != null) {
+                for (item in data) {
+                    if (item.title != "") {
+                        if (item.isLocked) {
+                            category = item.title
+                            map[category] = mutableListOf()
+                        } else {
+                            map[category]?.add(item.title)
+                        }
+                    }
+                }
+            }
+            Test.userAnswers[Test.counter.value] = map
+        }
+    }
+}
+
+// Готовим данные для отправки на сервер
+fun validateTest() {
+    Test.userAnswers.removeAt(0)
+    val userAnswersCopied = mutableListOf<Any>()
+
+    // Убираю пустые значения в множественном выборе
+    for (userAnswer in Test.userAnswers) {
+        if (userAnswer is HashMap<*, *>) {
+            val dragAndDropCopied = mutableMapOf<String, List<String>>()
+            for ((key, value) in userAnswer) {
+                if (value is MutableList<*> && value.isEmpty()) {
+                    continue
+                } else {
+                    dragAndDropCopied[key as String] = value as List<String>
+                }
+            }
+            userAnswersCopied.add(dragAndDropCopied)
+        } else if (userAnswer is MutableList<*>) {
+            userAnswersCopied.add(userAnswer)
+        } else {
+            userAnswersCopied.add(userAnswer)
+        }
+    }
+
+    Test.userAnswers = userAnswersCopied
+    Test.userAnswersString = mutableListOf()
+
+    // здесь преобразуею mutableList<Any> -> mutableList<String>
+    for (userAnswer in Test.userAnswers) {
+        var str = ""
+        when (userAnswer) {
+            is HashMap<*, *> -> {
+                val userAnswerMap = userAnswer as MutableMap<String, List<String>>
+                var k = 0
+                for ((key, value) in userAnswerMap) {
+                    str += if (k == 0) {
+                        "{\"$key\":"
+                    } else {
+                        "\"$key\":"
+                    }
+                    for ((c, userAnswerItem) in value.withIndex()) {
+                        val userAnswerItemString = userAnswerItem;
+                        if (value.size > 1) {
+                            if (c == 0) {
+                                str += "[\"$userAnswerItemString\", "
+                            } else if (c == value.size - 1) {
+                                str += "\"$userAnswerItemString\"]"
+                            } else {
+                                str += "\"$userAnswerItemString\", "
+                            }
+                        } else {
+                            str += "[\"${userAnswerItemString}\"]"
+                        }
+
+                    }
+                    if (k != userAnswerMap.size - 1) {
+                        str += ", "
+                    }
+                    k++
+                }
+                str += "}"
+                Test.userAnswersString.add(str)
+            }
+            is MutableList<*> -> {
+                if (userAnswer.size > 1) {
+                    for ((c, userAnswerItem) in userAnswer.withIndex()) {
+                        val userAnswerItemString = userAnswerItem.toString();
+                        if (c == 0) {
+                            str += "[\"$userAnswerItemString\", "
+                        } else if (c == userAnswer.size - 1) {
+                            str += "\"$userAnswerItemString\"]"
+                        } else {
+                            str += "\"$userAnswerItemString\", "
+                        }
+                    }
+                } else {
+                    str += "[\"${userAnswer.joinToString()}\"]"
+                }
+                Test.userAnswersString.add(str)
+            }
+            else -> {
+                Test.userAnswersString.add(userAnswer.toString())
+            }
+        }
+
+    }
+}
 
 // Специальный объект для доступа к переменным из любого места программы
 object Test {
@@ -731,13 +851,14 @@ object Test {
     lateinit var quizMetaData: Map<Int, QuizMetaDataEntity>
     lateinit var answers: HashMap<Int, List<String>>
     lateinit var userAnswers: MutableList<Any>
+    var userAnswersString = mutableListOf<String>()
     lateinit var answersPoint: MutableList<Int>
     lateinit var answersBoolean: MutableList<Boolean>
 
     lateinit var multipleAnswers: MutableList<MutableList<String>>
-    lateinit var dragAndDropData: MutableList<ItemData>
-    lateinit var answersDataCopied: MutableList<ItemData>
+    lateinit var dragAndDropItems: MutableList<ItemData>
+    lateinit var dragAndDropItemsCopied: MutableList<ItemData>
     lateinit var dragAndDropAnswers: HashMap<Int, HashMap<String, MutableList<String>>>
-    lateinit var answersData: HashMap<Int, MutableList<ItemData>>
+    lateinit var dragAndDropAnswersData: HashMap<Int, MutableList<ItemData>>
 }
 
