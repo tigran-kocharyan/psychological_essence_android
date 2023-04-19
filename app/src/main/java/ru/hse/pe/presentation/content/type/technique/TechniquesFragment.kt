@@ -25,7 +25,6 @@ import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.ArticleItem
 import ru.hse.pe.presentation.content.item.TechniqueItem
 import ru.hse.pe.presentation.content.type.article.view.ArticleFragment
-import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
 import ru.hse.pe.utils.Utils
@@ -97,7 +96,7 @@ class TechniquesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLiveData()
-        viewModel.getArticles()
+        viewModel.getTechniques()
         (activity as MainActivity).isBottomNavVisible(false)
     }
 
@@ -112,9 +111,10 @@ class TechniquesFragment : Fragment() {
             .show()
     }
 
-    private fun showArticles(articles: List<ArticleEntity>) {
-        binding.itemsContainer.adapter = GroupieAdapter().apply { add(getArticleItems(articles)) }
-        val (subscription, free) = articles.partition { it.requiresSubscription }
+    private fun showTechniques(techniques: List<ArticleEntity>) {
+        binding.itemsContainer.adapter =
+            GroupieAdapter().apply { add(getTechniqueItems(techniques)) }
+        val (subscription, free) = techniques.partition { it.requiresSubscription }
         val categories = free.groupBy { it.category }
         val content = arrayListOf<BindableItem<*>>()
         content.add(
@@ -128,9 +128,9 @@ class TechniquesFragment : Fragment() {
         binding.itemsContainer.adapter = GroupieAdapter().apply { addAll(content) }
     }
 
-    private fun getArticleItems(articles: List<ArticleEntity>): BindableItem<*> {
+    private fun getTechniqueItems(articles: List<ArticleEntity>): BindableItem<*> {
         return VerticalContentContainer(
-            "Доступные статьи",
+            "Доступные техники",
             articles.map { ArticleItem(it, clickListener) }
         )
     }
@@ -138,7 +138,7 @@ class TechniquesFragment : Fragment() {
     private fun observeLiveData() {
         viewModel.getErrorLiveData().observe(viewLifecycleOwner, this::showError)
         viewModel.getProgressLiveData().observe(viewLifecycleOwner, this::showProgress)
-        viewModel.getArticlesLiveData().observe(viewLifecycleOwner, this::showArticles)
+        viewModel.getTechniquesLiveData().observe(viewLifecycleOwner, this::showTechniques)
     }
 
     private fun String.getCategoryContent(list: List<ArticleEntity>): BindableItem<*> =
@@ -157,7 +157,7 @@ class TechniquesFragment : Fragment() {
         private const val TAG_PROGRESS = "$TAG PROGRESS"
 
         /**
-         * Получение объекта [FactsFragment]
+         * Получение объекта [TechniquesFragment]
          */
         fun newInstance() = TechniquesFragment()
     }

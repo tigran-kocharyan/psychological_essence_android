@@ -4,6 +4,9 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * Entity for quiz
+ */
 @Parcelize
 data class QuizEntity(
     @SerializedName("id") val id: Int? = 0,
@@ -20,6 +23,9 @@ data class QuizEntity(
     @SerializedName("needs_subscription") val requiresSubscription: Boolean = false
 ) : Parcelable, ContentEntity
 
+/**
+ * Entity for quiz answer
+ */
 @Parcelize
 data class QuizMetaDataEntity(
     val categories: List<String> ?= emptyList(),
@@ -33,6 +39,9 @@ data class QuizAnswerEntity(
     @SerializedName("answers") val answers: List<String>? = arrayListOf()
 ) : Parcelable, ContentEntity
 
+/**
+ * Entity for quiz result
+ */
 @Parcelize
 data class QuizResultEntity(
     @SerializedName("images") val images: List<String>? = arrayListOf(),
