@@ -7,7 +7,6 @@ import ru.hse.pe.utils.scheduler.SchedulersProviderImpl
 
 /**
  * Module with binding details of interfaces with their implementations.
- * Created by Kocharyan Tigran on 04.03.2022.
  */
 @Module
 interface BindModule {

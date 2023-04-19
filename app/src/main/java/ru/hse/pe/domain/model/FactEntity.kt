@@ -4,6 +4,9 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * Entity for fact
+ */
 @Parcelize
 data class FactEntity(
     @SerializedName("id") val id: Int? = 0,

@@ -28,7 +28,6 @@ class RetrofitModule {
         .build()
         .create(ApiService::class.java)
 
-
     @Provides
     @Singleton
     fun provideRetrofitBuilder(client: OkHttpClient): Retrofit.Builder = Retrofit.Builder()

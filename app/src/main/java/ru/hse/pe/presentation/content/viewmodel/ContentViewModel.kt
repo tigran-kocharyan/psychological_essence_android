@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.*
 import ru.hse.pe.utils.scheduler.SchedulersProvider
@@ -22,6 +21,7 @@ class ContentViewModel(
     private val progressLiveData = MutableLiveData<Boolean>()
     private val recommendationsLiveData = MutableLiveData<List<RecommendationEntity>>()
     private val articlesLiveData = MutableLiveData<List<ArticleEntity>>()
+    private val techniquesLiveData = MutableLiveData<List<ArticleEntity>>()
     private val quizzesLiveData = MutableLiveData<List<QuizEntity>>()
     private val quizLiveData = MutableLiveData<QuizEntity>()
     private val quizResultLiveData = MutableLiveData<QuizResultEntity>()
@@ -37,6 +37,20 @@ class ContentViewModel(
      */
     fun getArticles() {
         disposables.add(contentInteractor.getArticles()
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
+            .doOnSubscribe { progressLiveData.postValue(true) }
+            .doAfterTerminate { progressLiveData.postValue(false) }
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(articlesLiveData::setValue, errorLiveData::setValue)
+        )
+    }
+
+    /**
+     * Скачать статьи из БД
+     */
+    fun getTechniques() {
+        disposables.add(contentInteractor.getTechniques()
             .observeOn(schedulers.io()).subscribeOn(schedulers.io())
             .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
@@ -182,8 +196,12 @@ class ContentViewModel(
     fun getArticlesLiveData(): MutableLiveData<List<ArticleEntity>> =
         articlesLiveData
 
+
     fun getQuizLiveData(): MutableLiveData<QuizEntity> =
         quizLiveData
+        
+    fun getTechniquesLiveData(): MutableLiveData<List<ArticleEntity>> =
+        techniquesLiveData
 
     fun getQuizzesLiveData(): MutableLiveData<List<QuizEntity>> =
         quizzesLiveData

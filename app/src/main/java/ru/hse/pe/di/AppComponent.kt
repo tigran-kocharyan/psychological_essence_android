@@ -21,7 +21,6 @@ import javax.inject.Singleton
 
 /**
  * Common component fot the whole project.
- * Created by Kocharyan Tigran on 04.03.2022.
  */
 @Singleton
 @Component(
