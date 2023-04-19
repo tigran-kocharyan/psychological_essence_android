@@ -39,7 +39,7 @@ interface ApiService {
     /**
      * Method calls API to get the courses without lessons data from DB
      */
-    @GET(GET_SHORTCOURCES)
+    @GET(GET_SHORT_COURCES)
     fun getShortCourses(): Single<List<CourseEntity>>
 
     /**
@@ -91,7 +91,7 @@ interface ApiService {
         private const val GET_QUIZ = "quizzes/id/{id}"
         private const val GET_QUIZ_RESULT = "quiz/submit-answers"
         private const val GET_COURCES = "courses"
-        private const val GET_SHORTCOURCES = "courses/fast"
+        private const val GET_SHORT_COURCES = "courses/fast"
         private const val GET_LESSON = "lessons/id/{id}"
         private const val GET_RECOMMENDATIONS = "recommendations"
         private const val GET_FACTS = "facts"

@@ -3,7 +3,6 @@ package ru.hse.pe.domain.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class QuizEntity(
@@ -31,7 +30,7 @@ data class QuizMetaDataEntity(
 data class QuizAnswerEntity(
     @SerializedName("quiz_id") val quiz_id: Int? = 0,
     @SerializedName("user_uid") val user_uid: String? = "",
-    @SerializedName("answers") val answers: @RawValue List<String>? = arrayListOf()
+    @SerializedName("answers") val answers: List<String>? = arrayListOf()
 ) : Parcelable, ContentEntity
 
 @Parcelize

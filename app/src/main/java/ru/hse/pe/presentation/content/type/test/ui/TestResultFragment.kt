@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import org.json.JSONObject
 import ru.hse.pe.App
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentTestResultBinding

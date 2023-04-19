@@ -1,6 +1,5 @@
 package ru.hse.pe.presentation.content.type.test.ui.compose
 
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
@@ -227,11 +226,7 @@ fun CreateTopPartCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp, bottom = 35.dp, start = 40.dp),
-        text =
-        if (Test.questions[Test.counter.value - 1].length < 50)
-            Test.questions[Test.counter.value - 1]
-        else
-            Test.questions[Test.counter.value - 1].substring(0, 50),
+        text = Test.questions[Test.counter.value - 1],
         style = MaterialTheme.typography.subtitle1
     )
 }
@@ -792,7 +787,7 @@ fun validateTest() {
                         "\"$key\":"
                     }
                     for ((c, userAnswerItem) in value.withIndex()) {
-                        val userAnswerItemString = userAnswerItem;
+                        val userAnswerItemString = userAnswerItem
                         if (value.size > 1) {
                             if (c == 0) {
                                 str += "[\"$userAnswerItemString\", "
@@ -817,7 +812,7 @@ fun validateTest() {
             is MutableList<*> -> {
                 if (userAnswer.size > 1) {
                     for ((c, userAnswerItem) in userAnswer.withIndex()) {
-                        val userAnswerItemString = userAnswerItem.toString();
+                        val userAnswerItemString = userAnswerItem.toString()
                         if (c == 0) {
                             str += "[\"$userAnswerItemString\", "
                         } else if (c == userAnswer.size - 1) {

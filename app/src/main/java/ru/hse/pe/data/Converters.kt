@@ -65,10 +65,7 @@ object Converters {
     @TypeConverter
     fun jsonToQuiz(value: String) = run {
         val quizEntity = Gson().fromJson(value, QuizEntity::class.java)
-        val map = quizEntity.quizMetaData?.toMap()?.forEach{
-            println(it)
-        }
-        assert(map != null)
+        val map = quizEntity.quizMetaData?.toMap()
     }
 
     /**
@@ -76,7 +73,4 @@ object Converters {
      */
     @TypeConverter
     fun jsonToCourse(value: String) = Gson().fromJson(value, CourseEntity::class.java)
-
-
-
 }
