@@ -1,65 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="16dp"
-    android:background="?attr/selectableItemBackground">
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="10dp"
+    app:cardCornerRadius="10dp">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="163dp"
-        android:layout_height="107dp"
-        android:background="@drawable/rounded_corners_10dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/category"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_corners_10dp"
-        android:backgroundTint="@color/purpleSoft"
-        android:ellipsize="end"
-        android:fontFamily="@font/montserrat_medium"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="2dp"
-        android:textColor="#ffffff"
-        android:textSize="8sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Техника" />
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/lock"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:src="@drawable/ic_lock"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@id/image"
-        app:layout_constraintEnd_toEndOf="@id/image" />
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="260dp"
+            android:layout_height="150dp"
+            android:background="@drawable/rounded_corners_10dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="@id/category"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/placeholder_article" />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="3dp"
-        android:fontFamily="@font/montserrat"
-        android:letterSpacing="-0.05"
-        android:textAlignment="textStart"
-        android:textColor="@color/blackLight"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/image"
-        app:layout_constraintStart_toStartOf="@id/image"
-        app:layout_constraintTop_toBottomOf="@id/image"
-        tools:text="Кто я и чего хочу? Определяем ценности" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_corners_10dp"
+            android:backgroundTint="@color/purpleSoft"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_medium"
+            android:maxLines="1"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="2dp"
+            android:textColor="#ffffff"
+            android:textSize="8sp"
+            app:layout_constraintEnd_toEndOf="@id/image"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Техника" />
+
+        <ImageView
+            android:id="@+id/lock"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_lock"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/image"
+            app:layout_constraintEnd_toEndOf="@id/image"
+            app:tint="@color/purple" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:letterSpacing="-0.05"
+            android:maxLines="1"
+            android:textAlignment="textStart"
+            android:textColor="@color/blackLight"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/image"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            tools:text="Кто я и чего хочу? Определяем ценности" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

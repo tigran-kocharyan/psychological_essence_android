@@ -2,25 +2,31 @@ package ru.hse.pe.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.hse.pe.R
+import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.ActivityMainBinding
+import ru.hse.pe.presentation.auth.view.LoginFragment
 import ru.hse.pe.presentation.content.ContentFragment
 import ru.hse.pe.presentation.shop.ShopFragment
 
 /**
  * Main [Activity]. All fragments will be added on top of it.
- * Created by Kocharyan Tigran on 04.03.2022.
+ * Created by Kocharyan Tigran on 04.03.2023.
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    private val sharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.supportActionBar?.hide()
+        sharedViewModel.setUid(intent.getStringExtra(LoginFragment.EXTRA_AUTH_DATA) ?: "")
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()

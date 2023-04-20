@@ -64,17 +64,24 @@ interface ApiService {
      * Method calls API to get the user data from DB
      */
     @GET(GET_USER)
-    fun getUser(): Single<UserEntity>
+    fun getUser(@Path("uid") uid: String): Single<UserEntity>
+
+    /**
+     * Method calls API to get the subscription unique temporary url
+     */
+    @GET(GET_SUBSCRIPTION_URL)
+    fun getSubscriptionUrl(@Path("uid") uid: String): Single<String>
 
     companion object {
-        private const val GET_ARTICLES = "articles"
-        private const val GET_TECHNIQUES = "techniques"
-        private const val GET_QUIZZES = "quizzes"
-        private const val GET_QUIZ_RESULT = "quiz/submit-answers"
-        private const val GET_COURSES = "courses"
-        private const val GET_RECOMMENDATIONS = "recommendations"
-        private const val GET_FACTS = "facts"
+        private const val GET_ARTICLES = "extapi/articles"
+        private const val GET_TECHNIQUES = "extapi/techniques"
+        private const val GET_QUIZZES = "extapi/quizzes"
+        private const val GET_QUIZ_RESULT = "extapi/quiz/submit-answers"
+        private const val GET_COURSES = "extapi/courses"
+        private const val GET_RECOMMENDATIONS = "extapi/recommendations"
+        private const val GET_FACTS = "extapi/facts"
         private const val GET_USER = ""
-        private const val ADD_USER = "user/add"
+        private const val GET_SUBSCRIPTION_URL = "payment/link_uid/{uid}"
+        private const val ADD_USER = "extapi/user/add"
     }
 }
