@@ -66,4 +66,12 @@ class ContentInteractor @Inject constructor(private val apiService: ApiService) 
      */
     fun getRecommendations(): Single<List<RecommendationEntity>> =
         apiService.getRecommendations()
+
+    /**
+     * Obtain unique subscription URL
+     *
+     * @return URL for subscription wrapper into Single
+     */
+    fun getSubscriptionUrl(uid: String): Single<String> =
+        apiService.getSubscriptionUrl(uid)
 }

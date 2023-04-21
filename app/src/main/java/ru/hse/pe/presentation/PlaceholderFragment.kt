@@ -4,11 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import ru.hse.pe.R
 import ru.hse.pe.databinding.FragmentPlaceholderBinding
-import ru.hse.pe.presentation.content.ContentFragment
 
 
 /**
@@ -33,20 +30,7 @@ class PlaceholderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).isBottomNavVisible(true)
         binding.buttonContent.setOnClickListener {
-            (activity as AppCompatActivity).supportFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(
-                    R.anim.slide_in,
-                    R.anim.fade_out,
-                    R.anim.pop_enter,
-                    R.anim.pop_exit
-                )
-                .replace(
-                    R.id.fragment_container,
-                    ContentFragment.newInstance(),
-                    ContentFragment.TAG
-                )
-                .commit()
+            (activity as MainActivity).setDefaultMenuItemSelected()
         }
     }
 

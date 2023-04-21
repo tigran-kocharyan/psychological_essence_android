@@ -6,15 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.firebase.auth.FirebaseAuth
 import ru.hse.pe.R
 import ru.hse.pe.databinding.FragmentAuthBinding
 
 class AuthFragment : Fragment() {
     private lateinit var binding: FragmentAuthBinding
     private lateinit var root: View
-
-    private var auth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +39,7 @@ class AuthFragment : Fragment() {
                 R.anim.pop_exit
             )
             .addToBackStack(null)
-            .add(R.id.fragment_container, LoginFragment.newInstance(), LoginFragment.TAG)
+            .replace(R.id.fragment_container, LoginFragment.newInstance(), LoginFragment.TAG)
             .commit()
     }
 
@@ -56,7 +53,7 @@ class AuthFragment : Fragment() {
                 R.anim.pop_exit
             )
             .addToBackStack(null)
-            .add(R.id.fragment_container, RegisterFragment.newInstance(), RegisterFragment.TAG)
+            .replace(R.id.fragment_container, RegisterFragment.newInstance(), RegisterFragment.TAG)
             .commit()
     }
 

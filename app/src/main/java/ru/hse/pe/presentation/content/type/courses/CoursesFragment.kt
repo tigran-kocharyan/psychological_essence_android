@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.viewbinding.BindableItem
@@ -20,12 +19,13 @@ import ru.hse.pe.databinding.FragmentCoursesBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.domain.model.CourseEntity
+import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.CourseBigItem
+import ru.hse.pe.presentation.content.item.CourseItem
+import ru.hse.pe.presentation.content.type.courses.sheet.CoursePreviewFragment
 import ru.hse.pe.presentation.content.type.test.ui.TestsFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
-import ru.hse.pe.presentation.content.item.CourseItem
-import ru.hse.pe.presentation.content.type.courses.sheet.CoursePreviewFragment
 import ru.hse.pe.utils.callback.ContentClickListener
 import ru.hse.pe.utils.container.HorizontalContentContainer
 import ru.hse.pe.utils.container.VerticalContentContainer
@@ -89,7 +89,7 @@ class CoursesFragment : Fragment() {
 
     private fun showError(throwable: Throwable) {
         Log.d(TestsFragment.TAG, "showError() called with: throwable = $throwable")
-        Snackbar.make(binding.root, throwable.toString(), BaseTransientBottomBar.LENGTH_SHORT)
+        Snackbar.make(binding.root, throwable.toString(), Snackbar.LENGTH_SHORT)
             .show()
     }
 

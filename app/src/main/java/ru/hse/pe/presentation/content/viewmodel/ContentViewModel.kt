@@ -27,6 +27,7 @@ class ContentViewModel(
     private val quizResultLiveData = MutableLiveData<QuizResultEntity>()
     private val courseLiveData = MutableLiveData<List<CourseEntity>>()
     private val lessonLiveData = MutableLiveData<LessonEntity>()
+    private val subscriptionUrlLiveData = MutableLiveData<String>()
     private val factsLiveData = MutableLiveData<List<FactEntity>>()
     private val errorLiveData = MutableLiveData<Throwable>()
 
@@ -56,7 +57,7 @@ class ContentViewModel(
             .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.ui())
-            .subscribe(articlesLiveData::setValue, errorLiveData::setValue)
+            .subscribe(techniquesLiveData::setValue, errorLiveData::setValue)
         )
     }
 
@@ -173,6 +174,20 @@ class ContentViewModel(
     }
 
     /**
+     * Скачать ссылку для покупки подписки
+     */
+    fun getSubscriptionUrl(uid: String) {
+        disposables.add(contentInteractor.getSubscriptionUrl(uid)
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
+            .doOnSubscribe { progressLiveData.postValue(true) }
+            .doAfterTerminate { progressLiveData.postValue(false) }
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(subscriptionUrlLiveData::setValue, errorLiveData::setValue)
+        )
+    }
+
+    /**
      * Method clears disposables.
      */
     override fun onCleared() {
@@ -220,6 +235,9 @@ class ContentViewModel(
 
     fun getFactsLiveData(): MutableLiveData<List<FactEntity>> =
         factsLiveData
+
+    fun getSubscriptionUrlLiveData(): MutableLiveData<String> =
+        subscriptionUrlLiveData
 
     companion object {
         private const val TAG = "ContentViewModel"

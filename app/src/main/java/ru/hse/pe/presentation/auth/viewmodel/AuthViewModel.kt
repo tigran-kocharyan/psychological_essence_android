@@ -25,6 +25,9 @@ class AuthViewModel(
     private val _errorLiveData = MutableLiveData<Throwable>()
     val errorLiveData: LiveData<Throwable> get() = _errorLiveData
 
+    private val _userLiveData = MutableLiveData<UserEntity>()
+    val userLiveData: LiveData<UserEntity> get() = _userLiveData
+
 
     private val disposables = CompositeDisposable()
 
@@ -36,6 +39,17 @@ class AuthViewModel(
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.ui())
             .subscribe({}, _errorLiveData::setValue)
+        )
+    }
+
+    fun getUser(uid: String) {
+        disposables.add(authInteractor.getUser(uid)
+            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .doOnSubscribe { _progressLiveData.postValue(true) }
+            .doAfterTerminate { _progressLiveData.postValue(false) }
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(_userLiveData::setValue, _errorLiveData::setValue)
         )
     }
 

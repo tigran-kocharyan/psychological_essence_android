@@ -220,7 +220,7 @@ class RegisterFragment : Fragment() {
 //
 //    private fun showError(throwable: Throwable) {
 //        Log.d(ArticlesFragment.TAG, "showError() called with: throwable = $throwable")
-//        Snackbar.make(binding.root, throwable.toString(), BaseTransientBottomBar.LENGTH_SHORT)
+//        Snackbar.make(binding.root, throwable.toString(), Snackbar.LENGTH_SHORT)
 //            .show()
 //    }
 

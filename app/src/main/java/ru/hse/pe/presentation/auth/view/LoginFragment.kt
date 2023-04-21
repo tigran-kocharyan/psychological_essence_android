@@ -7,13 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import ru.hse.pe.R
-import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentLoginBinding
-import ru.hse.pe.domain.model.UserEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
@@ -28,8 +25,6 @@ class LoginFragment : Fragment() {
     private lateinit var root: View
 
     private var auth = FirebaseAuth.getInstance()
-
-    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,8 +66,8 @@ class LoginFragment : Fragment() {
             .addOnSuccessListener { result ->
                 result.user?.let { user ->
                     if (user.isEmailVerified) {
-                        sharedViewModel.setUser(UserEntity(uid = user.uid))
                         val intent = Intent(activity, MainActivity::class.java)
+                        intent.putExtra(EXTRA_AUTH_DATA, user.uid)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                     } else {
@@ -141,6 +136,7 @@ class LoginFragment : Fragment() {
 
     companion object {
         const val TAG = "LoginFragment"
+        const val EXTRA_AUTH_DATA = "LoginFragment"
 
         /**
          * Получение объекта [LoginFragment]

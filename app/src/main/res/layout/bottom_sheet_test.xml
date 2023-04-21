@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="com.google.android.material.BottomSheet"
     android:id="@+id/container">
 
     <androidx.core.widget.NestedScrollView
@@ -25,37 +25,44 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/top_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/close"
                     android:layout_width="44dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_close" />
+                    android:layout_height="44dp"
+                    android:layout_marginVertical="3dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_close"
+                    app:layout_constraintBottom_toBottomOf="@id/name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/name" />
 
                 <TextView
                     android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="12dp"
+                    android:layout_marginEnd="60dp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/montserrat_semibold"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:lineSpacingExtra="6sp"
-                    android:text="Пример"
-                    android:textColor="@color/blackLight"
-                    android:textSize="20sp" />
+                    android:maxLines="1"
+                    android:textColor="#22272f"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/close"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Прокачай себя вместе с нами" />
 
-                <ImageView
-                    android:id="@+id/share"
-                    android:layout_width="44dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_close" />
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/image"

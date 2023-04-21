@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import ru.hse.pe.domain.model.*
 
 class SharedViewModel : ViewModel() {
-    private var _user = MutableLiveData<UserEntity>(null)
+    private var _uid = MutableLiveData<String>(null)
     private var _article = MutableLiveData<ArticleEntity?>(null)
     private var _fact = MutableLiveData<FactEntity?>(null)
     private var _quiz = MutableLiveData<QuizEntity?>(null)
@@ -14,8 +14,7 @@ class SharedViewModel : ViewModel() {
     private var _lesson = MutableLiveData<LessonEntity?>(null)
     private var _recommendation = MutableLiveData<RecommendationEntity?>(null)
 
-
-    val user: LiveData<UserEntity> = _user
+    val uid: LiveData<String> = _uid
     var article: LiveData<ArticleEntity?> = _article
     var recommendation: LiveData<RecommendationEntity?> = _recommendation
     var fact: LiveData<FactEntity?> = _fact
@@ -23,8 +22,8 @@ class SharedViewModel : ViewModel() {
     var course: LiveData<CourseEntity?> = _course
     var lesson: LiveData<LessonEntity?> = _lesson
 
-    fun setUser(user: UserEntity) {
-        _user.value = user
+    fun setUid(uid: String) {
+        _uid.value = uid
     }
 
     fun setArticle(article: ArticleEntity) {

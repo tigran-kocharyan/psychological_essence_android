@@ -12,7 +12,6 @@ import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
 import ru.hse.pe.presentation.content.type.technique.TechniquesFragment
-import ru.hse.pe.presentation.content.type.courses.CoursesFragment
 import ru.hse.pe.presentation.content.type.test.ui.TestsFragment
 
 /**
@@ -29,6 +28,7 @@ class ContentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentContentBinding.inflate(inflater, container, false)
+        (activity as MainActivity).isBottomNavVisible(true)
         return binding.root
     }
 
@@ -76,7 +76,7 @@ class ContentFragment : Fragment() {
                 R.anim.pop_enter,
                 R.anim.pop_exit
             )
-            .add(R.id.fragment_container, fragment, tag)
+            .replace(R.id.fragment_container, fragment, tag)
             .addToBackStack(null)
             .commit()
 
