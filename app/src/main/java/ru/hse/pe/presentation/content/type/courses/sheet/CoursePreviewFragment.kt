@@ -1,7 +1,7 @@
 package ru.hse.pe.presentation.content.type.courses.sheet
 
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +12,17 @@ import coil.transform.RoundedCornersTransformation
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.viewbinding.BindableItem
+import io.noties.markwon.AbstractMarkwonPlugin
+import io.noties.markwon.Markwon
+import io.noties.markwon.SoftBreakAddsNewLinePlugin
+import io.noties.markwon.core.MarkwonTheme
+import io.noties.markwon.image.ImagesPlugin
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.BottomSheetCourseBinding
 import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.domain.model.CourseEntity
 import ru.hse.pe.domain.model.LessonEntity
-import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.LessonItem
 import ru.hse.pe.presentation.content.type.courses.lesson.LessonFragment
 import ru.hse.pe.utils.callback.ContentClickListener
@@ -83,8 +87,7 @@ class CoursePreviewFragment : BottomSheetDialogFragment() {
             }
             title.text = course.name
             countLessons.text = course.lessonsCount.toString() + " модулей"
-            description.text = course.description
-
+            showMarkdown(course.description)
             val lessons = listOf(getLessons(course))
             listLessons.adapter = GroupieAdapter().apply { addAll(lessons) }
 
@@ -100,6 +103,27 @@ class CoursePreviewFragment : BottomSheetDialogFragment() {
             close.setOnClickListener {
                 dismiss()
             }
+        }
+    }
+
+    // парсим описание
+    private fun showMarkdown(text: String?) {
+        context?.let { context ->
+            val markwon = Markwon.builder(context)
+                .usePlugin(object : AbstractMarkwonPlugin() {
+                    override fun configureTheme(builder: MarkwonTheme.Builder) {
+                        builder
+                            .codeTextColor(Color.BLACK)
+                            .codeBackgroundColor(Color.GREEN)
+                            .headingTextSizeMultipliers(MULTIPLIERS)
+                            .headingBreakHeight(0)
+                            .linkColor(Color.parseColor(LINK_COLOR))
+                    }
+                })
+                .usePlugin(SoftBreakAddsNewLinePlugin.create())
+                .usePlugin(ImagesPlugin.create())
+                .build()
+            markwon.setMarkdown(binding.description, text ?: "")
         }
     }
 
@@ -134,6 +158,8 @@ class CoursePreviewFragment : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "CoursePreviewFragment"
+        private val MULTIPLIERS = floatArrayOf(1.5F, 1.17F, 1F, 1F, .83F, .67F)
+        private val LINK_COLOR = "#6766D8"
 
         /**
          * Получение объекта [CoursePreviewFragment]

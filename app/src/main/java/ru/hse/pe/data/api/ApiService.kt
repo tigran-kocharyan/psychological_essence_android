@@ -93,7 +93,7 @@ interface ApiService {
     companion object {
         private const val GET_QUIZ = "extapi/quizzes/id/{id}"
         private const val GET_SHORT_COURSES = "extapi/courses/fast"
-        private const val GET_LESSON = "lessons/id/{id}"
+        private const val GET_LESSON = "extapi/lessons/id/{id}"
         private const val GET_COURSES = "extapi/courses"
         private const val GET_ARTICLES = "extapi/articles"
         private const val GET_TECHNIQUES = "extapi/techniques"

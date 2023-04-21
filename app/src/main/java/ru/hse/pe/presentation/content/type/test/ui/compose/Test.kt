@@ -167,7 +167,10 @@ fun CardItem() {
             .fillMaxSize()
             .padding(top = 32.dp, end = 27.dp, bottom = 20.dp),
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+        ) {
             CreateTopPartCard()
             CreateAnswersCard()
         }
@@ -185,9 +188,9 @@ fun CreateTopPartCard() {
     ) {
         Text(
             text = if (Test.counterQ.value in 1..9) {
-                "0${Test.counterQ.value}/"
+                "0${Test.counterQ.value} / "
             } else {
-                "${Test.counterQ.value}/"
+                "${Test.counterQ.value} / "
             },
             style = TextStyle(
                 fontWeight = FontWeight.SemiBold,
@@ -225,7 +228,7 @@ fun CreateTopPartCard() {
     Text(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp, bottom = 35.dp, start = 40.dp),
+            .padding(top = 16.dp, bottom = 15.dp, start = 40.dp),
         text = Test.questions[Test.counter.value - 1],
         style = MaterialTheme.typography.subtitle1
     )
@@ -281,12 +284,42 @@ fun MultipleAnswers() {
             }
 
             items(Test.answers[Test.counter.value]!!.size) { index ->
-                val checkedState = remember { mutableStateOf(false) }
+                val isChecked = remember { mutableStateOf(false) }
 
                 onOptionSelected(onOptionSelectedKeys[index])
                 Row(
                     modifier = Modifier
-                        .padding(bottom = 30.dp),
+                        .padding(bottom = 30.dp)
+//                        .selectable(
+//                            selected = Test.multipleAnswers[Test.counter.value][index] != "",
+//                            onClick = {
+//                                Log.d("checkcheck", Test.multipleAnswers[Test.counter.value][index])
+//                                // Добавляем ответ в список
+//                                isChecked.value = true
+//                                if (!isChecked.value) {
+//                                    Test.multipleAnswers[Test.counter.value][index] = ""
+//                                    isChecked.value = true
+//                                } else {
+//                                    Test.multipleAnswers[Test.counter.value][index] =
+//                                        Test.answers[Test.counter.value]?.get(index).toString()
+//                                    isChecked.value = false
+//                                }
+//
+//                                if (!Test.answersBoolean[Test.counter.value]) {
+//                                    Test.counterQ.value++
+//                                    if (Test.progress.value < 1.0f) Test.progress.value += diff
+//                                    Test.answersBoolean[Test.counter.value] = true
+//
+//                                    if (isFinish()) {
+//                                        Test.toggleBtn.value = true
+//                                    }
+//                                }
+//
+//                                Test.userAnswers[Test.counter.value] =
+//                                    Test.multipleAnswers[Test.counter.value]
+//                            }
+//                        ),
+                    ,
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -298,9 +331,9 @@ fun MultipleAnswers() {
                         Checkbox(
                             checked = Test.multipleAnswers[Test.counter.value][index] != "",
                             onCheckedChange = {
-                                checkedState.value = it
+                                isChecked.value = it
                                 // Добавляем ответ в список
-                                if (!checkedState.value) {
+                                if (!isChecked.value) {
                                     Test.multipleAnswers[Test.counter.value][index] = ""
                                 } else {
                                     Test.multipleAnswers[Test.counter.value][index] =
@@ -322,8 +355,7 @@ fun MultipleAnswers() {
                             },
                             modifier = Modifier.padding(5.dp),
                             colors = CheckboxDefaults.colors(
-                                checkedColor = Color(0xff, 0xb6, 0xc1),
-                                checkmarkColor = Color.Red
+                                checkedColor = Color(R.color.purple),
                             )
                         )
                     }
@@ -497,7 +529,7 @@ fun OrdinaryAnswers() {
                 onOptionSelected(onOptionSelectedKeys[index])
                 Row(
                     modifier = Modifier
-                        .padding(bottom = 30.dp)
+                        .fillMaxWidth()
                         .selectable(
                             selected = (Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value]),
                             onClick = {
@@ -519,9 +551,10 @@ fun OrdinaryAnswers() {
                                     }
                                 }
                             }
-                        ),
+
+                        )
+                        .padding(bottom = 15.dp, top = 15.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
                 ) {
                     Box(
                         modifier = Modifier
