@@ -63,6 +63,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun setDefaultMenuItemSelected() {
+        bottom_nav.selectedItemId = R.id.content
+    }
+
     private fun setCurrentFragment(fragment: Fragment, tag: String) =
         supportFragmentManager
             .beginTransaction()

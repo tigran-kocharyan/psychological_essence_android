@@ -17,7 +17,7 @@ class TestItem(
     override fun bind(binding: HolderTestBinding, position: Int) {
         binding.name.text = test.name
         val description = test.description?.split("Инструкция:")?.get(0)
-        binding.desc.text = description
+        binding.description.text = description
         binding.countQuestions.text = "${test.questions.size} вопроса"
         binding.time.text = "Время прохождения: ${test.time} минут"
 

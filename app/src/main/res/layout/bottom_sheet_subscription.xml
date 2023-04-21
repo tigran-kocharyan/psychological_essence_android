@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:fillViewport="true"
     android:orientation="vertical"
-    app:layout_behavior="com.google.android.material.BottomSheet"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 

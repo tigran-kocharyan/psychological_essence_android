@@ -59,7 +59,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/category"
@@ -74,13 +74,13 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:layout_marginTop="4dp"
                     android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:lineSpacingExtra="3.6sp"
                     android:textColor="@color/blackLight"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textStyle="normal"
                     tools:text="Время чтения: 6 мин" />
 
