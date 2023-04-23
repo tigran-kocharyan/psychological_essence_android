@@ -23,8 +23,10 @@ class ContentViewModel(
     private val articlesLiveData = MutableLiveData<List<ArticleEntity>>()
     private val techniquesLiveData = MutableLiveData<List<ArticleEntity>>()
     private val quizzesLiveData = MutableLiveData<List<QuizEntity>>()
+    private val quizLiveData = MutableLiveData<QuizEntity>()
     private val quizResultLiveData = MutableLiveData<QuizResultEntity>()
     private val courseLiveData = MutableLiveData<List<CourseEntity>>()
+    private val lessonLiveData = MutableLiveData<LessonEntity>()
     private val subscriptionUrlLiveData = MutableLiveData<String>()
     private val factsLiveData = MutableLiveData<List<FactEntity>>()
     private val errorLiveData = MutableLiveData<Throwable>()
@@ -74,6 +76,20 @@ class ContentViewModel(
     }
 
     /**
+     * Скачать тест из БД
+     */
+    fun getQuiz(id: String) {
+        disposables.add(contentInteractor.getQuiz(id)
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
+            .doOnSubscribe { progressLiveData.postValue(true) }
+            .doAfterTerminate { progressLiveData.postValue(false) }
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(quizLiveData::setValue, errorLiveData::setValue)
+        )
+    }
+
+    /**
      * Получить результат прохождения теста для отображения
      */
     fun getQuizResult(answers: QuizAnswerEntity) {
@@ -88,7 +104,7 @@ class ContentViewModel(
     }
 
     /**
-     * Скачать курсы из БД
+     * Скачать курсы из БД (вместе с уроками)
      */
     fun getCourses() {
         disposables.add(contentInteractor.getCourses()
@@ -98,6 +114,34 @@ class ContentViewModel(
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.ui())
             .subscribe(courseLiveData::setValue, errorLiveData::setValue)
+        )
+    }
+
+    /**
+     * Скачать курсы из БД (без уроков)
+     */
+    fun getShortCourses() {
+        disposables.add(contentInteractor.getFastCourses()
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
+            .doOnSubscribe { progressLiveData.postValue(true) }
+            .doAfterTerminate { progressLiveData.postValue(false) }
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(courseLiveData::setValue, errorLiveData::setValue)
+        )
+    }
+
+    /**
+     * Скачать урок из БД
+     */
+    fun getLesson(id: String) {
+        disposables.add(contentInteractor.getLesson(id)
+            .observeOn(schedulers.io()).subscribeOn(schedulers.io())
+            .doOnSubscribe { progressLiveData.postValue(true) }
+            .doAfterTerminate { progressLiveData.postValue(false) }
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(lessonLiveData::setValue, errorLiveData::setValue)
         )
     }
 
@@ -167,6 +211,10 @@ class ContentViewModel(
     fun getArticlesLiveData(): MutableLiveData<List<ArticleEntity>> =
         articlesLiveData
 
+
+    fun getQuizLiveData(): MutableLiveData<QuizEntity> =
+        quizLiveData
+        
     fun getTechniquesLiveData(): MutableLiveData<List<ArticleEntity>> =
         techniquesLiveData
 
@@ -178,6 +226,9 @@ class ContentViewModel(
 
     fun getCourseLiveData(): MutableLiveData<List<CourseEntity>> =
         courseLiveData
+
+    fun getLessonLiveData(): MutableLiveData<LessonEntity> =
+        lessonLiveData
 
     fun getRecommendationsLiveData(): MutableLiveData<List<RecommendationEntity>> =
         recommendationsLiveData

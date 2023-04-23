@@ -43,7 +43,6 @@ class TestPreviewFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as MainActivity).isBottomNavVisible(false)
         parseDescription(sharedViewModel.quiz.value?.description)
         setContent()
     }

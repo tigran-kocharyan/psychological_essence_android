@@ -18,6 +18,7 @@ class ContentInteractor @Inject constructor(private val apiService: ApiService) 
      * @return List<QuizEntity> wrapped into Single flow
      */
     fun getQuizzes(): Single<List<QuizEntity>> = apiService.getQuizzes()
+    fun getQuiz(id: String): Single<QuizEntity> = apiService.getQuiz(id)
 
     /**
      * Obtain quiz result from server data store
@@ -34,6 +35,8 @@ class ContentInteractor @Inject constructor(private val apiService: ApiService) 
      * @return List<CourseEntity> wrapped into Single flow
      */
     fun getCourses(): Single<List<CourseEntity>> = apiService.getCourses()
+    fun getFastCourses(): Single<List<CourseEntity>> = apiService.getShortCourses()
+    fun getLesson(id: String): Single<LessonEntity> = apiService.getLesson(id)
 
     /**
      * Obtain articles from server data store

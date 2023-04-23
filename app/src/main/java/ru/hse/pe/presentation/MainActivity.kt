@@ -11,6 +11,8 @@ import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.ActivityMainBinding
 import ru.hse.pe.presentation.auth.view.LoginFragment
 import ru.hse.pe.presentation.content.ContentFragment
+import ru.hse.pe.presentation.content.type.courses.CoursesFragment
+import ru.hse.pe.presentation.shop.ShopFragment
 import ru.hse.pe.presentation.shop.SubscriptionFragment
 
 /**
@@ -47,7 +49,10 @@ class MainActivity : AppCompatActivity() {
                     PlaceholderFragment.newInstance(),
                     PlaceholderFragment.TAG
                 )
-                R.id.course -> {}
+                R.id.course -> setCurrentFragment(
+                    CoursesFragment.newInstance(),
+                    CoursesFragment.TAG
+                )
             }
             true
         }

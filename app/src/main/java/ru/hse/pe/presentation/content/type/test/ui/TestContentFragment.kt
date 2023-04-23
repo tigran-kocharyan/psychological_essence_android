@@ -6,16 +6,10 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import ru.hse.pe.App
 import ru.hse.pe.SharedViewModel
-import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.presentation.content.type.test.ui.compose.Test
 import ru.hse.pe.presentation.content.type.test.utils.theme.TestTheme
-import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
-import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
-import ru.hse.pe.utils.scheduler.SchedulersProvider
-import javax.inject.Inject
 
 
 class TestContentFragment : Fragment() {
@@ -26,6 +20,7 @@ class TestContentFragment : Fragment() {
         (activity?.applicationContext as App).getAppComponent().inject(this)
     }
 
+    // Загружаем compose
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

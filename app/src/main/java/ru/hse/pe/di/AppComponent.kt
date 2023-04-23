@@ -9,6 +9,7 @@ import ru.hse.pe.presentation.auth.view.RegisterFragment
 import ru.hse.pe.presentation.content.ContentFragment
 import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
 import ru.hse.pe.presentation.content.type.courses.CoursesFragment
+import ru.hse.pe.presentation.content.type.courses.lesson.LessonFragment
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
 import ru.hse.pe.presentation.content.type.technique.TechniquesFragment
@@ -39,6 +40,7 @@ interface AppComponent {
     fun inject(fragment: TestContentFragment)
     fun inject(fragment: TestResultFragment)
     fun inject(fragment: CoursesFragment)
+    fun inject(fragment: LessonFragment)
     fun inject(fragment: RecommendationsFragment)
     fun inject(fragment: ArticlesFragment)
     fun inject(fragment: TechniquesFragment)

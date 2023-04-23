@@ -78,6 +78,7 @@ dependencies {
     implementation 'com.github.mukeshsolanki:MarkdownView-Android:2.0.0'
     implementation "io.noties.markwon:core:4.6.2"
     implementation "io.noties.markwon:image:4.6.2"
+    implementation "io.noties.markwon:ext-tables:4.6.2"
 
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-database:20.0.0'
@@ -148,6 +149,10 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.11'
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
+    // ComposeReorderable
+    implementation("org.burnoutcrew.composereorderable:reorderable:0.9.6")
+
+
     // Basic
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -155,6 +160,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

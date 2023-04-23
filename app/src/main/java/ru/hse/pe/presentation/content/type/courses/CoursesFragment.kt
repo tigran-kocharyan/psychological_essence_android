@@ -67,8 +67,7 @@ class CoursesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLiveData()
-        viewModel.getCourses()
-        (activity as MainActivity).isBottomNavVisible(false)
+        viewModel.getShortCourses()
     }
 
     private var clickListener = object : ContentClickListener {

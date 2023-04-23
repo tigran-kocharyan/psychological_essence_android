@@ -19,6 +19,12 @@ interface ApiService {
     fun getQuizzes(): Single<List<QuizEntity>>
 
     /**
+     * Method calls API to get the quiz from DB
+     */
+    @GET(GET_QUIZ)
+    fun getQuiz(@Path("id") id: String) : Single<QuizEntity>
+
+    /**
      * Method calls API to get the quizzes result data from DB
      */
     @POST(GET_QUIZ_RESULT)
@@ -29,6 +35,18 @@ interface ApiService {
      */
     @GET(GET_COURSES)
     fun getCourses(): Single<List<CourseEntity>>
+
+    /**
+     * Method calls API to get the courses without lessons data from DB
+     */
+    @GET(GET_SHORT_COURSES)
+    fun getShortCourses(): Single<List<CourseEntity>>
+
+    /**
+     * Method calls API to get the lesson from DB
+     */
+    @GET(GET_LESSON)
+    fun getLesson(@Path("id") id: String) : Single<LessonEntity>
 
     /**
      * Method calls API to get the articles data from DB
@@ -73,11 +91,14 @@ interface ApiService {
     fun getSubscriptionUrl(@Path("uid") uid: String): Single<String>
 
     companion object {
+        private const val GET_QUIZ = "extapi/quizzes/id/{id}"
+        private const val GET_SHORT_COURSES = "extapi/courses/fast"
+        private const val GET_LESSON = "extapi/lessons/id/{id}"
+        private const val GET_COURSES = "extapi/courses"
         private const val GET_ARTICLES = "extapi/articles"
         private const val GET_TECHNIQUES = "extapi/techniques"
         private const val GET_QUIZZES = "extapi/quizzes"
         private const val GET_QUIZ_RESULT = "extapi/quiz/submit-answers"
-        private const val GET_COURSES = "extapi/courses"
         private const val GET_RECOMMENDATIONS = "extapi/recommendations"
         private const val GET_FACTS = "extapi/facts"
         private const val GET_USER = ""

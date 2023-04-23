@@ -14,7 +14,9 @@ data class CourseEntity(
     @SerializedName("description") val description: String? = "",
     @SerializedName("duration") val duration: String? = "",
     @SerializedName("image_url") val imageUrl: String? = "",
-    @SerializedName("lessons") val lessons: List<LessonEntity> = emptyList(),
+    @SerializedName("lessons_count") val lessonsCount: Int? = 0,
+    @SerializedName("lessons_ids") val lessonsIds: List<Int>? = emptyList(),
+    @SerializedName("lessons_names") val lessonsNames: List<String>? = emptyList(),
     @SerializedName("views") val views: Int? = 0,
     @SerializedName("likes") val likes: Int? = 0,
     @SerializedName("needs_subscription") val requiresSubscription: Boolean = false

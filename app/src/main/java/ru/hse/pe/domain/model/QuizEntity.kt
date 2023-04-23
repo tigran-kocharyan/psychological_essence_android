@@ -15,6 +15,7 @@ data class QuizEntity(
     @SerializedName("description") val description: String? = "",
     @SerializedName("time") val time: String? = "",
     @SerializedName("questions") val questions: List<String> = emptyList(),
+    @SerializedName("questions_metadata") val quizMetaData: Map<Int, QuizMetaDataEntity> ?= mapOf(),
     @SerializedName("answers") val answers: List<List<String>> = emptyList(),
     @SerializedName("views") val views: Int? = 0,
     @SerializedName("likes") val likes: Int? = 0,
@@ -25,6 +26,12 @@ data class QuizEntity(
 /**
  * Entity for quiz answer
  */
+@Parcelize
+data class QuizMetaDataEntity(
+    val categories: List<String> ?= emptyList(),
+    val multiple_answers: Boolean ?= false
+): Parcelable, ContentEntity
+
 @Parcelize
 data class QuizAnswerEntity(
     @SerializedName("quiz_id") val quiz_id: Int? = 0,
