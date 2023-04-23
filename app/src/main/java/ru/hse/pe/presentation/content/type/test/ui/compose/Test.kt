@@ -16,11 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.burnoutcrew.reorderable.*
@@ -30,6 +32,10 @@ import ru.hse.pe.domain.model.QuizMetaDataEntity
 import ru.hse.pe.presentation.content.type.test.ui.TestResultFragment
 import ru.hse.pe.utils.Utils
 
+
+/*
+* Здесь подготавливаются к отображению данные с сервера
+*/
 @Composable
 fun Test(
     sharedViewModel: SharedViewModel,
@@ -158,7 +164,9 @@ fun Test(
     }
 }
 
-
+/*
+* Показывается сам вопрос и варианты ответа
+*/
 @Composable
 fun CardItem() {
     Card(
@@ -167,16 +175,23 @@ fun CardItem() {
             .fillMaxSize()
             .padding(top = 32.dp, end = 27.dp, bottom = 20.dp),
     ) {
-        Column(
+        LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
+            modifier = Modifier.height(LocalConfiguration.current.screenHeightDp.dp)
         ) {
-            CreateTopPartCard()
-            CreateAnswersCard()
+            item {
+                CreateTopPartCard()
+                CreateAnswersCard()
+            }
+
         }
     }
 }
 
+/*
+* Показывается верхняя часть вопроса:
+* кол-во вопросов, индикатор прогресса и сам вопрос
+*/
 @Composable
 fun CreateTopPartCard() {
     Row(
@@ -234,7 +249,9 @@ fun CreateTopPartCard() {
     )
 }
 
-
+/*
+* Показываются варианты ответов:
+*/
 @Composable
 fun CreateAnswersCard() {
     val counter = Test.counter.value - 1
@@ -260,121 +277,103 @@ fun CreateAnswersCard() {
     }
 }
 
+/*
+* Варианты ответов со множественным выбором
+*/
 @Composable
 fun MultipleAnswers() {
-    Column(
-        Modifier
-            .selectableGroup(), horizontalAlignment = Alignment.Start
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(0) }
+    LazyColumn(
+        modifier = Modifier
+            .selectableGroup()
+            .fillMaxWidth()
+            .padding(bottom = 40.dp, start = 40.dp)
+            .heightIn(max = 3000.dp),
+        horizontalAlignment = Alignment.Start
     ) {
-        val (selectedOption, onOptionSelected) = remember { mutableStateOf(0) }
-
-        LazyColumn(
-            modifier = Modifier
-                .selectableGroup()
-                .fillMaxWidth()
-                .padding(bottom = 40.dp, start = 40.dp)
-                .weight(1f),
-
-            horizontalAlignment = Alignment.Start
-        ) {
-            val diff = 1.0 / Test.maxCounter.value
-            val onOptionSelectedKeys = mutableListOf<Int>()
-            for (i in 0 until Test.answers[Test.counter.value]?.size!!) {
-                onOptionSelectedKeys.add(i)
-            }
-
-            items(Test.answers[Test.counter.value]!!.size) { index ->
-                val isChecked = remember { mutableStateOf(false) }
-
-                onOptionSelected(onOptionSelectedKeys[index])
-                Row(
+        val diff = 1.0 / Test.maxCounter.value
+        val onOptionSelectedKeys = mutableListOf<Int>()
+        for (i in 0 until Test.answers[Test.counter.value]?.size!!) {
+            onOptionSelectedKeys.add(i)
+        }
+        items(Test.answers[Test.counter.value]!!.size) { index ->
+            val isChecked =
+                remember { mutableStateOf(Test.multipleAnswers[Test.counter.value][index] != "") }
+            onOptionSelected(onOptionSelectedKeys[index])
+            Row(
+                modifier = Modifier
+                    .padding(bottom = 30.dp)
+                    .selectable(
+                        selected = Test.multipleAnswers[Test.counter.value][index] != "",
+                        onClick = {
+                            onClickMultipleAnswers(index, diff, isChecked)
+                        }
+                    ),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Box(
                     modifier = Modifier
-                        .padding(bottom = 30.dp)
-//                        .selectable(
-//                            selected = Test.multipleAnswers[Test.counter.value][index] != "",
-//                            onClick = {
-//                                Log.d("checkcheck", Test.multipleAnswers[Test.counter.value][index])
-//                                // Добавляем ответ в список
-//                                isChecked.value = true
-//                                if (!isChecked.value) {
-//                                    Test.multipleAnswers[Test.counter.value][index] = ""
-//                                    isChecked.value = true
-//                                } else {
-//                                    Test.multipleAnswers[Test.counter.value][index] =
-//                                        Test.answers[Test.counter.value]?.get(index).toString()
-//                                    isChecked.value = false
-//                                }
-//
-//                                if (!Test.answersBoolean[Test.counter.value]) {
-//                                    Test.counterQ.value++
-//                                    if (Test.progress.value < 1.0f) Test.progress.value += diff
-//                                    Test.answersBoolean[Test.counter.value] = true
-//
-//                                    if (isFinish()) {
-//                                        Test.toggleBtn.value = true
-//                                    }
-//                                }
-//
-//                                Test.userAnswers[Test.counter.value] =
-//                                    Test.multipleAnswers[Test.counter.value]
-//                            }
-//                        ),
-                    ,
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                        .width(20.dp)
+                        .height(20.dp)
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .width(20.dp)
-                            .height(20.dp)
-                    ) {
-                        Checkbox(
-                            checked = Test.multipleAnswers[Test.counter.value][index] != "",
-                            onCheckedChange = {
-                                isChecked.value = it
-                                // Добавляем ответ в список
-                                if (!isChecked.value) {
-                                    Test.multipleAnswers[Test.counter.value][index] = ""
-                                } else {
-                                    Test.multipleAnswers[Test.counter.value][index] =
-                                        Test.answers[Test.counter.value]?.get(index).toString()
-                                }
-
-                                if (!Test.answersBoolean[Test.counter.value]) {
-                                    Test.counterQ.value++
-                                    if (Test.progress.value < 1.0f) Test.progress.value += diff
-                                    Test.answersBoolean[Test.counter.value] = true
-
-                                    if (isFinish()) {
-                                        Test.toggleBtn.value = true
-                                    }
-                                }
-
-                                Test.userAnswers[Test.counter.value] =
-                                    Test.multipleAnswers[Test.counter.value]
-                            },
-                            modifier = Modifier.padding(5.dp),
-                            colors = CheckboxDefaults.colors(
-                                checkedColor = Color(R.color.purple),
-                            )
+                    Checkbox(
+                        checked = Test.multipleAnswers[Test.counter.value][index] != "",
+                        onCheckedChange = {
+                            onClickMultipleAnswers(index, diff, isChecked)
+                        },
+                        modifier = Modifier.padding(5.dp),
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = Color(R.color.purple),
                         )
-                    }
-
-                    Text(
-                        text = Test.answers[Test.counter.value]?.get(index).toString(),
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 22.dp),
-                        style = MaterialTheme.typography.subtitle2
                     )
                 }
+
+                Text(
+                    text = Test.answers[Test.counter.value]?.get(index).toString(),
+                    fontSize = 13.sp,
+                    modifier = Modifier.padding(start = 22.dp),
+                    style = MaterialTheme.typography.subtitle2
+                )
             }
         }
-        CreateBtnCard()
     }
+    CreateBtnCard()
+
 }
 
-data class ItemData(val title: String, val key: String, val isLocked: Boolean = false)
+/*
+* Обработка нажатия на вопрос со множественным выбором
+*/
+fun onClickMultipleAnswers(index: Int, diff: Double, isChecked: MutableState<Boolean>) {
+    if (isChecked.value) {
+        Test.multipleAnswers[Test.counter.value][index] = ""
+        isChecked.value = false
+    } else {
+        Test.multipleAnswers[Test.counter.value][index] =
+            Test.answers[Test.counter.value]
+                ?.get(index)
+                .toString()
+        isChecked.value = true
+    }
 
+    if (!Test.answersBoolean[Test.counter.value]) {
+        Test.counterQ.value++
+        if (Test.progress.value < 1.0f) Test.progress.value += diff
+        Test.answersBoolean[Test.counter.value] = true
+
+        if (isFinish()) {
+            Test.toggleBtn.value = true
+        }
+    }
+
+    Test.userAnswers[Test.counter.value] =
+        Test.multipleAnswers[Test.counter.value]
+}
+
+/*
+* Варианты ответов с dragAndDrop
+*/
 @Composable
 fun DragAndDrop(categories: List<String>) {
     var values = mutableListOf<ItemData>()
@@ -437,155 +436,153 @@ fun DragAndDrop(categories: List<String>) {
             }
         }
     )
-    Column(
-        Modifier
-            .selectableGroup(), horizontalAlignment = Alignment.Start
+
+    LazyColumn(
+        state = state.listState,
+        modifier = Modifier
+            .reorderable(state)
+            .detectReorderAfterLongPress(state)
+            .fillMaxWidth()
+            .padding(bottom = 40.dp, start = 40.dp)
+            .heightIn(max = 2000.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        userScrollEnabled = false,
     ) {
-        LazyColumn(
-            state = state.listState,
-            modifier = Modifier
-                .reorderable(state)
-                .detectReorderAfterLongPress(state)
-                .fillMaxWidth()
-                .padding(bottom = 40.dp, start = 40.dp)
-                .weight(1f),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            items(Test.dragAndDropItems, { item -> item.key }) { item ->
-                ReorderableItem(state, item.key) { dragging ->
-                    if (item.isLocked) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = item.title,
-                                fontSize = 20.sp,
-                                modifier = Modifier.padding(bottom = 24.dp),
-                                style = MaterialTheme.typography.subtitle2
-                            )
-                        }
-                    } else if (item.key.contains("invisible")) {
-                        Card(
-                            shape = RoundedCornerShape(10.dp),
+        items(Test.dragAndDropItems, { item -> item.key }) { item ->
+            ReorderableItem(state, item.key) { dragging ->
+                if (item.isLocked) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = item.title,
+                            fontSize = 20.sp,
+                            modifier = Modifier.padding(bottom = 24.dp),
+                            style = MaterialTheme.typography.subtitle2
+                        )
+                    }
+                } else if (item.key.contains("invisible")) {
+                    Card(
+                        shape = RoundedCornerShape(10.dp),
+                        modifier = Modifier
+                            .alpha(0f)
+                            .height(0.dp),
+                    ) {
+                        Text(
+                            text = item.title,
+                            fontSize = 12.sp,
+                            style = MaterialTheme.typography.subtitle2,
                             modifier = Modifier
-                                .alpha(0f)
-                                .height(0.dp),
-                        ) {
-                            Text(
-                                text = item.title,
-                                fontSize = 12.sp,
-                                style = MaterialTheme.typography.subtitle2,
-                                modifier = Modifier
-                                    .background(colorResource(id = R.color.purpleTransparent))
-                            )
-                        }
-                    } else {
-                        Card(
-                            shape = RoundedCornerShape(10.dp),
-                        ) {
-                            Text(
-                                text = item.title,
-                                fontSize = 12.sp,
-                                style = MaterialTheme.typography.subtitle2,
-                                modifier = Modifier
-                                    .background(colorResource(id = R.color.purpleTransparent))
-                                    .padding(start = 16.dp, end = 16.dp, top = 7.dp, bottom = 7.dp),
-                            )
-                        }
+                                .background(colorResource(id = R.color.purpleTransparent))
+                        )
+                    }
+                } else {
+                    Card(
+                        shape = RoundedCornerShape(10.dp),
+                    ) {
+                        Text(
+                            text = item.title,
+                            fontSize = 12.sp,
+                            style = MaterialTheme.typography.subtitle2,
+                            modifier = Modifier
+                                .background(colorResource(id = R.color.purpleTransparent))
+                                .padding(start = 16.dp, end = 16.dp, top = 7.dp, bottom = 7.dp),
+                        )
                     }
                 }
             }
         }
-        CreateBtnCard()
     }
+    CreateBtnCard()
 }
 
+// Разрешено ли перетаскивать элементы в dragAndDrop
+// Категорию - нет, варианты ответов - да
 fun isDragEnabled(draggedOver: ItemPosition, data: List<ItemData>) =
     data.getOrNull(draggedOver.index)?.isLocked != true
 
+/*
+* Варианты ответов с одиночным выбором
+*/
 @Composable
 fun OrdinaryAnswers() {
-    Column(
-        Modifier
-            .selectableGroup(), horizontalAlignment = Alignment.Start
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(0) }
+    LazyColumn(
+        modifier = Modifier
+            .selectableGroup()
+            .fillMaxWidth()
+            .padding(bottom = 40.dp, start = 40.dp)
+            .heightIn(max = 2000.dp),
+        horizontalAlignment = Alignment.Start
     ) {
-        val (selectedOption, onOptionSelected) = remember { mutableStateOf(0) }
-        LazyColumn(
-            modifier = Modifier
-                .selectableGroup()
-                .fillMaxWidth()
-                .padding(bottom = 40.dp, start = 40.dp)
-                .weight(1f),
-
-            horizontalAlignment = Alignment.Start
-        ) {
-            val diff = 1.0 / Test.maxCounter.value
-            val onOptionSelectedKeys = mutableListOf<Int>()
-            for (i in 0 until Test.answers[Test.counter.value]?.size!!) {
-                onOptionSelectedKeys.add(i)
-            }
-
-            items(Test.answers[Test.counter.value]!!.size) { index ->
-                onOptionSelected(onOptionSelectedKeys[index])
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .selectable(
-                            selected = (Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value]),
-                            onClick = {
-                                Test.answersPoint[Test.counter.value] =
-                                    Test.answers.keys.toList()[index]
-
-                                Test.userAnswers[Test.counter.value] =
-                                    Test.answers[Test.counter.value]
-                                        ?.get(index)
-                                        .toString()
-
-                                if (!Test.answersBoolean[Test.counter.value]) {
-                                    Test.counterQ.value++
-                                    if (Test.progress.value < 1.0f) Test.progress.value += diff
-                                    Test.answersBoolean[Test.counter.value] = true
-
-                                    if (isFinish()) {
-                                        Test.toggleBtn.value = true
-                                    }
-                                }
-                            }
-
-                        )
-                        .padding(bottom = 15.dp, top = 15.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .width(20.dp)
-                            .height(20.dp)
-                    ) {
-                        RadioButton(
-                            selected = (Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value]),
-                            onClick = null,
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            colors = RadioButtonDefaults
-                                .colors(selectedColor = Color(R.color.purple))
-                        )
-                    }
-
-                    Text(
-                        text = Test.answers[Test.counter.value]?.get(index).toString(),
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 22.dp),
-                        style = MaterialTheme.typography.subtitle2
-                    )
-                }
-            }
+        val diff = 1.0 / Test.maxCounter.value
+        val onOptionSelectedKeys = mutableListOf<Int>()
+        for (i in 0 until Test.answers[Test.counter.value]?.size!!) {
+            onOptionSelectedKeys.add(i)
         }
 
-        CreateBtnCard()
+        items(Test.answers[Test.counter.value]!!.size) { index ->
+            onOptionSelected(onOptionSelectedKeys[index])
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .selectable(
+                        selected = (Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value]),
+                        onClick = {
+                            Test.answersPoint[Test.counter.value] =
+                                Test.answers.keys.toList()[index]
+
+                            Test.userAnswers[Test.counter.value] =
+                                Test.answers[Test.counter.value]
+                                    ?.get(index)
+                                    .toString()
+
+                            if (!Test.answersBoolean[Test.counter.value]) {
+                                Test.counterQ.value++
+                                if (Test.progress.value < 1.0f) Test.progress.value += diff
+                                Test.answersBoolean[Test.counter.value] = true
+
+                                if (isFinish()) {
+                                    Test.toggleBtn.value = true
+                                }
+                            }
+                        }
+
+                    )
+                    .padding(bottom = 15.dp, top = 15.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Box(
+                    modifier = Modifier
+                        .width(20.dp)
+                        .height(20.dp)
+                ) {
+                    RadioButton(
+                        selected = (Test.answers.keys.toList()[index] == Test.answersPoint[Test.counter.value]),
+                        onClick = null,
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        colors = RadioButtonDefaults
+                            .colors(selectedColor = Color(R.color.purple))
+                    )
+                }
+
+                Text(
+                    text = Test.answers[Test.counter.value]?.get(index).toString(),
+                    fontSize = 13.sp,
+                    modifier = Modifier.padding(start = 22.dp),
+                    style = MaterialTheme.typography.subtitle2
+                )
+            }
+        }
     }
+
+    CreateBtnCard()
 }
 
-
+/*
+* Показываются кнопки завершить, следующий, предыдущий
+*/
 @Composable
 fun CreateBtnCard() {
     Row(
@@ -598,7 +595,8 @@ fun CreateBtnCard() {
         val context = LocalContext.current
         Button(
             onClick = {
-                if (!Test.answersBoolean[Test.counter.value]) {
+                val counterMultipleAnswer = checkMultipleAnswers()
+                if (!Test.answersBoolean[Test.counter.value] || counterMultipleAnswer == 0) {
                     Toast.makeText(
                         context,
                         "Выберите вариант ответа или нажмите кнопку пропустить",
@@ -688,7 +686,7 @@ fun CreateBtnCard() {
                     contentColor = Color.White
                 )
         ) {
-            Text(text = stringResource(id = R.string.finishBtn))
+            Text(text = stringResource(id = R.string.finishBtn), textAlign = TextAlign.Center)
         }
     }
     Row(
@@ -727,9 +725,8 @@ fun checkMultipleAnswers(): Int {
         counterMultipleAnswer = 0
         for (multipleAnswer in Test.userAnswers[Test.counter.value] as MutableList<*>) {
             if (multipleAnswer != null) {
-                if (multipleAnswer == "") {
+                if (multipleAnswer != "") {
                     counterMultipleAnswer++
-                } else {
                     tempMultipleAnswersItems.add(multipleAnswer as String)
                 }
             }
@@ -783,7 +780,6 @@ fun checkDragAndDrop() {
 fun validateTest() {
     Test.userAnswers.removeAt(0)
     val userAnswersCopied = mutableListOf<Any>()
-
     // Убираю пустые значения в множественном выборе
     for (userAnswer in Test.userAnswers) {
         if (userAnswer is HashMap<*, *>) {
@@ -863,9 +859,11 @@ fun validateTest() {
                 Test.userAnswersString.add(userAnswer.toString())
             }
         }
-
     }
 }
+
+// вариант ответа или категория в dragAndDrop
+data class ItemData(val title: String, val key: String, val isLocked: Boolean = false)
 
 // Специальный объект для доступа к переменным из любого места программы
 object Test {
@@ -889,4 +887,3 @@ object Test {
     lateinit var dragAndDropAnswers: HashMap<Int, HashMap<String, MutableList<String>>>
     lateinit var dragAndDropAnswersData: HashMap<Int, MutableList<ItemData>>
 }
-

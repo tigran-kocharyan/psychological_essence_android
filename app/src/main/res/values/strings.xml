@@ -113,7 +113,7 @@
     <string name="backBtn">Предыдущий</string>
     <string name="nextBtn">Следующий</string>
     <string name="skipBtn">Пропустить вопрос</string>
-    <string name="finishBtn">Завершить тест</string>
+    <string name="finishBtn">Завершить</string>
     <string name="results">Результаты</string>
     <string name="listTests">К списку тестов</string>
     <string name="startTest">Пройти тест</string>

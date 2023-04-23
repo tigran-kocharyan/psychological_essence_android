@@ -127,6 +127,7 @@ class CoursePreviewFragment : BottomSheetDialogFragment() {
         }
     }
 
+    // Показываем все уроки
     private fun getLessons(course: CourseEntity): BindableItem<*> {
         lessonList = mutableListOf()
         for (i in 0 until course.lessonsCount!!) {

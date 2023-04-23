@@ -17,6 +17,8 @@ import com.google.android.material.snackbar.Snackbar
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.core.MarkwonTheme
+import io.noties.markwon.ext.tables.TablePlugin
+import io.noties.markwon.ext.tables.TableTheme
 import io.noties.markwon.image.ImagesPlugin
 import ru.hse.pe.App
 import ru.hse.pe.R
@@ -32,6 +34,9 @@ import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
 import ru.hse.pe.utils.scheduler.SchedulersProvider
 import javax.inject.Inject
 
+/*
+* Урок из курса
+*/
 class LessonFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
@@ -78,7 +83,7 @@ class LessonFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
     }
 
-
+    // Показываем контент
     private fun showLesson(lesson: LessonEntity) {
         binding.title.text = lesson.name
         showMarkdown(lesson.content)
@@ -117,7 +122,6 @@ class LessonFragment : Fragment() {
     }
 
     private fun showQuiz(quiz: QuizEntity) {
-        Log.d("questionsMetaData", quiz.quizMetaData.toString())
         sharedViewModel.setQuiz(quiz)
 
         (activity as AppCompatActivity).supportFragmentManager
@@ -156,6 +160,7 @@ class LessonFragment : Fragment() {
                     }
                 })
                 .usePlugin(ImagesPlugin.create())
+                .usePlugin(TablePlugin.create(tableTheme))
                 .build()
             markwon.setMarkdown(binding.markdownLesson, text ?: "")
         }
@@ -165,6 +170,16 @@ class LessonFragment : Fragment() {
         const val TAG = "LessonFragment"
         private val MULTIPLIERS = floatArrayOf(1.5F, 1.17F, 1F, 1F, .83F, .67F)
         private val LINK_COLOR = "#6766D8"
+
+        // дизайн таблицы (если есть)
+        private val tableTheme = TableTheme.Builder()
+            .tableBorderColor(Color.BLUE)
+            .tableBorderWidth(0)
+            .tableCellPadding(0)
+            .tableHeaderRowBackgroundColor(Color.BLACK)
+            .tableEvenRowBackgroundColor(Color.GREEN)
+            .tableOddRowBackgroundColor(Color.YELLOW)
+            .build()
 
         /**
          * Получение объекта [LessonFragment]

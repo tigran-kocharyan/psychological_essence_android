@@ -19,7 +19,6 @@ import ru.hse.pe.databinding.FragmentTestsBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.domain.model.QuizEntity
-import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.SpecialTestItem
 import ru.hse.pe.presentation.content.item.TestItem
 import ru.hse.pe.presentation.content.type.test.ui.sheet.TestPreviewFragment
@@ -105,6 +104,7 @@ class TestsFragment : Fragment() {
         )
     }
 
+    // берем абсолютно все тесты
     private fun getQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
         return VerticalContentContainer(
             getString(R.string.tests),
