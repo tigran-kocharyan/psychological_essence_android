@@ -17,7 +17,6 @@ import ru.hse.pe.App
 import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.BottomSheetTestBinding
-import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.type.test.ui.TestContentFragment
 import ru.hse.pe.utils.Utils.setCommonAnimations
 

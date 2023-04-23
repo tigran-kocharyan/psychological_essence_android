@@ -12,7 +12,7 @@ import ru.hse.pe.utils.callback.ContentClickListener
 class CourseBigItem(
     private val course: CourseEntity,
     private val clickListener: ContentClickListener,
-) : BindableItem<HolderBigCourseBinding>(){
+) : BindableItem<HolderBigCourseBinding>() {
 
     override fun bind(binding: HolderBigCourseBinding, position: Int) {
         binding.name.text = course.name

@@ -30,7 +30,7 @@ fun TestTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable (
         colors = colors,
         typography = typography,
         shapes = Shapes,
-    ){
+    ) {
         content()
     }
 }

@@ -5,9 +5,9 @@
     android:id="@+id/main_content_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="24dp"
     android:background="#FFFFFF"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp">
 
     <TextView
         android:id="@+id/title"

@@ -20,7 +20,7 @@ class AuthActivity : AppCompatActivity() {
                 .beginTransaction()
                 .setCommonAnimations()
                 .add(R.id.fragment_container, AuthFragment.newInstance(), AuthFragment.TAG)
-                    .commit()
+                .commit()
         }
     }
 }

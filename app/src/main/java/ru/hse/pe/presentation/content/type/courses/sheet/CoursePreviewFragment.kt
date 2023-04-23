@@ -92,7 +92,7 @@ class CoursePreviewFragment : BottomSheetDialogFragment() {
             listLessons.adapter = GroupieAdapter().apply { addAll(lessons) }
 
             start.setOnClickListener {
-                clickListener.onContentClick(lessonList[0],0)
+                clickListener.onContentClick(lessonList[0], 0)
                 setCurrentFragment(
                     LessonFragment.newInstance(),
                     LessonFragment.TAG

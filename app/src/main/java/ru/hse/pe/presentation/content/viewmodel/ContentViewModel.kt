@@ -214,7 +214,7 @@ class ContentViewModel(
 
     fun getQuizLiveData(): MutableLiveData<QuizEntity> =
         quizLiveData
-        
+
     fun getTechniquesLiveData(): MutableLiveData<List<ArticleEntity>> =
         techniquesLiveData
 

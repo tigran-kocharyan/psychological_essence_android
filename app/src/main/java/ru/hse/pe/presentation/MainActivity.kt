@@ -12,7 +12,6 @@ import ru.hse.pe.databinding.ActivityMainBinding
 import ru.hse.pe.presentation.auth.view.LoginFragment
 import ru.hse.pe.presentation.content.ContentFragment
 import ru.hse.pe.presentation.content.type.courses.CoursesFragment
-import ru.hse.pe.presentation.shop.ShopFragment
 import ru.hse.pe.presentation.shop.SubscriptionFragment
 
 /**

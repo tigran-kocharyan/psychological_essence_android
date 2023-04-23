@@ -281,12 +281,12 @@
                         app:layout_constraintTop_toTopOf="@id/accept" />
 
                     <TextView
-                        android:clickable="true"
-                        android:textColor="@color/purple"
                         android:id="@+id/accept"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
                         android:text="@string/register_terms"
+                        android:textColor="@color/purple"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/accept_checkbox"
@@ -316,9 +316,9 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fill_info"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fill_info">
 
         <TextView
             style="@style/AppTheme.Text.InputTitle"

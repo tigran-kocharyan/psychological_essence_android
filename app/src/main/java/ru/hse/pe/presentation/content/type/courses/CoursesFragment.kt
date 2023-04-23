@@ -19,7 +19,6 @@ import ru.hse.pe.databinding.FragmentCoursesBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.domain.model.CourseEntity
-import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.CourseBigItem
 import ru.hse.pe.presentation.content.item.CourseItem
 import ru.hse.pe.presentation.content.type.courses.sheet.CoursePreviewFragment

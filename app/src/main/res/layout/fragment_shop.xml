@@ -40,18 +40,18 @@
 
 
         <androidx.cardview.widget.CardView
-            android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true"
             android:id="@+id/subscription"
             android:layout_width="match_parent"
             android:layout_height="170dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             app:layout_constraintTop_toTopOf="parent"
             card_view:cardCornerRadius="10dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/banner_shop"/>
+                android:background="@drawable/banner_shop" />
 
         </androidx.cardview.widget.CardView>
     </androidx.appcompat.widget.LinearLayoutCompat>

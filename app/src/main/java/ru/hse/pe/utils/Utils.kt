@@ -30,9 +30,11 @@ object Utils {
 
     fun EditText.value() = this.text.toString()
 
-    fun getSnackbar(view: View, message: String) = Snackbar.make(view, message, Snackbar.LENGTH_SHORT).setMaxLines(5)
+    fun getSnackbar(view: View, message: String) =
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).setMaxLines(5)
 
-    fun getLongSnackbar(view: View, message: String) = Snackbar.make(view, message, Snackbar.LENGTH_LONG).setMaxLines(5)
+    fun getLongSnackbar(view: View, message: String) =
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).setMaxLines(5)
 
     fun Snackbar.setMaxLines(lines: Int): Snackbar = apply {
         view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).apply {
@@ -80,7 +82,7 @@ object Utils {
                 verticalAlignment = Alignment.CenterVertically
             )
             {
-                if(arrow) {
+                if (arrow) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_arrow_back),
                         contentDescription = "arrowLeft"

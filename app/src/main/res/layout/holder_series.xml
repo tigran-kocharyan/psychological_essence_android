@@ -21,17 +21,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ellipsize="marquee"
-        android:scrollHorizontally="true"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="start|top"
         android:lineSpacingExtra="4.8sp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
         android:textColor="#22272f"
         android:textSize="16sp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toTopOf="parent"
-        android:singleLine="true"
         tools:text="ПациентыПациентыПациентыПациенты" />
 
     <TextView

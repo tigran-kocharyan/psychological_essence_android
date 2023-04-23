@@ -22,7 +22,7 @@ interface ApiService {
      * Method calls API to get the quiz from DB
      */
     @GET(GET_QUIZ)
-    fun getQuiz(@Path("id") id: String) : Single<QuizEntity>
+    fun getQuiz(@Path("id") id: String): Single<QuizEntity>
 
     /**
      * Method calls API to get the quizzes result data from DB
@@ -46,7 +46,7 @@ interface ApiService {
      * Method calls API to get the lesson from DB
      */
     @GET(GET_LESSON)
-    fun getLesson(@Path("id") id: String) : Single<LessonEntity>
+    fun getLesson(@Path("id") id: String): Single<LessonEntity>
 
     /**
      * Method calls API to get the articles data from DB
