@@ -26,6 +26,7 @@ import ru.hse.pe.presentation.content.item.MovieItem
 import ru.hse.pe.presentation.content.item.SeriesItem
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
+import ru.hse.pe.utils.Utils.setCommonAnimations
 import ru.hse.pe.utils.callback.ContentClickListener
 import ru.hse.pe.utils.container.HorizontalContentContainer
 import ru.hse.pe.utils.container.VerticalContentContainer
@@ -55,12 +56,7 @@ class RecommendationsFragment : Fragment() {
                 sharedViewModel.setRecommendation(content)
                 (activity as AppCompatActivity).supportFragmentManager
                     .beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_in,
-                        R.anim.fade_out,
-                        R.anim.pop_enter,
-                        R.anim.pop_exit
-                    )
+                    .setCommonAnimations()
                     .addToBackStack(null)
                     .add(R.id.fragment_container, RecommendationFragment.newInstance(), TAG)
                     .commit()
@@ -74,12 +70,7 @@ class RecommendationsFragment : Fragment() {
                 sharedViewModel.setRecommendation(content)
                 (activity as AppCompatActivity).supportFragmentManager
                     .beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_in,
-                        R.anim.fade_out,
-                        R.anim.pop_enter,
-                        R.anim.pop_exit
-                    )
+                    .setCommonAnimations()
                     .addToBackStack(null)
                     .add(R.id.fragment_container, BookFragment.newInstance(), TAG)
                     .commit()

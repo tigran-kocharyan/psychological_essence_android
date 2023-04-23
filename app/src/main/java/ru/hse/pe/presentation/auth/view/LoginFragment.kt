@@ -15,6 +15,7 @@ import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
 import ru.hse.pe.utils.Utils.isInvalid
+import ru.hse.pe.utils.Utils.setCommonAnimations
 import ru.hse.pe.utils.Utils.setVisible
 import ru.hse.pe.utils.Utils.validateEmail
 import ru.hse.pe.utils.Utils.value
@@ -87,12 +88,7 @@ class LoginFragment : Fragment() {
     private fun resetPassword() {
         (activity as AppCompatActivity).supportFragmentManager
             .beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.fade_out,
-                R.anim.pop_enter,
-                R.anim.pop_exit
-            )
+            .setCommonAnimations()
             .addToBackStack(null)
             .add(
                 R.id.fragment_container,
@@ -105,12 +101,7 @@ class LoginFragment : Fragment() {
     private fun registerUser() {
         (activity as AppCompatActivity).supportFragmentManager
             .beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.fade_out,
-                R.anim.pop_enter,
-                R.anim.pop_exit
-            )
+            .setCommonAnimations()
             .addToBackStack(null)
             .add(R.id.fragment_container, RegisterFragment.newInstance(), RegisterFragment.TAG)
             .commit()

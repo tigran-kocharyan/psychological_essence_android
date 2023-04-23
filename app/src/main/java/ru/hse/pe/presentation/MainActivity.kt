@@ -11,7 +11,7 @@ import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.ActivityMainBinding
 import ru.hse.pe.presentation.auth.view.LoginFragment
 import ru.hse.pe.presentation.content.ContentFragment
-import ru.hse.pe.presentation.shop.ShopFragment
+import ru.hse.pe.presentation.shop.SubscriptionFragment
 
 /**
  * Main [Activity]. All fragments will be added on top of it.
@@ -39,7 +39,10 @@ class MainActivity : AppCompatActivity() {
                     ContentFragment.newInstance(),
                     ContentFragment.TAG
                 )
-                R.id.shop -> setCurrentFragment(ShopFragment.newInstance(), ContentFragment.TAG)
+                R.id.shop -> setCurrentFragment(
+                    SubscriptionFragment.newInstance(),
+                    SubscriptionFragment.TAG
+                )
                 R.id.profile -> setCurrentFragment(
                     PlaceholderFragment.newInstance(),
                     PlaceholderFragment.TAG
@@ -63,11 +66,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setDefaultMenuItemSelected() {
-        bottom_nav.selectedItemId = R.id.content
+    fun setDefaultMenuItemSelected(id: Int) {
+        bottom_nav.selectedItemId = id
     }
 
-    private fun setCurrentFragment(fragment: Fragment, tag: String) =
+    fun setCurrentFragment(fragment: Fragment, tag: String) =
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment, tag)

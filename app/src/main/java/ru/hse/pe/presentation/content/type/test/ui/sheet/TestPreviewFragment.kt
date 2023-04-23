@@ -19,6 +19,7 @@ import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.BottomSheetTestBinding
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.type.test.ui.TestContentFragment
+import ru.hse.pe.utils.Utils.setCommonAnimations
 
 
 class TestPreviewFragment : BottomSheetDialogFragment() {
@@ -60,12 +61,7 @@ class TestPreviewFragment : BottomSheetDialogFragment() {
             start.setOnClickListener {
                 (activity as AppCompatActivity).supportFragmentManager
                     .beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_in,
-                        R.anim.fade_out,
-                        R.anim.pop_enter,
-                        R.anim.pop_exit
-                    )
+                    .setCommonAnimations()
                     .add(
                         R.id.fragment_container, TestContentFragment.newInstance(),
                         TestContentFragment.TAG

@@ -28,6 +28,7 @@ import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.presentation.content.type.test.ui.TestResultFragment
 import ru.hse.pe.utils.Utils
+import ru.hse.pe.utils.Utils.setCommonAnimations
 
 @Composable
 fun Test(
@@ -309,12 +310,7 @@ fun CreateBtnCard() {
             onClick = {
                 activity.supportFragmentManager
                     .beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_in,
-                        R.anim.fade_out,
-                        R.anim.pop_enter,
-                        R.anim.pop_exit
-                    )
+                    .setCommonAnimations()
                     .addToBackStack(null)
                     .add(
                         R.id.fragment_container, TestResultFragment.newInstance(),
