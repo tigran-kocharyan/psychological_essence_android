@@ -13,5 +13,5 @@ data class FactEntity(
     @SerializedName("title") val title: String = "",
     @SerializedName("content") val content: String = "",
     @SerializedName("needs_subscription") val requiresSubscription: Boolean = false,
-    @SerializedName("image_url") val imageUrl: String = "",
+    @SerializedName("image_url") val imageUrl: String = ""
 ) : Parcelable, ContentEntity

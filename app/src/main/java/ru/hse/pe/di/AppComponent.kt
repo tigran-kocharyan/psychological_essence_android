@@ -18,6 +18,7 @@ import ru.hse.pe.presentation.content.type.test.ui.TestResultFragment
 import ru.hse.pe.presentation.content.type.test.ui.TestsFragment
 import ru.hse.pe.presentation.content.type.test.ui.sheet.TestPreviewFragment
 import ru.hse.pe.presentation.shop.SubscriptionBottomSheetDialogFragment
+import ru.hse.pe.presentation.shop.SubscriptionFragment
 import javax.inject.Singleton
 
 /**
@@ -45,6 +46,7 @@ interface AppComponent {
     fun inject(fragment: TechniquesFragment)
     fun inject(fragment: RegisterFragment)
     fun inject(fragment: SubscriptionBottomSheetDialogFragment)
+    fun inject(fragment: SubscriptionFragment)
 
     @Component.Builder
     interface Builder {

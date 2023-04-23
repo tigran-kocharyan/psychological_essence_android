@@ -7,6 +7,9 @@ import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.R
 import ru.hse.pe.databinding.ContainerVerticalListBinding
 
+/**
+ * Класс для универсального вертикального списка в groupie
+ */
 class VerticalContentContainer(
     private val title: String,
     private val items: List<BindableItem<*>>

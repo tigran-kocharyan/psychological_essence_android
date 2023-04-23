@@ -19,8 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import com.google.accompanist.systemuicontroller.SystemUiController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.snackbar.Snackbar
 import ru.hse.pe.R
 
@@ -42,18 +41,31 @@ object Utils {
         }
     }
 
-    fun AppCompatActivity.openFragment(holder: Int, fragment: Fragment){
+    fun AppCompatActivity.openFragment(holder: Int, fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(holder, fragment)
             .commit()
     }
 
-
+    /**
+     * Метод для установки вью в состоянии видимости = gone
+     */
     fun View.setGone() = run { this.visibility = View.GONE }
+
+    /**
+     * Метод для установки вью в состоянии видимости = visible
+     */
     fun View.setVisible() = run { this.visibility = View.VISIBLE }
+
+    /**
+     * Метод для установки вью в состоянии видимости = invisible
+     */
     fun View.setInvisible() = run { this.visibility = View.INVISIBLE }
 
+    /**
+     * Метод для установки топбара в компоузе
+     */
     @Composable
     fun MyTopAppBar(name: String, arrow: Boolean) {
         Card(
@@ -76,11 +88,13 @@ object Utils {
                 }
                 Text(
                     text = name,
-                    modifier = Modifier.padding(horizontal = 10.dp).fillMaxWidth(),
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.subtitle1
                 )
-                if(arrow) {
+                if (arrow) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_question),
                         contentDescription = "question"
@@ -89,4 +103,14 @@ object Utils {
             }
         }
     }
+
+    /**
+     * Метод для установки кастомной анимации перехода между фрагментами
+     */
+    fun FragmentTransaction.setCommonAnimations() = this.setCustomAnimations(
+        R.anim.slide_in,
+        R.anim.fade_out,
+        R.anim.pop_enter,
+        R.anim.pop_exit
+    )
 }

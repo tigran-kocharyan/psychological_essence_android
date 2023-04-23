@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import ru.hse.pe.R
 import ru.hse.pe.databinding.FragmentAuthBinding
+import ru.hse.pe.utils.Utils.setCommonAnimations
 
 class AuthFragment : Fragment() {
     private lateinit var binding: FragmentAuthBinding
@@ -32,12 +33,7 @@ class AuthFragment : Fragment() {
     private fun loginUser() {
         (activity as AppCompatActivity).supportFragmentManager
             .beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.fade_out,
-                R.anim.pop_enter,
-                R.anim.pop_exit
-            )
+            .setCommonAnimations()
             .addToBackStack(null)
             .replace(R.id.fragment_container, LoginFragment.newInstance(), LoginFragment.TAG)
             .commit()
@@ -46,12 +42,7 @@ class AuthFragment : Fragment() {
     private fun registerUser() {
         (activity as AppCompatActivity).supportFragmentManager
             .beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.fade_out,
-                R.anim.pop_enter,
-                R.anim.pop_exit
-            )
+            .setCommonAnimations()
             .addToBackStack(null)
             .replace(R.id.fragment_container, RegisterFragment.newInstance(), RegisterFragment.TAG)
             .commit()

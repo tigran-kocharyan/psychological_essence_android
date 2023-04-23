@@ -26,6 +26,7 @@ import ru.hse.pe.presentation.auth.viewmodel.AuthViewModel
 import ru.hse.pe.presentation.auth.viewmodel.AuthViewModelFactory
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.getSnackbar
+import ru.hse.pe.utils.Utils.setCommonAnimations
 import ru.hse.pe.utils.Utils.setGone
 import ru.hse.pe.utils.Utils.setVisible
 import ru.hse.pe.utils.Utils.validateEmail
@@ -176,12 +177,7 @@ class RegisterFragment : Fragment() {
     private fun openLogin() {
         (activity as AppCompatActivity).supportFragmentManager
             .beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.fade_out,
-                R.anim.pop_enter,
-                R.anim.pop_exit
-            )
+            .setCommonAnimations()
             .addToBackStack(null)
             .add(
                 R.id.fragment_container,

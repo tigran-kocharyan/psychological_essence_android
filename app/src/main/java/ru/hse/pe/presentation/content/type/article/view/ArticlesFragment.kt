@@ -24,6 +24,7 @@ import ru.hse.pe.presentation.content.item.ArticleItem
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
+import ru.hse.pe.utils.Utils.setCommonAnimations
 import ru.hse.pe.utils.callback.ContentClickListener
 import ru.hse.pe.utils.container.VerticalContentContainer
 import ru.hse.pe.utils.scheduler.SchedulersProvider
@@ -51,12 +52,7 @@ class ArticlesFragment : Fragment() {
                 sharedViewModel.setArticle(content)
                 (activity as AppCompatActivity).supportFragmentManager
                     .beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_in,
-                        R.anim.fade_out,
-                        R.anim.pop_enter,
-                        R.anim.pop_exit
-                    )
+                    .setCommonAnimations()
                     .addToBackStack(null)
                     .add(R.id.fragment_container, ArticleFragment.newInstance(), TAG)
                     .commit()

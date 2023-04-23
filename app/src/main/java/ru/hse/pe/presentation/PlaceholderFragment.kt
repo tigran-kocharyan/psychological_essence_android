@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import ru.hse.pe.R
 import ru.hse.pe.databinding.FragmentPlaceholderBinding
 
 
@@ -30,7 +31,7 @@ class PlaceholderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).isBottomNavVisible(true)
         binding.buttonContent.setOnClickListener {
-            (activity as MainActivity).setDefaultMenuItemSelected()
+            (activity as MainActivity).setDefaultMenuItemSelected(R.id.content)
         }
     }
 

@@ -13,6 +13,8 @@ import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
 import ru.hse.pe.presentation.content.type.technique.TechniquesFragment
 import ru.hse.pe.presentation.content.type.test.ui.TestsFragment
+import ru.hse.pe.presentation.shop.SubscriptionFragment
+import ru.hse.pe.utils.Utils.setCommonAnimations
 
 /**
  * [Fragment] to display the trending events.
@@ -65,26 +67,25 @@ class ContentFragment : Fragment() {
                 TechniquesFragment.TAG
             )
         }
+        binding.subscription.setOnClickListener {
+            (activity as MainActivity).setDefaultMenuItemSelected(R.id.shop)
+            (activity as MainActivity).setCurrentFragment(
+                SubscriptionFragment.newInstance(),
+                SubscriptionFragment.TAG
+            )
+        }
     }
 
     private fun setCurrentFragment(fragment: Fragment, tag: String) =
         parentFragmentManager
             .beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.fade_out,
-                R.anim.pop_enter,
-                R.anim.pop_exit
-            )
+            .setCommonAnimations()
             .replace(R.id.fragment_container, fragment, tag)
             .addToBackStack(null)
             .commit()
 
     companion object {
         const val TAG = "ContentFragment"
-        private const val TAG_ADD = "$TAG ADD"
-        private const val TAG_ERROR = "$TAG ERROR"
-        private const val TAG_PROGRESS = "$TAG PROGRESS"
 
         /**
          * Получение объекта [ContentFragment]

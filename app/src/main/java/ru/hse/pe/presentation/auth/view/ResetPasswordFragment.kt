@@ -37,7 +37,8 @@ class ResetPasswordFragment : Fragment() {
 
     private fun resetPassword() {
         when {
-            binding.emailInput.isInvalid() && binding.emailInput.text.toString().validateEmail() -> {
+            binding.emailInput.text?.isBlank() ?: true || binding.emailInput.isInvalid() || !binding.emailInput.text.toString()
+                .validateEmail() -> {
                 binding.emailInput.error = "Введите корректную почту"
                 binding.emailInput.requestFocus()
             }

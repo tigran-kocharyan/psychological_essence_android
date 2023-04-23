@@ -31,6 +31,7 @@ import ru.hse.pe.SharedViewModel
 import ru.hse.pe.domain.model.QuizMetaDataEntity
 import ru.hse.pe.presentation.content.type.test.ui.TestResultFragment
 import ru.hse.pe.utils.Utils
+import ru.hse.pe.utils.Utils.setCommonAnimations
 
 
 /*
@@ -663,12 +664,7 @@ fun CreateBtnCard() {
                 validateTest()
                 activity.supportFragmentManager
                     .beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_in,
-                        R.anim.fade_out,
-                        R.anim.pop_enter,
-                        R.anim.pop_exit
-                    )
+                    .setCommonAnimations()
                     .addToBackStack(null)
                     .add(
                         R.id.fragment_container, TestResultFragment.newInstance(),
