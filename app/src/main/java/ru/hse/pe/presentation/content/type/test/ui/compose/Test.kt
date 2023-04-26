@@ -384,7 +384,7 @@ fun DragAndDrop(categories: List<String>) {
             id++
 
             // Добавляю скрытый элемент, чтобы можно было вставить ответ между категориями
-            if (i < categories.size - 1) {
+            if (i < categories.size) {
                 values.add(ItemData("", "id${id}invisible", false))
                 id++
             }
