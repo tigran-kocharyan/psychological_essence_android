@@ -41,10 +41,10 @@
     <string name="startCourse">Начать курс</string>
     <string name="newCourses">Новинки</string>
     <string name="specCourses">Специально для вас</string>
+    <string name="contentCourses">Содержание курса</string>
     <string name="seeAll">Смотреть все</string>
     <string name="durationCourses">Длительность ${duration} месяца</string>
     <string name="goToTest">Перейти к тесту</string>
-    <string name="tempLorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam dictum nulla nullam. Lorem ipsum dolor sit amet, consectetur adipiscing</string>
     /* Реклама */
     <string name="develop">Прокачай себя вместе с нами всего за 99 ₽/мес.</string>
 
@@ -95,15 +95,6 @@
     <string name="tests_title">Тесты</string>
     <string name="tests_subtitle">Характер человека</string>
     <string name="test_close">Завершить</string>
-
-    /* Статьи */
-    <string name="articles_title">Статьи</string>
-    <string name="articles_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
-    <string name="articles_btn">Читать</string>
-    <string name="title_activity_test_part">TestPart</string>
-
-
-    /* Test*/
     <string name="tests">Тесты</string>
     <string name="test_back">Назад</string>
     <string name="test_go">Следующий вопрос</string>
@@ -120,4 +111,12 @@
     <string name="description">Описание</string>
     <string name="instruction">Инструкция</string>
     <string name="error">Отправить ответы повторно</string>
+
+    /* Статьи */
+    <string name="articles_title">Статьи</string>
+    <string name="articles_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="articles_btn">Читать</string>
+    <string name="title_activity_test_part">TestPart</string>
+
+
 </resources>

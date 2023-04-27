@@ -100,7 +100,7 @@ class CoursesFragment : Fragment() {
     // берем все курсы, которые будут в большой картинке
     private fun getBigCoursesItems(courses: List<CourseEntity>): BindableItem<*> {
         return HorizontalContentContainer(
-            "Специально для вас",
+            getString(R.string.specCourses),
             courses.map { CourseBigItem(it, clickListener) }
         )
     }
