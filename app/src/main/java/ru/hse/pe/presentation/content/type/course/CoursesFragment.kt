@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.content.type.courses
+package ru.hse.pe.presentation.content.type.course
 
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +21,7 @@ import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.domain.model.CourseEntity
 import ru.hse.pe.presentation.content.item.CourseBigItem
 import ru.hse.pe.presentation.content.item.CourseItem
-import ru.hse.pe.presentation.content.type.courses.sheet.CoursePreviewFragment
+import ru.hse.pe.presentation.content.type.course.sheet.CoursePreviewFragment
 import ru.hse.pe.presentation.content.type.test.ui.TestsFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
@@ -93,7 +93,8 @@ class CoursesFragment : Fragment() {
     }
 
     private fun showCourses(courses: List<CourseEntity>) {
-        val listTests = listOf(getBigCoursesItems(courses), getCoursesItems(courses))
+//        val listTests = listOf(getBigCoursesItems(courses), getCoursesItems(courses))
+        val listTests = listOf(getCoursesItems(courses))
         binding.coursesList.adapter = GroupieAdapter().apply { addAll(listTests) }
     }
 

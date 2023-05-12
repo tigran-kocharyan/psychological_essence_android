@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.content.type.courses.sheet
+package ru.hse.pe.presentation.content.type.course.sheet
 
 import android.graphics.Color
 import android.os.Bundle

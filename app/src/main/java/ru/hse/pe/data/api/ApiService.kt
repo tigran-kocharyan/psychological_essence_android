@@ -85,6 +85,21 @@ interface ApiService {
     fun getUser(@Path("uid") uid: String): Single<UserEntity>
 
     /**
+     * Method calls API to get the user data from DB
+     */
+    @GET(GET_USER_WITH_CREDENTIALS)
+    fun getUserWithCredentials(
+        @Path("email") email: String,
+        @Path("password") password: String
+    ): Single<UserEntity>
+
+    /**
+     * Method calls API to get the user data from DB
+     */
+    @GET(GET_USER_SUBSCRIPTION)
+    fun getUserSubscriptionStatus(@Path("uid") uid: String): Single<Boolean>
+
+    /**
      * Method calls API to get the subscription unique temporary url
      */
     @GET(GET_SUBSCRIPTION_URL)
@@ -102,6 +117,8 @@ interface ApiService {
         private const val GET_RECOMMENDATIONS = "extapi/recommendations"
         private const val GET_FACTS = "extapi/facts"
         private const val GET_USER = ""
+        private const val GET_USER_WITH_CREDENTIALS = "user/login"
+        private const val GET_USER_SUBSCRIPTION = "user/is_subscribed/{uid}"
         private const val GET_SUBSCRIPTION_URL = "payment/link_uid/{uid}"
         private const val ADD_USER = "extapi/user/add"
     }

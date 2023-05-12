@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.hse.pe.domain.interactor.AuthInteractor
+import ru.hse.pe.domain.model.SubscriptionStatusException
 import ru.hse.pe.domain.model.UserEntity
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.utils.scheduler.SchedulersProvider
@@ -27,6 +28,9 @@ class AuthViewModel(
 
     private val _userLiveData = MutableLiveData<UserEntity>()
     val userLiveData: LiveData<UserEntity> get() = _userLiveData
+
+    private val _isSubscribedLiveData = MutableLiveData<Boolean>()
+    val isSubscribedLiveData: LiveData<Boolean> get() = _isSubscribedLiveData
 
 
     private val disposables = CompositeDisposable()
@@ -50,6 +54,21 @@ class AuthViewModel(
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.ui())
             .subscribe(_userLiveData::setValue, _errorLiveData::setValue)
+        )
+    }
+
+    fun getUserSubscriptionStatus(uid: String) {
+        disposables.add(authInteractor.getUserSubscriptionStatus(uid)
+            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .doOnSubscribe { _progressLiveData.postValue(true) }
+            .doAfterTerminate { _progressLiveData.postValue(false) }
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(_isSubscribedLiveData::setValue) {
+                _errorLiveData.setValue(
+                    SubscriptionStatusException()
+                )
+            }
         )
     }
 

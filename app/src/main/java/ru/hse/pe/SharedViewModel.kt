@@ -7,6 +7,7 @@ import ru.hse.pe.domain.model.*
 
 class SharedViewModel : ViewModel() {
     private var _uid = MutableLiveData<String>(null)
+    private var _isSubscribed = MutableLiveData<Boolean>(false)
     private var _article = MutableLiveData<ArticleEntity?>(null)
     private var _fact = MutableLiveData<FactEntity?>(null)
     private var _quiz = MutableLiveData<QuizEntity?>(null)
@@ -15,6 +16,7 @@ class SharedViewModel : ViewModel() {
     private var _recommendation = MutableLiveData<RecommendationEntity?>(null)
 
     val uid: LiveData<String> = _uid
+    val isSubscribed: LiveData<Boolean> = _isSubscribed
     var article: LiveData<ArticleEntity?> = _article
     var recommendation: LiveData<RecommendationEntity?> = _recommendation
     var fact: LiveData<FactEntity?> = _fact
@@ -24,6 +26,10 @@ class SharedViewModel : ViewModel() {
 
     fun setUid(uid: String) {
         _uid.value = uid
+    }
+
+    fun setIsSubscribed(isSubscribed: Boolean) {
+        _isSubscribed.value = isSubscribed
     }
 
     fun setArticle(article: ArticleEntity) {

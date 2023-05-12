@@ -60,8 +60,10 @@ class TestPreviewFragment : BottomSheetDialogFragment() {
                 (activity as AppCompatActivity).supportFragmentManager
                     .beginTransaction()
                     .setCommonAnimations()
+                    .addToBackStack(null)
                     .add(
-                        R.id.fragment_container, TestContentFragment.newInstance(),
+                        R.id.fragment_container,
+                        TestContentFragment.newInstance(),
                         TestContentFragment.TAG
                     )
                     .commit()

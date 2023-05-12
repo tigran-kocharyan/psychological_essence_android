@@ -11,7 +11,7 @@ import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.ActivityMainBinding
 import ru.hse.pe.presentation.auth.view.LoginFragment
 import ru.hse.pe.presentation.content.ContentFragment
-import ru.hse.pe.presentation.content.type.courses.CoursesFragment
+import ru.hse.pe.presentation.content.type.course.CoursesFragment
 import ru.hse.pe.presentation.shop.SubscriptionFragment
 
 /**
@@ -27,7 +27,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.supportActionBar?.hide()
-        sharedViewModel.setUid(intent.getStringExtra(LoginFragment.EXTRA_AUTH_DATA) ?: "")
+        sharedViewModel.setUid(intent.getStringExtra(LoginFragment.EXTRA_AUTH_UID) ?: "")
+        sharedViewModel.setIsSubscribed(
+            intent.getBooleanExtra(
+                LoginFragment.EXTRA_AUTH_IS_SUBSCRIBED,
+                false
+            )
+        )
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
@@ -48,10 +54,12 @@ class MainActivity : AppCompatActivity() {
                     PlaceholderFragment.newInstance(),
                     PlaceholderFragment.TAG
                 )
-                R.id.course -> setCurrentFragment(
-                    CoursesFragment.newInstance(),
-                    CoursesFragment.TAG
-                )
+                R.id.course -> {
+                    setCurrentFragment(
+                        CoursesFragment.newInstance(),
+                        CoursesFragment.TAG
+                    )
+                }
             }
             true
         }

@@ -18,14 +18,17 @@ import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentRecommendationsBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
+import ru.hse.pe.domain.model.ArticleEntity
 import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.domain.model.RecommendationEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.BookItem
 import ru.hse.pe.presentation.content.item.MovieItem
 import ru.hse.pe.presentation.content.item.SeriesItem
+import ru.hse.pe.presentation.content.item.SubscriptionItem
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
+import ru.hse.pe.utils.Utils
 import ru.hse.pe.utils.Utils.setCommonAnimations
 import ru.hse.pe.utils.callback.ContentClickListener
 import ru.hse.pe.utils.container.HorizontalContentContainer
@@ -49,6 +52,15 @@ class RecommendationsFragment : Fragment() {
         )
     }
     private val sharedViewModel: SharedViewModel by activityViewModels()
+
+    private var subscriptionClickListener = object : ContentClickListener {
+        override fun onContentClick(content: ContentEntity, position: Int) {
+            if (content is ArticleEntity) {
+                Utils.getSnackbar(binding.root, "Данная рекомендация доступен только по подписке!")
+                    .show()
+            }
+        }
+    }
 
     private var clickListener = object : ContentClickListener {
         override fun onContentClick(content: ContentEntity, position: Int) {
@@ -111,11 +123,18 @@ class RecommendationsFragment : Fragment() {
     }
 
     private fun showRecommendations(recommendations: List<RecommendationEntity>) {
-        val categories = recommendations.groupBy { it.category }
-        val content = arrayListOf<BindableItem<*>>()
-        categories.forEach { entry ->
-            content.add(entry.key.getCategoryContent(entry.value))
+        val (subscription, free) = recommendations.partition { it.requiresSubscription }
+        val categories = free.groupBy { it.category }
+        val content = arrayListOf<BindableItem<*>>().apply {
+            add(Utils.getHorizontalCategory(
+                "Больше рекомендаций по подписке",
+                subscription
+            ) { SubscriptionItem(it, subscriptionClickListener) })
+            categories.forEach { entry ->
+                add(entry.key.getCategoryContent(entry.value))
+            }
         }
+
         binding.itemsContainer.adapter = GroupieAdapter().apply { addAll(content) }
     }
 

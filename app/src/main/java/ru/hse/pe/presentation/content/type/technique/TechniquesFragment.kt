@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.viewbinding.BindableItem
@@ -22,14 +21,14 @@ import ru.hse.pe.domain.model.ArticleEntity
 import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.ArticleItem
-import ru.hse.pe.presentation.content.item.TechniqueItem
+import ru.hse.pe.presentation.content.item.SubscriptionItem
 import ru.hse.pe.presentation.content.type.article.view.ArticleFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
 import ru.hse.pe.utils.Utils
+import ru.hse.pe.utils.Utils.getHorizontalCategory
 import ru.hse.pe.utils.Utils.setCommonAnimations
 import ru.hse.pe.utils.callback.ContentClickListener
-import ru.hse.pe.utils.container.HorizontalContentContainer
 import ru.hse.pe.utils.container.VerticalContentContainer
 import ru.hse.pe.utils.scheduler.SchedulersProvider
 import javax.inject.Inject
@@ -107,8 +106,6 @@ class TechniquesFragment : Fragment() {
     }
 
     private fun showTechniques(techniques: List<ArticleEntity>) {
-        binding.itemsContainer.adapter =
-            GroupieAdapter().apply { add(getTechniqueItems(techniques)) }
         val (subscription, free) = techniques.partition { it.requiresSubscription }
         val categories = free.groupBy { it.category }
         val content = arrayListOf<BindableItem<*>>()
@@ -116,7 +113,7 @@ class TechniquesFragment : Fragment() {
             getHorizontalCategory(
                 "Больше техник по подписке",
                 subscription
-            ) { TechniqueItem(it, subscriptionClickListener) })
+            ) { SubscriptionItem(it, subscriptionClickListener) })
         categories.forEach { entry ->
             content.add(entry.key.getCategoryContent(entry.value))
         }
@@ -137,13 +134,7 @@ class TechniquesFragment : Fragment() {
     }
 
     private fun String.getCategoryContent(list: List<ArticleEntity>): BindableItem<*> =
-        getHorizontalCategory(this, list) { TechniqueItem(it, clickListener) }
-
-    private fun <T : ViewBinding> getHorizontalCategory(
-        title: String,
-        items: List<ArticleEntity>,
-        cast: (ArticleEntity) -> BindableItem<T>
-    ) = HorizontalContentContainer(title, items.map(cast))
+        getHorizontalCategory(this, list) { SubscriptionItem(it, clickListener) }
 
     companion object {
         const val TAG = "TechniquesFragment"

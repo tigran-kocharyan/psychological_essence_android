@@ -21,9 +21,12 @@ import ru.hse.pe.domain.model.ArticleEntity
 import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.content.item.ArticleItem
+import ru.hse.pe.presentation.content.item.SubscriptionItem
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
+import ru.hse.pe.utils.Utils.getHorizontalCategory
+import ru.hse.pe.utils.Utils.getSnackbar
 import ru.hse.pe.utils.Utils.setCommonAnimations
 import ru.hse.pe.utils.callback.ContentClickListener
 import ru.hse.pe.utils.container.VerticalContentContainer
@@ -45,6 +48,15 @@ class ArticlesFragment : Fragment() {
         )
     }
     private val sharedViewModel: SharedViewModel by activityViewModels()
+
+    private var subscriptionClickListener = object : ContentClickListener {
+        override fun onContentClick(content: ContentEntity, position: Int) {
+            if (content is ArticleEntity) {
+                getSnackbar(binding.root, "Данная статья доступна только по подписке!")
+                    .show()
+            }
+        }
+    }
 
     private var clickListener = object : ContentClickListener {
         override fun onContentClick(content: ContentEntity, position: Int) {
@@ -93,7 +105,16 @@ class ArticlesFragment : Fragment() {
     }
 
     private fun showArticles(articles: List<ArticleEntity>) {
-        binding.itemsContainer.adapter = GroupieAdapter().apply { add(getArticleItems(articles)) }
+        val (subscription, free) = articles.partition { it.requiresSubscription }
+        val content = arrayListOf<BindableItem<*>>()
+        content.apply {
+            add(getHorizontalCategory(
+                "Больше статей по подписке",
+                subscription
+            ) { SubscriptionItem(it, subscriptionClickListener) })
+            add(getArticleItems(free))
+            binding.itemsContainer.adapter = GroupieAdapter().apply { addAll(content) }
+        }
     }
 
     private fun getArticleItems(articles: List<ArticleEntity>): BindableItem<*> {

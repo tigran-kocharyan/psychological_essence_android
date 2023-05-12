@@ -17,13 +17,16 @@ import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentTestsBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
+import ru.hse.pe.domain.model.ArticleEntity
 import ru.hse.pe.domain.model.ContentEntity
 import ru.hse.pe.domain.model.QuizEntity
 import ru.hse.pe.presentation.content.item.SpecialTestItem
+import ru.hse.pe.presentation.content.item.SubscriptionItem
 import ru.hse.pe.presentation.content.item.TestItem
 import ru.hse.pe.presentation.content.type.test.ui.sheet.TestPreviewFragment
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
+import ru.hse.pe.utils.Utils
 import ru.hse.pe.utils.callback.ContentClickListener
 import ru.hse.pe.utils.container.HorizontalContentContainer
 import ru.hse.pe.utils.container.VerticalContentContainer
@@ -46,6 +49,15 @@ class TestsFragment : Fragment() {
             schedulers,
             interactor
         )
+    }
+
+    private var subscriptionClickListener = object : ContentClickListener {
+        override fun onContentClick(content: ContentEntity, position: Int) {
+            if (content is ArticleEntity) {
+                Utils.getSnackbar(binding.root, "Данный тест доступен только по подписке!")
+                    .show()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,8 +104,20 @@ class TestsFragment : Fragment() {
     }
 
     private fun showQizizz(quizizz: List<QuizEntity>) {
-        val listTests = listOf(getSpecialQuizItems(quizizz), getQuizItems(quizizz))
-        binding.testList.adapter = GroupieAdapter().apply { addAll(listTests) }
+//        val listTests = listOf(getSpecialQuizItems(quizizz), getQuizItems(quizizz))
+        val (subscription, free) = quizizz.partition { it.requiresSubscription }
+        val content = arrayListOf<BindableItem<*>>().apply {
+            if (subscription.isNotEmpty()) {
+                add(Utils.getHorizontalCategory(
+                    "Больше тестов по подписке",
+                    subscription
+                ) { SubscriptionItem(it, subscriptionClickListener) })
+            }
+            add(getQuizItems(free))
+        }
+
+        val listTests = listOf(content)
+        binding.testList.adapter = GroupieAdapter().apply { addAll(content) }
     }
 
     // берем все тесты, специально подобранные под предпочтения пользователя
