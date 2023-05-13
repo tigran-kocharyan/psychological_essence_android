@@ -119,7 +119,7 @@ class ArticlesFragment : Fragment() {
 
     private fun getArticleItems(articles: List<ArticleEntity>): BindableItem<*> {
         return VerticalContentContainer(
-            "Доступные статьи",
+            getString(R.string.articles_available),
             articles.map { ArticleItem(it, clickListener) }
         )
     }

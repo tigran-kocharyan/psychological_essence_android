@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.App
+import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentFactsBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
@@ -93,7 +94,7 @@ class FactsFragment : Fragment() {
 
     private fun getFactItems(facts: List<FactEntity>): BindableItem<*> {
         return VerticalContentContainer(
-            "Факты дня",
+            getString(R.string.facts_day),
             facts.map { FactItem(it, clickListener) }
         )
     }

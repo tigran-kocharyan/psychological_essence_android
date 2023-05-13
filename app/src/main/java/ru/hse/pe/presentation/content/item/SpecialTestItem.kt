@@ -17,9 +17,11 @@ class SpecialTestItem(
     private val clickListener: ContentClickListener
 ) : BindableItem<HolderSpecialTestBinding>() {
     override fun bind(binding: HolderSpecialTestBinding, position: Int) {
+        val context = binding.root.context
         binding.name.text = test.name
-        binding.countQuestions.text = "${test.questions.size} вопроса"
-        binding.time.text = "${test.time} минут"
+        binding.countQuestions.text =
+            context?.getString(R.string.test_countQuestions, test.questions.size) ?: ""
+        binding.time.text = context?.getString(R.string.test_time, test.time) ?: ""
         if (test.imageUrl != null && test.imageUrl.isNotBlank()) {
             binding.image.load(test.imageUrl) {
                 crossfade(true)

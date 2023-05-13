@@ -107,7 +107,6 @@ class TestResultFragment : Fragment() {
     }
 
     private fun showResults(quizResultEntity: QuizResultEntity) {
-        Log.d("sdads", quizResultEntity.content.toString())
         binding.result.text = quizResultEntity.content
         binding.error.visibility = View.GONE
     }

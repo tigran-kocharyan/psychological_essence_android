@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import ru.hse.pe.App
+import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentSubscriptionBinding
 import ru.hse.pe.presentation.MainActivity
@@ -51,7 +52,7 @@ class SubscriptionFragment : Fragment() {
             this.setOnClickListener {
                 Snackbar.make(
                     this,
-                    "На данный момент доступна только ежемесячная подписка!",
+                    getString(R.string.subscription_month),
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
