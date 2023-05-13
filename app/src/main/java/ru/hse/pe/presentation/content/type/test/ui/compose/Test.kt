@@ -600,7 +600,7 @@ fun CreateBtnCard() {
                 if (!Test.answersBoolean[Test.counter.value] || counterMultipleAnswer == 0) {
                     Toast.makeText(
                         context,
-                        "Выберите вариант ответа или нажмите кнопку пропустить",
+                        context.getString(R.string.test_choose),
                         Toast.LENGTH_SHORT
                     ).show()
                     return@Button
@@ -633,7 +633,7 @@ fun CreateBtnCard() {
                 if (!Test.answersBoolean[Test.counter.value] || counterMultipleAnswer == 0) {
                     Toast.makeText(
                         context,
-                        "Выберите вариант ответа или нажмите кнопку пропустить",
+                        context.getString(R.string.test_choose),
                         Toast.LENGTH_SHORT
                     ).show()
                     return@Button

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
+import ru.hse.pe.R
 import ru.hse.pe.databinding.FragmentResetPasswordBinding
 import ru.hse.pe.utils.Utils.getLongSnackbar
 import ru.hse.pe.utils.Utils.isInvalid
@@ -39,7 +40,7 @@ class ResetPasswordFragment : Fragment() {
         when {
             binding.emailInput.text?.isBlank() ?: true || binding.emailInput.isInvalid() || !binding.emailInput.text.toString()
                 .validateEmail() -> {
-                binding.emailInput.error = "Введите корректную почту"
+                binding.emailInput.error = getString(R.string.login_validEmail)
                 binding.emailInput.requestFocus()
             }
             else -> {
@@ -50,8 +51,7 @@ class ResetPasswordFragment : Fragment() {
                             update()
                         } else {
                             getLongSnackbar(
-                                root,
-                                "Ошибка отправки письма для смены пароля"
+                                root, getString(R.string.reset_error)
                             ).show()
                         }
                         showProgress(false)
@@ -62,8 +62,8 @@ class ResetPasswordFragment : Fragment() {
 
     private fun update() {
         binding.buttonReset.setOnClickListener { (activity as AppCompatActivity).supportFragmentManager.popBackStack() }
-        binding.buttonReset.text = "Вернуться ко входу"
-        binding.subtitle.text = "Мы отправили на ваш E-mail письмо для смены пароля"
+        binding.buttonReset.text = getString(R.string.reset_login)
+        binding.subtitle.text = getString(R.string.reset_email)
         binding.email.setGone()
     }
 

@@ -48,11 +48,11 @@ class LoginFragment : Fragment() {
         when {
             binding.emailInput.isInvalid() && binding.emailInput.text.toString()
                 .validateEmail() -> {
-                binding.emailInput.error = "Введите корректную почту"
+                binding.emailInput.error = getString(R.string.login_validEmail)
                 binding.emailInput.requestFocus()
             }
             binding.passwordInput.text.toString().isBlank() -> {
-                getSnackbar(root, "Введите пароль")
+                getSnackbar(root, getString(R.string.login_hintPassword))
                 binding.passwordInput.requestFocus()
             }
             else -> {
@@ -74,13 +74,13 @@ class LoginFragment : Fragment() {
                     } else {
                         binding.resend.setVisible()
                         binding.resendCodeButton.setOnClickListener { verify(user) }
-//                        binding.buttonVerify.setOnClickListener { verify(user) }
-//                        binding.buttonVerify.visibility = View.VISIBLE
+//                      binding.buttonVerify.setOnClickListener { verify(user) }
+//                      binding.buttonVerify.visibility = View.VISIBLE
                     }
                     showProgress(false)
                 }
             }.addOnFailureListener {
-                getSnackbar(root, "Неверная почта или пароль").show()
+                getSnackbar(root, getString(R.string.login_error)).show()
                 showProgress(false)
             }
     }
@@ -110,13 +110,12 @@ class LoginFragment : Fragment() {
     private fun verify(user: FirebaseUser) {
         user.sendEmailVerification().addOnCanceledListener {
             getLongSnackbar(
-                root, "На вашу почту отправлена ссылка для подтверждения аккаунта!" +
-                        "\nПерейдите по ссылке для подтверждения"
+                root, getString(R.string.login_emailVerify)
             ).show()
         }.addOnFailureListener {
             getLongSnackbar(
                 root,
-                "Не удалось отправить письмо-подтверждение\nВозможно недавно письмо уже посылалось!"
+                getString(R.string.login_errorEmailVerify)
             ).show()
         }
     }
