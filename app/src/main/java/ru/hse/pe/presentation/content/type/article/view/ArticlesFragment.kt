@@ -100,7 +100,7 @@ class ArticlesFragment : Fragment() {
 
     private fun showError(throwable: Throwable) {
         Log.d(TAG, "showError() called with: throwable = $throwable")
-        Snackbar.make(binding.root, throwable.toString(), Snackbar.LENGTH_SHORT)
+        Snackbar.make(binding.root, getString(R.string.error_materials), Snackbar.LENGTH_SHORT)
             .show()
     }
 

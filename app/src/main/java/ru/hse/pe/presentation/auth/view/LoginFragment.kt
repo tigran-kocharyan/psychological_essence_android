@@ -115,7 +115,7 @@ class LoginFragment : Fragment() {
             .beginTransaction()
             .setCommonAnimations()
             .addToBackStack(null)
-            .add(
+            .replace(
                 R.id.fragment_container,
                 ResetPasswordFragment.newInstance(),
                 ResetPasswordFragment.TAG
@@ -128,7 +128,7 @@ class LoginFragment : Fragment() {
             .beginTransaction()
             .setCommonAnimations()
             .addToBackStack(null)
-            .add(R.id.fragment_container, RegisterFragment.newInstance(), RegisterFragment.TAG)
+            .replace(R.id.fragment_container, RegisterFragment.newInstance(), RegisterFragment.TAG)
             .commit()
     }
 
