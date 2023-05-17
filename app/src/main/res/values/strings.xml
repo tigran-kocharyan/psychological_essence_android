@@ -131,6 +131,7 @@
     <string name="description">Описание</string>
     <string name="instruction">Инструкция</string>
     <string name="error">Отправить ответы повторно</string>
+    <string name="error_materials">Ошибка при обращении к серверу для получения материалов. Попробуйте позже.</string>
 
     /* Статьи */
     <string name="articles_title">Статьи</string>
