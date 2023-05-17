@@ -86,31 +86,31 @@ class RegisterFragment : Fragment() {
 
         when {
             name.isEmpty() -> {
-                binding.nameInput.error = "Введите ваше имя"
+                binding.nameInput.error = getString(R.string.register_hint_name)
                 binding.nameInput.requestFocus()
             }
             email.isEmpty() -> {
-                binding.emailInput.error = "Введите вашу почту"
+                binding.emailInput.error = getString(R.string.register_hint_email)
                 binding.emailInput.requestFocus()
             }
             sex.isEmpty() -> {
-                binding.female.error = "Выберите ваш пол"
+                binding.female.error = getString(R.string.register_hint_sex)
                 binding.sexRadio.requestFocus()
             }
             !email.validateEmail() -> {
-                binding.emailInput.error = "Некорректная почта"
+                binding.emailInput.error = getString(R.string.register_hint_error_email)
                 binding.emailInput.requestFocus()
             }
             password.length < 5 -> {
-                getSnackbar(root, "Пароль должен быть больше 5 символов").show()
+                getSnackbar(root, getString(R.string.register_hint_error_password)).show()
                 binding.passwordInput.requestFocus()
             }
             repeatPassword != password -> {
-                getSnackbar(root, "Пароли не совпадают").show()
+                getSnackbar(root, getString(R.string.register_hint_mismatch_password)).show()
                 binding.passwordRepeatInput.requestFocus()
             }
             !binding.acceptCheckbox.isChecked -> {
-                getSnackbar(root, "Подтвердите пользовательское соглашение!").show()
+                getSnackbar(root, getString(R.string.register_hint_user_agreement)).show()
                 binding.acceptCheckbox.requestFocus()
             }
             else -> {
@@ -124,7 +124,10 @@ class RegisterFragment : Fragment() {
         auth.createUserWithEmailAndPassword(credentials.email, credentials.password)
             .addOnSuccessListener {
                 auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
-                    if (!it.isSuccessful) getSnackbar(root, "Не удается создать аккаунт").show()
+                    if (!it.isSuccessful) getSnackbar(
+                        root,
+                        getString(R.string.register_hint_error_account)
+                    ).show()
                 }
                 val uid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
                 val user = UserEntity(
@@ -148,15 +151,15 @@ class RegisterFragment : Fragment() {
             .addOnFailureListener {
                 when (it) {
                     is FirebaseAuthWeakPasswordException -> {
-                        getSnackbar(root, "Слабый пароль").show()
+                        getSnackbar(root, getString(R.string.register_hint_weak_password)).show()
                         binding.passwordInput.requestFocus()
                     }
                     is FirebaseAuthInvalidCredentialsException -> {
-                        binding.emailInput.error = "Неверная почта"
+                        binding.emailInput.error = getString(R.string.register_hint_wrong_email)
                         binding.emailInput.requestFocus()
                     }
                     is FirebaseAuthUserCollisionException -> {
-                        binding.emailInput.error = "Данная почта уже зарегистрирована!"
+                        binding.emailInput.error = getString(R.string.register_hint_email_existed)
                         binding.emailInput.requestFocus()
                     }
                     else -> {
@@ -193,7 +196,7 @@ class RegisterFragment : Fragment() {
             override fun onTouch(view: View?, event: MotionEvent?): Boolean = true
         })
         binding.subtitle.setVisible()
-        binding.buttonRegister.text = "Проверить почту"
+        binding.buttonRegister.text = getString(R.string.register_hint_check_email)
         binding.buttonRegister.setOnClickListener {
             try {
                 val intent = Intent(Intent.ACTION_MAIN)

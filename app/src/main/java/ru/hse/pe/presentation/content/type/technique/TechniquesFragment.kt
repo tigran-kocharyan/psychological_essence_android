@@ -66,7 +66,7 @@ class TechniquesFragment : Fragment() {
     private var subscriptionClickListener = object : ContentClickListener {
         override fun onContentClick(content: ContentEntity, position: Int) {
             if (content is ArticleEntity) {
-                Utils.getSnackbar(binding.root, "Данная техника доступна только по подписке!")
+                Utils.getSnackbar(binding.root, getString(R.string.techniques_subscribe))
                     .show()
             }
         }
@@ -83,7 +83,7 @@ class TechniquesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentArticlesBinding.inflate(inflater, container, false)
-        binding.barTitle.text = "Техники"
+        binding.barTitle.text = getString(R.string.techniques)
         return binding.root
     }
 
@@ -111,7 +111,7 @@ class TechniquesFragment : Fragment() {
         val content = arrayListOf<BindableItem<*>>()
         content.add(
             getHorizontalCategory(
-                "Больше техник по подписке",
+                getString(R.string.techniques_more),
                 subscription
             ) { SubscriptionItem(it, subscriptionClickListener) })
         categories.forEach { entry ->
@@ -122,7 +122,7 @@ class TechniquesFragment : Fragment() {
 
     private fun getTechniqueItems(articles: List<ArticleEntity>): BindableItem<*> {
         return VerticalContentContainer(
-            "Доступные техники",
+            getString(R.string.techniques_subscription),
             articles.map { ArticleItem(it, clickListener) }
         )
     }

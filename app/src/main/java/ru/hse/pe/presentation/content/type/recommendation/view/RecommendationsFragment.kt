@@ -163,7 +163,12 @@ class RecommendationsFragment : Fragment() {
             "Книги" -> getHorizontalCategory(this, list) { BookItem(it, bookClickListener) }
             "Фильмы" -> getHorizontalCategory(this, list) { MovieItem(it, clickListener) }
             "Сериалы" -> getVerticalCategory(this, list) { SeriesItem(it, clickListener) }
-            else -> getVerticalCategory("Также рекомендуем", list) { BookItem(it, clickListener) }
+            else -> getVerticalCategory(getString(R.string.recommendation), list) {
+                BookItem(
+                    it,
+                    clickListener
+                )
+            }
         }
 
     companion object {
