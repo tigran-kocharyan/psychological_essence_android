@@ -100,7 +100,7 @@ class CoursesFragment : Fragment() {
     // берем все курсы, которые будут в большой картинке
     private fun getBigCoursesItems(courses: List<CourseEntity>): BindableItem<*> {
         return HorizontalContentContainer(
-            getString(R.string.specCourses),
+            getString(R.string.special_courses),
             courses.map { CourseBigItem(it, clickListener) }
         )
     }
@@ -108,7 +108,7 @@ class CoursesFragment : Fragment() {
     // берем все курсы,
     private fun getCoursesItems(courses: List<CourseEntity>): BindableItem<*> {
         return VerticalContentContainer(
-            getString(R.string.newCourses),
+            getString(R.string.new_courses),
             courses.map { CourseItem(it, clickListener) }
         )
     }

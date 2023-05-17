@@ -20,8 +20,8 @@ class TestItem(
         val description = test.description?.split("Инструкция:")?.get(0)
         binding.description.text = description
         binding.countQuestions.text =
-            context?.getString(R.string.test_countQuestions, test.questions.size) ?: ""
-        binding.time.text = context?.getString(R.string.test_timePassing, test.time) ?: ""
+            context?.getString(R.string.test_questions_amount, test.questions.size) ?: ""
+        binding.time.text = context?.getString(R.string.test_time_passing, test.time) ?: ""
 
 
         if (test.imageUrl != null && test.imageUrl.isNotBlank()) {

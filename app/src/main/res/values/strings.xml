@@ -27,27 +27,27 @@
     <string name="register_female">Женский</string>
     <string name="register_email">E-mail</string>
     <string name="register_password">Придумайте пароль</string>
-    <string name="register_repeatPassword">Повторите пароль</string>
+    <string name="register_repeat_password">Повторите пароль</string>
     <string name="register_terms">Нажимая кнопку зарегистрироваться, Вы принимаете условия пользовательского соглашения!</string>
     <string name="register_btn">Зарегистрироваться</string>
-    <string name="login_hintEmail">Введите email</string>
-    <string name="login_validEmail">Введите корректную почту</string>
-    <string name="login_emailVerify">На вашу почту отправлена ссылка для подтверждения аккаунта!\nПерейдите по ссылке для подтверждения</string>
-    <string name="login_errorEmailVerify">Не удалось отправить письмо-подтверждение\nВозможно недавно письмо уже посылалось!</string>
-    <string name="login_hintPassword">Введите пароль</string>
-    <string name="register_hintName">Введите имя</string>
-    <string name="register_hintEmail">Введите вашу почту</string>
-    <string name="register_hintSex">Выберите пол</string>
-    <string name="register_hintErrorEmail">Некорректная почта</string>
-    <string name="register_hintErrorPassword">Пароль должен быть больше 5 символов</string>
-    <string name="register_hintMisMatchPassword">Пароли не совпадают</string>
-    <string name="register_hintUserAgreement">Подтвердите пользовательское соглашение!</string>
-    <string name="register_hintRepeatPassword">Повторите пароль</string>
-    <string name="register_hintErrorAccount">Не удается создать аккаунт</string>
-    <string name="register_hintWeakPassword">Слабый пароль</string>
-    <string name="register_hintWrongEmail">Неверная Почта</string>
-    <string name="register_hintEmailExisted">Данная почта уже зарегистрирована!</string>
-    <string name="register_hintCheckEmail">Проверить почту!</string>
+    <string name="login_hint_email">Введите email</string>
+    <string name="login_valid_email">Введите корректную почту</string>
+    <string name="login_email_verify">На вашу почту отправлена ссылка для подтверждения аккаунта!\nПерейдите по ссылке для подтверждения</string>
+    <string name="login_error_email_verify">Не удалось отправить письмо-подтверждение\nВозможно недавно письмо уже посылалось!</string>
+    <string name="login_hint_password">Введите пароль</string>
+    <string name="register_hint_name">Введите имя</string>
+    <string name="register_hint_email">Введите вашу почту</string>
+    <string name="register_hint_sex">Выберите пол</string>
+    <string name="register_hint_error_email">Некорректная почта</string>
+    <string name="register_hint_error_password">Пароль должен быть больше 5 символов</string>
+    <string name="register_hint_mismatch_password">Пароли не совпадают</string>
+    <string name="register_hint_user_agreement">Подтвердите пользовательское соглашение!</string>
+    <string name="register_hint_repeat_password">Повторите пароль</string>
+    <string name="register_hint_error_account">Не удается создать аккаунт</string>
+    <string name="register_hint_weak_password">Слабый пароль</string>
+    <string name="register_hint_wrong_email">Неверная Почта</string>
+    <string name="register_hint_email_existed">Данная почта уже зарегистрирована!</string>
+    <string name="register_hint_check_email">Проверить почту!</string>
     <string name="reset_error">Ошибка отправки письма для смены пароля</string>
     <string name="reset_login">Вернуться ко входу</string>
     <string name="reset_email">Мы отправили на ваш E-mail письмо для смены пароля</string>
@@ -55,13 +55,13 @@
     /* Курсы */
     <string name="courses">Курсы</string>
     <string name="course">Курс</string>
-    <string name="startCourse">Начать курс</string>
-    <string name="newCourses">Новинки</string>
-    <string name="specCourses">Специально для вас</string>
-    <string name="contentCourses">Содержание курса</string>
-    <string name="seeAll">Смотреть все</string>
-    <string name="durationCourses">Длительность ${duration} месяца</string>
-    <string name="goToTest">Перейти к тесту</string>
+    <string name="start_course">Начать курс</string>
+    <string name="new_courses">Новинки</string>
+    <string name="special_courses">Специально для вас</string>
+    <string name="content_courses">Содержание курса</string>
+    <string name="see_all">Смотреть все</string>
+    <string name="duration_courses">Длительность ${duration} месяца</string>
+    <string name="go_to_test">Перейти к тесту</string>
     /* Реклама */
     <string name="develop">Прокачай себя вместе с нами всего за 99 ₽/мес.</string>
 
@@ -77,15 +77,14 @@
     <string name="menu_articles">Статьи</string>
     <string name="menu_gaslighting">Как понять, что вы имеете дело с газлайтингом</string>
 
-
-    <string name="recommend">Также рекомендуем</string>
-    <string name="menu_recomendations">Рекомендации</string>
+    <string name="recommendation">Также рекомендуем</string>
+    <string name="menu_recommendations">Рекомендации</string>
     <string name="menu_films">Рекомендации по просмотру фильмов</string>
     <string name="menu_serials">Рекомендации по просмотру сериалов</string>
     <string name="menu_books">Рекомендации по чтению книг</string>
 
     <string name="menu_facts">Факты</string>
-    <string name="menu_psychologyFacts">Различные факты по психологии</string>
+    <string name="menu_psychology_facts">Различные факты по психологии</string>
 
     <string name="menu_favourites">Избранное</string>
     <string name="menu_settings">Настройки</string>
@@ -117,17 +116,17 @@
     <string name="test_skip">Пропустить</string>
     <string name="test_finish">Завершить</string>
     <string name="test_results">Результаты</string>
-    <string name="test_countQuestions">%s вопроса</string>
-    <string name="test_timePassing">%s вопроса</string>
+    <string name="test_questions_amount">%s вопроса</string>
+    <string name="test_time_passing">%s вопроса</string>
     <string name="test_time">%s минут</string>
     <string name="test_choose">Выберите вариант ответа или нажмите кнопку пропустить</string>
-    <string name="backBtn">Предыдущий</string>
-    <string name="nextBtn">Следующий</string>
-    <string name="skipBtn">Пропустить вопрос</string>
-    <string name="finishBtn">Завершить</string>
+    <string name="back_button">Предыдущий</string>
+    <string name="next_button">Следующий</string>
+    <string name="skip_button">Пропустить вопрос</string>
+    <string name="finish_button">Завершить</string>
     <string name="results">Результаты</string>
-    <string name="listTests">К списку тестов</string>
-    <string name="startTest">Пройти тест</string>
+    <string name="list_tests">К списку тестов</string>
+    <string name="start_test">Пройти тест</string>
     <string name="description">Описание</string>
     <string name="instruction">Инструкция</string>
     <string name="error">Отправить ответы повторно</string>
@@ -136,16 +135,15 @@
     <string name="articles_title">Статьи</string>
     <string name="articles_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
     <string name="articles_btn">Читать</string>
-    <string name="articles_available">Доступные статьи</string>
-    <string name="title_activity_test_part">TestPart</string>
+    <string name="articles_available">Доступные Статьи</string>
 
     /* Факты */
-    <string name="facts_day">Факты дня</string>
+    <string name="facts_today">Факты дня</string>
 
     /* Техники */
     <string name="techniques">Техники</string>
-    <string name="techniques_available">Доступные техники</string>
-    <string name="technique_more">Больше техник по подписке</string>
+    <string name="techniques_subscription">Доступные техники</string>
+    <string name="techniques_more">Больше техник по подписке</string>
     <string name="techniques_subscribe">Факты дня</string>
 
     /* Подписка */

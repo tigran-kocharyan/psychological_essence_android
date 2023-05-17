@@ -623,7 +623,7 @@ fun CreateBtnCard() {
             border = BorderStroke(2.dp, color = colorResource(id = R.color.purple))
         ) {
             Text(
-                text = stringResource(id = R.string.backBtn),
+                text = stringResource(id = R.string.back_button),
                 color = colorResource(id = R.color.purple)
             )
         }
@@ -656,7 +656,7 @@ fun CreateBtnCard() {
                     contentColor = Color.White
                 )
         ) {
-            Text(text = stringResource(id = R.string.nextBtn))
+            Text(text = stringResource(id = R.string.next_button))
         }
         val activity = LocalContext.current as AppCompatActivity
         Button(
@@ -682,7 +682,7 @@ fun CreateBtnCard() {
                     contentColor = Color.White
                 )
         ) {
-            Text(text = stringResource(id = R.string.finishBtn), textAlign = TextAlign.Center)
+            Text(text = stringResource(id = R.string.finish_button), textAlign = TextAlign.Center)
         }
     }
     Row(
@@ -706,7 +706,7 @@ fun CreateBtnCard() {
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         ) {
             Text(
-                text = stringResource(id = R.string.skipBtn),
+                text = stringResource(id = R.string.skip_button),
                 color = colorResource(id = R.color.purple)
             )
         }

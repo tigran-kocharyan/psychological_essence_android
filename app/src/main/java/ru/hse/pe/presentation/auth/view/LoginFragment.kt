@@ -48,11 +48,11 @@ class LoginFragment : Fragment() {
         when {
             binding.emailInput.isInvalid() && binding.emailInput.text.toString()
                 .validateEmail() -> {
-                binding.emailInput.error = getString(R.string.login_validEmail)
+                binding.emailInput.error = getString(R.string.login_valid_email)
                 binding.emailInput.requestFocus()
             }
             binding.passwordInput.text.toString().isBlank() -> {
-                getSnackbar(root, getString(R.string.login_hintPassword))
+                getSnackbar(root, getString(R.string.login_hint_password))
                 binding.passwordInput.requestFocus()
             }
             else -> {
@@ -110,12 +110,12 @@ class LoginFragment : Fragment() {
     private fun verify(user: FirebaseUser) {
         user.sendEmailVerification().addOnCanceledListener {
             getLongSnackbar(
-                root, getString(R.string.login_emailVerify)
+                root, getString(R.string.login_email_verify)
             ).show()
         }.addOnFailureListener {
             getLongSnackbar(
                 root,
-                getString(R.string.login_errorEmailVerify)
+                getString(R.string.login_error_email_verify)
             ).show()
         }
     }
