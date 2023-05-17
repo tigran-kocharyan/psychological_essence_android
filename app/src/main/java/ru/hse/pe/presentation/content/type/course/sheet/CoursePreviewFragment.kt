@@ -139,7 +139,7 @@ class CoursePreviewFragment : BottomSheetDialogFragment() {
             )
         }
         return VerticalContentContainer(
-            getString(R.string.contentCourses),
+            getString(R.string.content_courses),
             lessonList.map { LessonItem(it, clickListener) }
         )
     }

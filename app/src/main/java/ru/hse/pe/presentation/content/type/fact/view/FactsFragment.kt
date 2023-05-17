@@ -94,7 +94,7 @@ class FactsFragment : Fragment() {
 
     private fun getFactItems(facts: List<FactEntity>): BindableItem<*> {
         return VerticalContentContainer(
-            getString(R.string.facts_day),
+            getString(R.string.facts_today),
             facts.map { FactItem(it, clickListener) }
         )
     }

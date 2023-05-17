@@ -20,7 +20,7 @@ class SpecialTestItem(
         val context = binding.root.context
         binding.name.text = test.name
         binding.countQuestions.text =
-            context?.getString(R.string.test_countQuestions, test.questions.size) ?: ""
+            context?.getString(R.string.test_questions_amount, test.questions.size) ?: ""
         binding.time.text = context?.getString(R.string.test_time, test.time) ?: ""
         if (test.imageUrl != null && test.imageUrl.isNotBlank()) {
             binding.image.load(test.imageUrl) {

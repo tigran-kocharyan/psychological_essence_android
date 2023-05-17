@@ -123,7 +123,7 @@ class TestsFragment : Fragment() {
     // берем все тесты, специально подобранные под предпочтения пользователя
     private fun getSpecialQuizItems(quizizz: List<QuizEntity>): BindableItem<*> {
         return HorizontalContentContainer(
-            getString(R.string.specCourses),
+            getString(R.string.special_courses),
             quizizz.map { SpecialTestItem(it, clickListener) }
         )
     }

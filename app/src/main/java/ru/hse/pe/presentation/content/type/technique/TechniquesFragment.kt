@@ -111,7 +111,7 @@ class TechniquesFragment : Fragment() {
         val content = arrayListOf<BindableItem<*>>()
         content.add(
             getHorizontalCategory(
-                getString(R.string.technique_more),
+                getString(R.string.techniques_more),
                 subscription
             ) { SubscriptionItem(it, subscriptionClickListener) })
         categories.forEach { entry ->
@@ -122,7 +122,7 @@ class TechniquesFragment : Fragment() {
 
     private fun getTechniqueItems(articles: List<ArticleEntity>): BindableItem<*> {
         return VerticalContentContainer(
-            getString(R.string.techniques_available),
+            getString(R.string.techniques_subscription),
             articles.map { ArticleItem(it, clickListener) }
         )
     }

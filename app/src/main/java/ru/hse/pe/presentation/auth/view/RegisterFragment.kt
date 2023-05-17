@@ -86,31 +86,31 @@ class RegisterFragment : Fragment() {
 
         when {
             name.isEmpty() -> {
-                binding.nameInput.error = getString(R.string.register_hintName)
+                binding.nameInput.error = getString(R.string.register_hint_name)
                 binding.nameInput.requestFocus()
             }
             email.isEmpty() -> {
-                binding.emailInput.error = getString(R.string.register_hintEmail)
+                binding.emailInput.error = getString(R.string.register_hint_email)
                 binding.emailInput.requestFocus()
             }
             sex.isEmpty() -> {
-                binding.female.error = getString(R.string.register_hintSex)
+                binding.female.error = getString(R.string.register_hint_sex)
                 binding.sexRadio.requestFocus()
             }
             !email.validateEmail() -> {
-                binding.emailInput.error = getString(R.string.register_hintErrorEmail)
+                binding.emailInput.error = getString(R.string.register_hint_error_email)
                 binding.emailInput.requestFocus()
             }
             password.length < 5 -> {
-                getSnackbar(root, getString(R.string.register_hintErrorPassword)).show()
+                getSnackbar(root, getString(R.string.register_hint_error_password)).show()
                 binding.passwordInput.requestFocus()
             }
             repeatPassword != password -> {
-                getSnackbar(root, getString(R.string.register_hintMisMatchPassword)).show()
+                getSnackbar(root, getString(R.string.register_hint_mismatch_password)).show()
                 binding.passwordRepeatInput.requestFocus()
             }
             !binding.acceptCheckbox.isChecked -> {
-                getSnackbar(root, getString(R.string.register_hintUserAgreement)).show()
+                getSnackbar(root, getString(R.string.register_hint_user_agreement)).show()
                 binding.acceptCheckbox.requestFocus()
             }
             else -> {
@@ -126,7 +126,7 @@ class RegisterFragment : Fragment() {
                 auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
                     if (!it.isSuccessful) getSnackbar(
                         root,
-                        getString(R.string.register_hintErrorAccount)
+                        getString(R.string.register_hint_error_account)
                     ).show()
                 }
                 val uid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
@@ -151,15 +151,15 @@ class RegisterFragment : Fragment() {
             .addOnFailureListener {
                 when (it) {
                     is FirebaseAuthWeakPasswordException -> {
-                        getSnackbar(root, getString(R.string.register_hintWeakPassword)).show()
+                        getSnackbar(root, getString(R.string.register_hint_weak_password)).show()
                         binding.passwordInput.requestFocus()
                     }
                     is FirebaseAuthInvalidCredentialsException -> {
-                        binding.emailInput.error = getString(R.string.register_hintWrongEmail)
+                        binding.emailInput.error = getString(R.string.register_hint_wrong_email)
                         binding.emailInput.requestFocus()
                     }
                     is FirebaseAuthUserCollisionException -> {
-                        binding.emailInput.error = getString(R.string.register_hintEmailExisted)
+                        binding.emailInput.error = getString(R.string.register_hint_email_existed)
                         binding.emailInput.requestFocus()
                     }
                     else -> {
@@ -196,7 +196,7 @@ class RegisterFragment : Fragment() {
             override fun onTouch(view: View?, event: MotionEvent?): Boolean = true
         })
         binding.subtitle.setVisible()
-        binding.buttonRegister.text = getString(R.string.register_hintCheckEmail)
+        binding.buttonRegister.text = getString(R.string.register_hint_check_email)
         binding.buttonRegister.setOnClickListener {
             try {
                 val intent = Intent(Intent.ACTION_MAIN)

@@ -40,7 +40,7 @@ class ResetPasswordFragment : Fragment() {
         when {
             binding.emailInput.text?.isBlank() ?: true || binding.emailInput.isInvalid() || !binding.emailInput.text.toString()
                 .validateEmail() -> {
-                binding.emailInput.error = getString(R.string.login_validEmail)
+                binding.emailInput.error = getString(R.string.login_valid_email)
                 binding.emailInput.requestFocus()
             }
             else -> {
