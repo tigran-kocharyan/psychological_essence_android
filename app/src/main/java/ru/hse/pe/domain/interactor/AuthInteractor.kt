@@ -28,4 +28,14 @@ class AuthInteractor @Inject constructor(private val apiService: ApiService) {
      * @return response wrapped into Single
      */
     fun getUser(uid: String) = apiService.getUser(uid)
+
+
+    /**
+     * Obtain user subscription status
+     *
+     * @param uid user uid
+     *
+     * @return response wrapped into Single
+     */
+    fun getUserSubscriptionStatus(uid: String) = apiService.getUserSubscriptionStatus(uid)
 }

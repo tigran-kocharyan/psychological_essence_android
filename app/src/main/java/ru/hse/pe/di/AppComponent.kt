@@ -5,10 +5,11 @@ import dagger.BindsInstance
 import dagger.Component
 import ru.hse.pe.presentation.MainActivity
 import ru.hse.pe.presentation.auth.view.AuthFragment
+import ru.hse.pe.presentation.auth.view.LoginFragment
 import ru.hse.pe.presentation.auth.view.RegisterFragment
 import ru.hse.pe.presentation.content.ContentFragment
 import ru.hse.pe.presentation.content.type.article.view.ArticlesFragment
-import ru.hse.pe.presentation.content.type.courses.CoursesFragment
+import ru.hse.pe.presentation.content.type.course.CoursesFragment
 import ru.hse.pe.presentation.content.type.courses.lesson.LessonFragment
 import ru.hse.pe.presentation.content.type.fact.view.FactsFragment
 import ru.hse.pe.presentation.content.type.recommendation.view.RecommendationsFragment
@@ -32,6 +33,7 @@ import javax.inject.Singleton
 )
 interface AppComponent {
     fun inject(launcher: MainActivity)
+    fun inject(fragment: LoginFragment)
     fun inject(fragment: AuthFragment)
     fun inject(fragment: ContentFragment)
     fun inject(fragment: FactsFragment)

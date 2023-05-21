@@ -385,7 +385,7 @@ fun DragAndDrop(categories: List<String>) {
             id++
 
             // Добавляю скрытый элемент, чтобы можно было вставить ответ между категориями
-            if (i < categories.size - 1) {
+            if (i < categories.size) {
                 values.add(ItemData("", "id${id}invisible", false))
                 id++
             }
@@ -600,7 +600,7 @@ fun CreateBtnCard() {
                 if (!Test.answersBoolean[Test.counter.value] || counterMultipleAnswer == 0) {
                     Toast.makeText(
                         context,
-                        "Выберите вариант ответа или нажмите кнопку пропустить",
+                        context.getString(R.string.test_choose),
                         Toast.LENGTH_SHORT
                     ).show()
                     return@Button
@@ -623,7 +623,7 @@ fun CreateBtnCard() {
             border = BorderStroke(2.dp, color = colorResource(id = R.color.purple))
         ) {
             Text(
-                text = stringResource(id = R.string.backBtn),
+                text = stringResource(id = R.string.back_button),
                 color = colorResource(id = R.color.purple)
             )
         }
@@ -633,7 +633,7 @@ fun CreateBtnCard() {
                 if (!Test.answersBoolean[Test.counter.value] || counterMultipleAnswer == 0) {
                     Toast.makeText(
                         context,
-                        "Выберите вариант ответа или нажмите кнопку пропустить",
+                        context.getString(R.string.test_choose),
                         Toast.LENGTH_SHORT
                     ).show()
                     return@Button
@@ -656,7 +656,7 @@ fun CreateBtnCard() {
                     contentColor = Color.White
                 )
         ) {
-            Text(text = stringResource(id = R.string.nextBtn))
+            Text(text = stringResource(id = R.string.next_button))
         }
         val activity = LocalContext.current as AppCompatActivity
         Button(
@@ -682,7 +682,7 @@ fun CreateBtnCard() {
                     contentColor = Color.White
                 )
         ) {
-            Text(text = stringResource(id = R.string.finishBtn), textAlign = TextAlign.Center)
+            Text(text = stringResource(id = R.string.finish_button), textAlign = TextAlign.Center)
         }
     }
     Row(
@@ -706,7 +706,7 @@ fun CreateBtnCard() {
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         ) {
             Text(
-                text = stringResource(id = R.string.skipBtn),
+                text = stringResource(id = R.string.skip_button),
                 color = colorResource(id = R.color.purple)
             )
         }

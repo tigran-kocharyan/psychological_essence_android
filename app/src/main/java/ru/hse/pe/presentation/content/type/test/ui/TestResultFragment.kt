@@ -5,18 +5,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import ru.hse.pe.App
+import ru.hse.pe.R
 import ru.hse.pe.SharedViewModel
 import ru.hse.pe.databinding.FragmentTestResultBinding
 import ru.hse.pe.domain.interactor.ContentInteractor
 import ru.hse.pe.domain.model.QuizAnswerEntity
 import ru.hse.pe.domain.model.QuizResultEntity
+import ru.hse.pe.presentation.content.type.course.CoursesFragment
 import ru.hse.pe.presentation.content.type.test.ui.compose.Test
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModel
 import ru.hse.pe.presentation.content.viewmodel.ContentViewModelFactory
@@ -67,7 +68,20 @@ class TestResultFragment : Fragment() {
         viewModel.getQuizResult(result)
         binding.error.setOnClickListener { viewModel.getQuizResult(result) }
         binding.finish.setOnClickListener {
-            (activity as AppCompatActivity).supportFragmentManager.popBackStack()
+            activity!!.supportFragmentManager
+                .beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in,
+                    R.anim.fade_out,
+                    R.anim.pop_enter,
+                    R.anim.pop_exit
+                )
+                .addToBackStack(null)
+                .add(
+                    R.id.fragment_container, CoursesFragment.newInstance(),
+                    CoursesFragment.TAG
+                )
+                .commit()
         }
     }
 

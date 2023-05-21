@@ -1,4 +1,4 @@
-package ru.hse.pe.presentation.content.type.courses.sheet
+package ru.hse.pe.presentation.content.type.course.sheet
 
 import android.graphics.Color
 import android.os.Bundle
@@ -139,7 +139,7 @@ class CoursePreviewFragment : BottomSheetDialogFragment() {
             )
         }
         return VerticalContentContainer(
-            "Содержание курса",
+            getString(R.string.content_courses),
             lessonList.map { LessonItem(it, clickListener) }
         )
     }

@@ -20,8 +20,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
+import com.xwray.groupie.viewbinding.BindableItem
 import ru.hse.pe.R
+import ru.hse.pe.domain.model.ContentEntity
+import ru.hse.pe.utils.container.HorizontalContentContainer
 
 object Utils {
     fun String.validateEmail() = android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
@@ -115,4 +119,13 @@ object Utils {
         R.anim.pop_enter,
         R.anim.pop_exit
     )
+
+    /**
+     * Метод для получения горизонтального списка groupie
+     */
+    fun <T : ViewBinding> getHorizontalCategory(
+        title: String,
+        items: List<ContentEntity>,
+        cast: (ContentEntity) -> BindableItem<T>
+    ) = HorizontalContentContainer(title, items.map(cast))
 }
